@@ -1,4 +1,4 @@
-package org.mju_likelion.festival.domain.common.constant;
+package org.mju_likelion.festival.common.domain.constant;
 
 public abstract class ColumnLengths {
 

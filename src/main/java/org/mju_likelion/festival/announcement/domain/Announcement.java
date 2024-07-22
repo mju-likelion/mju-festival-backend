@@ -1,7 +1,7 @@
-package org.mju_likelion.festival.domain.announcement;
+package org.mju_likelion.festival.announcement.domain;
 
-import static org.mju_likelion.festival.domain.common.constant.ColumnLengths.ANNOUNCEMENT_CONTENT_LENGTH;
-import static org.mju_likelion.festival.domain.common.constant.ColumnLengths.ANNOUNCEMENT_TITLE_LENGTH;
+import static org.mju_likelion.festival.common.domain.constant.ColumnLengths.ANNOUNCEMENT_CONTENT_LENGTH;
+import static org.mju_likelion.festival.common.domain.constant.ColumnLengths.ANNOUNCEMENT_TITLE_LENGTH;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -15,8 +15,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.mju_likelion.festival.domain.admin.Admin;
-import org.mju_likelion.festival.domain.common.BaseEntity;
+import org.mju_likelion.festival.admin.domain.Admin;
+import org.mju_likelion.festival.common.domain.BaseEntity;
 
 @Getter
 @Builder

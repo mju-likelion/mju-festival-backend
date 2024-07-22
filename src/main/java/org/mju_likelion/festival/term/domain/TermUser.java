@@ -1,4 +1,4 @@
-package org.mju_likelion.festival.domain.lost_item;
+package org.mju_likelion.festival.term.domain;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -8,21 +8,21 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.mju_likelion.festival.domain.common.BaseEntity;
-import org.mju_likelion.festival.domain.image.Image;
+import org.mju_likelion.festival.common.domain.BaseEntity;
+import org.mju_likelion.festival.user.domain.User;
 
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "lost_item_image")
-public class LostItemImage extends BaseEntity {
+@Entity(name = "term_user")
+public class TermUser extends BaseEntity {
 
   @ManyToOne(optional = false, fetch = FetchType.LAZY)
-  @JoinColumn(name = "lost_item_id", nullable = false)
-  private LostItem lostItem;
+  @JoinColumn(name = "user_id", nullable = false)
+  private User user;
 
   @ManyToOne(optional = false, fetch = FetchType.LAZY)
-  @JoinColumn(name = "image_id", nullable = false)
-  private Image image;
+  @JoinColumn(name = "term_id", nullable = false)
+  private Term term;
 }

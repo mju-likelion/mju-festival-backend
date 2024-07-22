@@ -1,4 +1,4 @@
-package org.mju_likelion.festival.domain.booth;
+package org.mju_likelion.festival.booth.domain;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -8,21 +8,21 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.mju_likelion.festival.domain.common.BaseEntity;
-import org.mju_likelion.festival.domain.user.User;
+import org.mju_likelion.festival.common.domain.BaseEntity;
+import org.mju_likelion.festival.image.domain.Image;
 
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "booth_user")
-public class BoothUser extends BaseEntity {
+@Entity(name = "booth_image")
+public class BoothImage extends BaseEntity {
 
   @ManyToOne(optional = false, fetch = FetchType.LAZY)
   @JoinColumn(name = "booth_id", nullable = false)
   private Booth booth;
 
   @ManyToOne(optional = false, fetch = FetchType.LAZY)
-  @JoinColumn(name = "user_id", nullable = false)
-  private User user;
+  @JoinColumn(name = "image_id", nullable = false)
+  private Image image;
 }

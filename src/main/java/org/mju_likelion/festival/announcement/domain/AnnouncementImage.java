@@ -1,4 +1,4 @@
-package org.mju_likelion.festival.domain.announcement;
+package org.mju_likelion.festival.announcement.domain;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -8,8 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.mju_likelion.festival.domain.common.BaseEntity;
-import org.mju_likelion.festival.domain.image.Image;
+import org.mju_likelion.festival.common.domain.BaseEntity;
+import org.mju_likelion.festival.image.domain.Image;
 
 @Getter
 @Builder

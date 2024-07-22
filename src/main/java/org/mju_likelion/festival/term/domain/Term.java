@@ -1,7 +1,7 @@
-package org.mju_likelion.festival.domain.term;
+package org.mju_likelion.festival.term.domain;
 
-import static org.mju_likelion.festival.domain.common.constant.ColumnLengths.TERM_CONTENT_LENGTH;
-import static org.mju_likelion.festival.domain.common.constant.ColumnLengths.TERM_TITLE_LENGTH;
+import static org.mju_likelion.festival.common.domain.constant.ColumnLengths.TERM_CONTENT_LENGTH;
+import static org.mju_likelion.festival.common.domain.constant.ColumnLengths.TERM_TITLE_LENGTH;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -10,7 +10,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
 import java.util.List;
 import lombok.Getter;
-import org.mju_likelion.festival.domain.common.BaseEntity;
+import org.mju_likelion.festival.common.domain.BaseEntity;
 
 @Getter
 @Entity(name = "term")

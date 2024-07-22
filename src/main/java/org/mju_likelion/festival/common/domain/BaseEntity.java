@@ -1,4 +1,4 @@
-package org.mju_likelion.festival.domain.common;
+package org.mju_likelion.festival.common.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;

@@ -1,6 +1,6 @@
-package org.mju_likelion.festival.domain.user;
+package org.mju_likelion.festival.user.domain;
 
-import static org.mju_likelion.festival.domain.common.constant.ColumnLengths.USER_STUDENT_ID_LENGTH;
+import static org.mju_likelion.festival.common.domain.constant.ColumnLengths.USER_STUDENT_ID_LENGTH;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -12,9 +12,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.mju_likelion.festival.domain.booth.BoothUser;
-import org.mju_likelion.festival.domain.common.BaseEntity;
-import org.mju_likelion.festival.domain.term.TermUser;
+import org.mju_likelion.festival.booth.domain.BoothUser;
+import org.mju_likelion.festival.common.domain.BaseEntity;
+import org.mju_likelion.festival.term.domain.TermUser;
 
 @Getter
 @Builder

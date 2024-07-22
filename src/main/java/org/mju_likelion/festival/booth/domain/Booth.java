@@ -1,7 +1,7 @@
-package org.mju_likelion.festival.domain.booth;
+package org.mju_likelion.festival.booth.domain;
 
-import static org.mju_likelion.festival.domain.common.constant.ColumnLengths.BOOTH_DESCRIPTION_LENGTH;
-import static org.mju_likelion.festival.domain.common.constant.ColumnLengths.BOOTH_NAME_LENGTH;
+import static org.mju_likelion.festival.common.domain.constant.ColumnLengths.BOOTH_DESCRIPTION_LENGTH;
+import static org.mju_likelion.festival.common.domain.constant.ColumnLengths.BOOTH_NAME_LENGTH;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -14,8 +14,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.mju_likelion.festival.domain.admin.Admin;
-import org.mju_likelion.festival.domain.common.BaseEntity;
+import org.mju_likelion.festival.admin.domain.Admin;
+import org.mju_likelion.festival.common.domain.BaseEntity;
 
 @Getter
 @Builder

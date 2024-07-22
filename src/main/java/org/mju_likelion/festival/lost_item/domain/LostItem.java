@@ -1,8 +1,8 @@
-package org.mju_likelion.festival.domain.lost_item;
+package org.mju_likelion.festival.lost_item.domain;
 
-import static org.mju_likelion.festival.domain.common.constant.ColumnLengths.LOST_ITEM_CONTENT_LENGTH;
-import static org.mju_likelion.festival.domain.common.constant.ColumnLengths.LOST_ITEM_OWNER_INFO_LENGTH;
-import static org.mju_likelion.festival.domain.common.constant.ColumnLengths.LOST_ITEM_TITLE_LENGTH;
+import static org.mju_likelion.festival.common.domain.constant.ColumnLengths.LOST_ITEM_CONTENT_LENGTH;
+import static org.mju_likelion.festival.common.domain.constant.ColumnLengths.LOST_ITEM_OWNER_INFO_LENGTH;
+import static org.mju_likelion.festival.common.domain.constant.ColumnLengths.LOST_ITEM_TITLE_LENGTH;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -16,8 +16,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.mju_likelion.festival.domain.admin.Admin;
-import org.mju_likelion.festival.domain.common.BaseEntity;
+import org.mju_likelion.festival.admin.domain.Admin;
+import org.mju_likelion.festival.common.domain.BaseEntity;
 
 @Getter
 @Builder
