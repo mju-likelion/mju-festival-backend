@@ -20,6 +20,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+
+      - name: Grant execute permission for gradlew # gradlew 파일에 실행 권한 부여
+        run: chmod +x gradlew # gradlew 파일에 실행 권한을 부여한다.
+
       # 1. Java 17 세팅
       - name: Set up JDK 17
         uses: actions/setup-java@v3
