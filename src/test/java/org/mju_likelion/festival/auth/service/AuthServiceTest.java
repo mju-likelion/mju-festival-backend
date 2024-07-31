@@ -9,6 +9,7 @@ import java.util.UUID;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mju_likelion.festival.auth.domain.RsaKeyStrategy;
+import org.mju_likelion.festival.auth.dto.request.AdminLoginRequest;
 import org.mju_likelion.festival.auth.dto.request.UserLoginRequest;
 import org.mju_likelion.festival.auth.dto.response.KeyResponse;
 import org.mju_likelion.festival.auth.dto.response.LoginResponse;
@@ -31,6 +32,10 @@ public class AuthServiceTest {
   private String studentId;
   @Value("${student-password}")
   private String studentPassword;
+  @Value("${admin-login-id}")
+  private String adminLoginId;
+  @Value("${admin-password}")
+  private String adminPassword;
   @Autowired
   private AuthService authService;
   @MockBean
@@ -47,7 +52,7 @@ public class AuthServiceTest {
 
   @DisplayName("RedisRsaKeyManager 를 사용하여 암호화된 studentId, password, key를 받아 로그인한다.")
   @Test
-  void testUserLogin() {
+  void testUserLoginRedisRsaKeyManager() {
     // given
     willReturn(redisRsaKeyManager).given(rsaKeyManagerContext).rsaKeyManager();
     willReturn(redisRsaKeyManager).given(rsaKeyManagerContext).rsaKeyManager(RsaKeyStrategy.REDIS);
@@ -78,7 +83,7 @@ public class AuthServiceTest {
     // then
     assertNotNull(loginResponse.getAccessToken());
   }
-
+  
   /**
    * UserLoginRequest 객체를 생성한다.
    *
@@ -98,5 +103,56 @@ public class AuthServiceTest {
 
     return new UserLoginRequest(encryptedStudentId, encryptedPassword,
         credentialKey, termMap);
+  }
+
+  @DisplayName("RedisRsaKeyManager 를 사용하여 암호화된 loginId, password, key를 받아 로그인한다.")
+  @Test
+  void testAdminLoginRedisRsaKeyManager() {
+    // given
+    willReturn(redisRsaKeyManager).given(rsaKeyManagerContext).rsaKeyManager();
+    willReturn(redisRsaKeyManager).given(rsaKeyManagerContext).rsaKeyManager(RsaKeyStrategy.REDIS);
+    KeyResponse keyResponse = authService.getKey();
+    AdminLoginRequest adminLoginRequest = createAdminLoginRequest(keyResponse);
+
+    // when
+    LoginResponse loginResponse = authService.adminLogin(adminLoginRequest,
+        RsaKeyStrategy.REDIS);
+
+    // then
+    assertNotNull(loginResponse.getAccessToken());
+  }
+
+  @DisplayName("TokenRsaKeyManager 를 사용하여 암호화된 loginId, password, key를 받아 로그인한다.")
+  @Test
+  void testAdminLoginWithTokenRsaKeyManager() {
+    // given
+    willReturn(tokenRsaKeyManager).given(rsaKeyManagerContext).rsaKeyManager();
+    willReturn(tokenRsaKeyManager).given(rsaKeyManagerContext).rsaKeyManager(RsaKeyStrategy.TOKEN);
+    KeyResponse keyResponse = authService.getKey();
+    AdminLoginRequest adminLoginRequest = createAdminLoginRequest(keyResponse);
+
+    // when
+    LoginResponse loginResponse = authService.adminLogin(adminLoginRequest,
+        RsaKeyStrategy.TOKEN);
+
+    // then
+    assertNotNull(loginResponse.getAccessToken());
+  }
+
+  /**
+   * AdminLoginRequest 객체를 생성한다.
+   *
+   * @param keyResponse 키 응답 객체
+   * @return AdminLoginRequest 객체
+   */
+  private AdminLoginRequest createAdminLoginRequest(KeyResponse keyResponse) {
+    String publicKey = keyResponse.getRsaPublicKey();
+    String credentialKey = keyResponse.getCredentialKey();
+
+    String encryptedLoginId = rsaKeyUtil.rsaEncode(adminLoginId, publicKey);
+    String encryptedPassword = rsaKeyUtil.rsaEncode(adminPassword, publicKey);
+
+    return new AdminLoginRequest(encryptedLoginId, encryptedPassword,
+        credentialKey);
   }
 }

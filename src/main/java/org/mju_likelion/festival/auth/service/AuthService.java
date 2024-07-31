@@ -1,6 +1,5 @@
 package org.mju_likelion.festival.auth.service;
 
-import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -8,8 +7,11 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
+import org.mju_likelion.festival.admin.domain.Admin;
+import org.mju_likelion.festival.admin.domain.repository.AdminJpaRepository;
 import org.mju_likelion.festival.auth.domain.RsaKey;
 import org.mju_likelion.festival.auth.domain.RsaKeyStrategy;
+import org.mju_likelion.festival.auth.dto.request.AdminLoginRequest;
 import org.mju_likelion.festival.auth.dto.request.UserLoginRequest;
 import org.mju_likelion.festival.auth.dto.response.KeyResponse;
 import org.mju_likelion.festival.auth.dto.response.LoginResponse;
@@ -25,6 +27,7 @@ import org.mju_likelion.festival.term.domain.repository.TermJpaRepository;
 import org.mju_likelion.festival.user.domain.User;
 import org.mju_likelion.festival.user.domain.repository.UserJpaRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @AllArgsConstructor
@@ -34,6 +37,7 @@ public class AuthService {
   private final MjuApiUtil mjuApiUtil;
   private final UserJpaRepository userJpaRepository;
   private final TermJpaRepository termJpaRepository;
+  private final AdminJpaRepository adminJpaRepository;
   private final JwtUtil jwtUtil;
 
   public KeyResponse getKey() {
@@ -62,6 +66,26 @@ public class AuthService {
 
     String accessToken = jwtUtil.create(userId.toString());
     return new LoginResponse(accessToken);
+  }
+
+  @Transactional(readOnly = true)
+  public LoginResponse adminLogin(AdminLoginRequest adminLoginRequest,
+      RsaKeyStrategy rsaKeyStrategy) {
+    RsaKeyManager rsaKeyManager = rsaKeyManager(rsaKeyStrategy);
+
+    String key = adminLoginRequest.getKey();
+    String loginId = rsaKeyManager.decryptByKey(adminLoginRequest.getEncryptedLoginId(), key);
+    String password = rsaKeyManager.decryptByKey(adminLoginRequest.getEncryptedPassword(), key);
+
+    Admin admin = getExistingAdmin(loginId, password);
+
+    String accessToken = jwtUtil.create(admin.getId().toString());
+    return new LoginResponse(accessToken);
+  }
+
+  private Admin getExistingAdmin(String loginId, String password) {
+    return adminJpaRepository.findByLoginIdAndPassword(loginId, password)
+        .orElseThrow(() -> new UnauthorizedException(ErrorType.INVALID_CREDENTIALS));
   }
 
   /**
