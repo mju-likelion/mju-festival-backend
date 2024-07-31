@@ -22,11 +22,15 @@ public class RedisConfig {
   private String redisHost;
   @Value("${spring.data.redis.port}")
   private int redisPort;
+  @Value("${spring.data.redis.password}")
+  private String redisPassword;
 
   @Bean
   public RedisConnectionFactory redisConnectionFactory() {
-    RedisStandaloneConfiguration serverConfig = new RedisStandaloneConfiguration(redisHost,
-        redisPort);
+    RedisStandaloneConfiguration redisConfiguration = new RedisStandaloneConfiguration();
+    redisConfiguration.setHostName(redisHost);
+    redisConfiguration.setPort(redisPort);
+    redisConfiguration.setPassword(redisPassword);
 
     LettuceClientConfiguration clientConfig = LettuceClientConfiguration.builder()
         .clientResources(DefaultClientResources.create())
@@ -37,7 +41,7 @@ public class RedisConfig {
             .build())
         .build();
 
-    return new LettuceConnectionFactory(serverConfig, clientConfig);
+    return new LettuceConnectionFactory(redisConfiguration, clientConfig);
   }
 
   @Bean
