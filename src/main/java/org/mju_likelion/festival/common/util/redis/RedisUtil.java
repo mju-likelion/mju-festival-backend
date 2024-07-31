@@ -32,4 +32,12 @@ public class RedisUtil<K, V> {
       throw new InternalServerException(REDIS_ERROR, e.getMessage());
     }
   }
+
+  public void delete(K key) {
+    try {
+      this.redisTemplate.delete(key);
+    } catch (Exception e) {
+      throw new InternalServerException(REDIS_ERROR, e.getMessage());
+    }
+  }
 }
