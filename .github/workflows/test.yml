@@ -23,6 +23,15 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
+      # 2. application.properties 파일 생성
+      - name: make application.properties
+        run: |
+          mkdir -p ./src/main/resources
+          cd ./src/main/resources
+          touch ./application.properties
+          echo "${{ secrets.DEV_PROPERTIES }}" > ./application.properties
+        shell: bash
+
         # Gradle Test를 실행한다
       - name: Test with Gradle
         run: ./gradlew --info test
