@@ -25,9 +25,9 @@ public class TokenRsaKeyManager implements RsaKeyManager {
   }
 
   @Override
-  public String decryptByKey(String plainText, String key) {
+  public String decryptByKey(String encryptedText, String key) {
     String privateKey = credentialTokenUtil.parsePrivateKey(key);
-    return rsaKeyUtil.rsaDecode(plainText, privateKey);
+    return rsaKeyUtil.rsaDecode(encryptedText, privateKey);
   }
 
   @Override

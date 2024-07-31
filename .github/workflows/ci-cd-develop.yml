@@ -40,6 +40,15 @@ jobs:
           echo "${{ secrets.DEV_PROPERTIES }}" > ./application.properties
         shell: bash
 
+      # 2-1. test 용 application.properties 파일 생성
+      - name: make application.properties for test
+        run: |
+          mkdir -p ./src/test/resources
+          cd ./src/test/resources
+          touch ./application.properties
+          echo "${{ secrets.DEV_TEST_PROPERTIES }}" > ./application.properties
+          shell: bash
+
       # 3. Spring Boot 애플리케이션 빌드
       - name: Build with Gradle
         uses: gradle/gradle-build-action@bd5760595778326ba7f1441bcf7e88b49de61a25 # v2.6.0
