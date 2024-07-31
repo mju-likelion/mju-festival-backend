@@ -25,7 +25,7 @@ public interface RsaKeyManager {
   String savePrivateKey(String privateKey);
 
   /**
-   * RSA Private Key 를 이용하여 암호화된 텍스트를 복호화한다.
+   * Key 를 이용하여 암호화된 텍스트를 복호화한다.
    *
    * @param plainText 암호화된 텍스트
    * @param key       RSA Private Key 를 식별할 수 있는 Key
