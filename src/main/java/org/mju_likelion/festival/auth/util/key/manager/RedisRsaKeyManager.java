@@ -30,7 +30,9 @@ public class RedisRsaKeyManager implements RsaKeyManager {
 
   @Override
   public String decryptByKey(String encryptedText, String key) {
-    String privateKey = getPrivateKey(key);
+    String redisKey = formatRedisKey(key);
+
+    String privateKey = getPrivateKey(redisKey);
     return rsaKeyUtil.rsaDecode(encryptedText, privateKey);
   }
 
