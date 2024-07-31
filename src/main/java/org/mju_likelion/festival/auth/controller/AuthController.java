@@ -12,28 +12,30 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @AllArgsConstructor
+@RequestMapping("/auth")
 public class AuthController {
 
   private final AuthService authService;
 
-  @GetMapping("/auth/key")
+  @GetMapping("/key")
   public ResponseEntity<KeyResponse> getKey() {
     return ResponseEntity.ok(authService.getKey());
   }
 
-  @PostMapping("/auth/user/login")
+  @PostMapping("/user/login")
   public ResponseEntity<LoginResponse> userLogin(
       @RequestBody @Valid UserLoginRequest userLoginRequest,
       @RequestParam RsaKeyStrategy rsaKeyStrategy) {
     return ResponseEntity.ok(authService.userLogin(userLoginRequest, rsaKeyStrategy));
   }
 
-  @PostMapping("/auth/admin/login")
+  @PostMapping("/admin/login")
   public ResponseEntity<LoginResponse> adminLogin(
       @RequestBody @Valid AdminLoginRequest adminLoginRequest,
       @RequestParam RsaKeyStrategy rsaKeyStrategy) {
