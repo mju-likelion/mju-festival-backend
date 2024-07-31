@@ -3,6 +3,7 @@ package org.mju_likelion.festival.auth.controller;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.mju_likelion.festival.auth.domain.RsaKeyStrategy;
+import org.mju_likelion.festival.auth.dto.request.AdminLoginRequest;
 import org.mju_likelion.festival.auth.dto.request.UserLoginRequest;
 import org.mju_likelion.festival.auth.dto.response.KeyResponse;
 import org.mju_likelion.festival.auth.dto.response.LoginResponse;
@@ -26,8 +27,16 @@ public class AuthController {
   }
 
   @PostMapping("/auth/user/login")
-  public ResponseEntity<LoginResponse> login(@RequestBody @Valid UserLoginRequest userLoginRequest,
+  public ResponseEntity<LoginResponse> userLogin(
+      @RequestBody @Valid UserLoginRequest userLoginRequest,
       @RequestParam RsaKeyStrategy rsaKeyStrategy) {
     return ResponseEntity.ok(authService.userLogin(userLoginRequest, rsaKeyStrategy));
+  }
+
+  @PostMapping("/auth/admin/login")
+  public ResponseEntity<LoginResponse> adminLogin(
+      @RequestBody @Valid AdminLoginRequest adminLoginRequest,
+      @RequestParam RsaKeyStrategy rsaKeyStrategy) {
+    return ResponseEntity.ok(authService.adminLogin(adminLoginRequest, rsaKeyStrategy));
   }
 }
