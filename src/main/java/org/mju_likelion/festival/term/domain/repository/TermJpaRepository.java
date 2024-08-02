@@ -14,5 +14,5 @@ public interface TermJpaRepository extends JpaRepository<Term, UUID> {
    *
    * @return Term 의 Order 를 기준으로 오름차순으로 정렬된 모든 Term
    */
-  List<Term> findTermsByOrderByOrderAsc();
+  List<Term> findTermsByOrderBySequenceAsc();
 }
