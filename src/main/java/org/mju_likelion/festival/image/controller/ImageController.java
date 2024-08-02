@@ -1,6 +1,7 @@
 package org.mju_likelion.festival.image.controller;
 
 import lombok.AllArgsConstructor;
+import org.mju_likelion.festival.image.dto.response.ImageResponse;
 import org.mju_likelion.festival.image.service.ImageService;
 import org.mju_likelion.festival.image.util.s3.ImageType;
 import org.springframework.http.ResponseEntity;
@@ -19,10 +20,9 @@ public class ImageController {
   private final ImageService imageService;
 
   @PostMapping
-  public ResponseEntity<Void> uploadImage(
+  public ResponseEntity<ImageResponse> uploadImage(
       @RequestPart MultipartFile image,
       @RequestParam ImageType type) {
-    imageService.saveImage(image, type);
-    return ResponseEntity.ok().build();
+    return ResponseEntity.ok(imageService.saveImage(image, type));
   }
 }
