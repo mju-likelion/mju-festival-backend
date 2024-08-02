@@ -19,6 +19,9 @@ public class Term extends BaseEntity {
   @Column(nullable = false, length = TERM_CONTENT_LENGTH)
   private String content;
 
+  @Column(nullable = false)
+  private Short order;
+
   @Override
   public String toString() {
     return "Term{" +
