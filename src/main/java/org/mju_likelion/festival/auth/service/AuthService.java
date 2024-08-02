@@ -15,6 +15,7 @@ import org.mju_likelion.festival.auth.dto.request.AdminLoginRequest;
 import org.mju_likelion.festival.auth.dto.request.UserLoginRequest;
 import org.mju_likelion.festival.auth.dto.response.KeyResponse;
 import org.mju_likelion.festival.auth.dto.response.LoginResponse;
+import org.mju_likelion.festival.auth.dto.response.TermResponse;
 import org.mju_likelion.festival.auth.util.jwt.JwtUtil;
 import org.mju_likelion.festival.auth.util.key.manager.RsaKeyManager;
 import org.mju_likelion.festival.auth.util.key.manager.RsaKeyManagerContext;
@@ -81,6 +82,13 @@ public class AuthService {
 
     String accessToken = jwtUtil.create(admin.getId().toString());
     return new LoginResponse(accessToken);
+  }
+
+  @Transactional(readOnly = true)
+  public List<TermResponse> getTerms() {
+    return termJpaRepository.findTermsByOrderByOrderAsc().stream()
+        .map(TermResponse::of)
+        .collect(Collectors.toList());
   }
 
   private Admin getExistingAdmin(String loginId, String password) {
