@@ -32,6 +32,8 @@ dependencies {
     implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'//JWT
     implementation 'javax.xml.bind:jaxb-api:2.3.1'//JAXB
 
+    implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'//AWS
+
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'//Redis
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
