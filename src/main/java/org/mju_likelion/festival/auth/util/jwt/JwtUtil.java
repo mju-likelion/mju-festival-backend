@@ -1,11 +1,12 @@
 package org.mju_likelion.festival.auth.util.jwt;
 
-import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
+import java.util.UUID;
 import javax.crypto.SecretKey;
 import org.mju_likelion.festival.common.exception.UnauthorizedException;
 import org.mju_likelion.festival.common.exception.type.ErrorType;
@@ -25,17 +26,18 @@ public class JwtUtil {
   }
 
   /**
-   * payload를 받아 토큰을 생성한다.
+   * Payload 를 받아 jwt 를 생성한다.
    *
-   * @param payload 토큰에 담을 정보
+   * @param payload Payload 정보
    * @return 생성된 토큰
    */
-  public String create(final String payload) {
+  public String create(final Payload payload) {
     Date now = new Date();
     Date expiration = new Date(now.getTime() + validityInMilliseconds);
 
     return Jwts.builder()
-        .setSubject(payload)
+        .setSubject(payload.getId().toString())
+        .claim("role", payload.getRole())
         .setIssuedAt(now)
         .setExpiration(expiration)
         .signWith(key, SignatureAlgorithm.HS256)
@@ -43,21 +45,24 @@ public class JwtUtil {
   }
 
   /**
-   * 토큰을 받아 payload를 반환한다.
+   * 토큰을 받아 Payload를 반환한다.
    *
    * @param token 토큰
-   * @return payload
+   * @return Payload 정보
    */
-  public String getPayload(final String token) {
+  public Payload getPayload(final String token) {
     try {
-      return Jwts.parserBuilder()
+      Claims claims = Jwts.parserBuilder()
           .setSigningKey(key)
           .build()
           .parseClaimsJws(token)
-          .getBody()
-          .getSubject();
-    } catch (JwtException e) {
-      throw new UnauthorizedException(ErrorType.INVALID_JWT, e.getLocalizedMessage());
+          .getBody();
+
+      UUID id = UUID.fromString(claims.getSubject());
+      AuthenticationRole role = AuthenticationRole.valueOf(claims.get("role", String.class));
+      return new Payload(id, role);
+    } catch (Exception e) {
+      throw new UnauthorizedException(ErrorType.INVALID_JWT_ERROR, e.getLocalizedMessage());
     }
   }
 }

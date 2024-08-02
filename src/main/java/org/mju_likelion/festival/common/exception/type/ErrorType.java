@@ -19,6 +19,15 @@ public enum ErrorType {
   MISSING_TERM(4003, "동의 항목이 누락되었습니다."),
 
   INVALID_CREDENTIALS(4010, "아이디나 비밀번호가 일치하지 않습니다."),
+  NOT_AUTHENTICATED_ERROR(4011, "인증되지 않았습니다."),
+  ALREADY_AUTHENTICATED_ERROR(4012, "이미 인증되었습니다."),
+  JWT_NOT_FOUND_ERROR(4013, "JWT 토큰이 없습니다."),
+  INVALID_JWT_ERROR(4014, "JWT 토큰이 유효하지 않습니다."),
+
+  USER_ONLY_ERROR(4030, "사용자만 접근할 수 있습니다."),
+  ADMIN_ONLY_ERROR(4031, "관리자만 접근할 수 있습니다."),
+  STUDENT_COUNCIL_ONLY_ERROR(4032, "학생회만 접근할 수 있습니다."),
+  BOOTH_MANAGER_ONLY_ERROR(4033, "부스 관리자만 접근할 수 있습니다."),
 
   NO_RESOURCE_ERROR(4040, "해당 리소스를 찾을 수 없습니다."),
   BOOTH_NOT_FOUND(4041, "해당 부스를 찾을 수 없습니다."),
@@ -29,7 +38,6 @@ public enum ErrorType {
 
   HTTP_MEDIA_TYPE_NOT_SUPPORTED_ERROR(4150, "지원하지 않는 미디어 타입입니다."),
 
-  INVALID_JWT(5000, "JWT 토큰이 유효하지 않습니다."),
   API_ERROR(5001, "API 호출 중 오류가 발생했습니다."),
   UUID_FORMAT_ERROR(5002, "UUID 형식이 잘못되었습니다."),
 
