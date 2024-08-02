@@ -16,11 +16,11 @@ public enum ErrorType {
   INVALID_REQUEST_BODY(4000, "요청 바디가 잘못되었습니다."),
   MISSING_REQUEST_PARAMETER(4001, "필수 요청 파라미터가 누락되었습니다."),
   INVALID_REQUEST_FORMAT_ERROR(4002, "요청 바디 형식이 잘못되었습니다."),
+  MISSING_TERM(4003, "동의 항목이 누락되었습니다."),
 
   INVALID_CREDENTIALS(4010, "아이디나 비밀번호가 일치하지 않습니다."),
 
-  MISSING_TERM(4040, "동의 항목이 누락되었습니다."),
-  NO_RESOURCE_ERROR(4041, "해당 리소스를 찾을 수 없습니다."),
+  NO_RESOURCE_ERROR(4040, "해당 리소스를 찾을 수 없습니다."),
 
   METHOD_NOT_ALLOWED_ERROR(4050, "허용되지 않은 HTTP 메소드입니다."),
 
