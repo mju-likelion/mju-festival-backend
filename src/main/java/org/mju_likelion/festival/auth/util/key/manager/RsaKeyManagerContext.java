@@ -28,14 +28,29 @@ public class RsaKeyManagerContext {
         .collect(Collectors.toMap(RsaKeyManager::rsaKeyStrategy, Function.identity()));
   }
 
+  /**
+   * RedisRsaKeyManager 를 반환한다.
+   *
+   * @return RedisRsaKeyManager
+   */
   private RsaKeyManager redisRsaKeyManager() {
     return rsaKeyManagers.get(RsaKeyStrategy.REDIS);
   }
 
+  /**
+   * TokenRsaKeyManager 를 반환한다.
+   *
+   * @return TokenRsaKeyManager
+   */
   private RsaKeyManager tokenRsaKeyManager() {
     return rsaKeyManagers.get(RsaKeyStrategy.TOKEN);
   }
 
+  /**
+   * 사용 가능한 RsaKeyManager 를 반환한다.
+   *
+   * @return RsaKeyManager
+   */
   public RsaKeyManager rsaKeyManager() {
     if (redisAvailabilityChecker.isAvailable()) {
       return redisRsaKeyManager();
@@ -43,6 +58,12 @@ public class RsaKeyManagerContext {
     return tokenRsaKeyManager();
   }
 
+  /**
+   * 전략에 따른 RsaKeyManager 를 반환한다.
+   *
+   * @param rsaKeyStrategy RsaKey 전략
+   * @return RsaKeyManager
+   */
   public RsaKeyManager rsaKeyManager(RsaKeyStrategy rsaKeyStrategy) {
     return rsaKeyManagers.get(rsaKeyStrategy);
   }

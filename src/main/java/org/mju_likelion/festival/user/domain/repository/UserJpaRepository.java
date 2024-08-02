@@ -11,6 +11,12 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserJpaRepository extends JpaRepository<User, UUID> {
 
+  /**
+   * 학번으로 사용자 ID 조회.
+   *
+   * @param studentId 학번
+   * @return 사용자 ID
+   */
   @Query("SELECT u.id FROM user u WHERE u.studentId = :studentId")
   Optional<UUID> findIdByStudentId(@Param("studentId") String studentId);
 }

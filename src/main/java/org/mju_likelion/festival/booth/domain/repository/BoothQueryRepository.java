@@ -15,7 +15,9 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-
+/**
+ * 부스 조회 Repository.
+ */
 @Repository
 @RequiredArgsConstructor
 public class BoothQueryRepository {
@@ -53,6 +55,13 @@ public class BoothQueryRepository {
     };
   }
 
+  /**
+   * 페이지네이션을 적용하여 부스 간단 정보 List 조회.
+   *
+   * @param page 페이지
+   * @param size 크기
+   * @return 부스 간단 정보 List
+   */
   public List<SimpleBooth> findOrderedSimpleBoothsWithPagination(final int page, final int size) {
     String sql =
         "SELECT HEX(b.id) AS boothId, b.name AS boothName, b.description AS boothDescription, "
@@ -69,6 +78,12 @@ public class BoothQueryRepository {
     return jdbcTemplate.query(sql, params, simpleBoothRowMapper);
   }
 
+  /**
+   * 부스 상세 정보 조회.
+   *
+   * @param id 부스 ID
+   * @return 부스 상세 정보
+   */
   public Optional<BoothDetail> findBoothById(final UUID id) {
     String sql =
         "SELECT HEX(b.id) AS boothId, b.name AS boothName, b.description AS boothDescription, "

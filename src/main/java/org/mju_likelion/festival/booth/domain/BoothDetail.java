@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.UUID;
 import lombok.Getter;
 
+/**
+ * 부스 상세 정보.
+ */
 @Getter
 public class BoothDetail extends SimpleBooth {
 
@@ -20,7 +23,7 @@ public class BoothDetail extends SimpleBooth {
       final String thumbnailUrl,
       final List<String> imageUrls,
       final LocalDateTime createdAt) {
-    
+
     super(id, name, description, thumbnailUrl);
     this.location = location;
     this.imageUrls = imageUrls;

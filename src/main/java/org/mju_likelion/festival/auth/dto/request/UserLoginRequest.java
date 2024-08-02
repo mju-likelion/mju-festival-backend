@@ -8,6 +8,9 @@ import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+/**
+ * 유저 로그인 요청 DTO.
+ */
 @Getter
 @AllArgsConstructor
 public class UserLoginRequest {

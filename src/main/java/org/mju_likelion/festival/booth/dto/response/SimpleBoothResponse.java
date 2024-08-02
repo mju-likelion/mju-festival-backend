@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.mju_likelion.festival.booth.domain.SimpleBooth;
 
+/**
+ * 부스 간단 정보 응답 DTO.
+ */
 @Getter
 @AllArgsConstructor
 public class SimpleBoothResponse {

@@ -4,6 +4,9 @@ import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+/**
+ * 부스 간단 정보.
+ */
 @Getter
 @AllArgsConstructor
 public class SimpleBooth {

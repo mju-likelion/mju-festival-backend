@@ -27,6 +27,11 @@ public class RsaKeyUtil {
     this.keySize = keySize;
   }
 
+  /**
+   * RSAKey 를 생성한다.
+   *
+   * @return RSAKey
+   */
   public RsaKey generateRsaKey() {
     KeyPair keyPair = generateKeypair();
 
@@ -36,6 +41,11 @@ public class RsaKeyUtil {
     return new RsaKey(publicKey, privateKey);
   }
 
+  /**
+   * RSA KeyPair 를 생성한다.
+   *
+   * @return RSA KeyPair
+   */
   private KeyPair generateKeypair() {
     try {
       KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance(instanceType);
