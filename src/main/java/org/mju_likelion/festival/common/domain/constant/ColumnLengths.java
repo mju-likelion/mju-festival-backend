@@ -18,6 +18,7 @@ public abstract class ColumnLengths {
 
   public static final int BOOTH_NAME_LENGTH = 100;
   public static final int BOOTH_DESCRIPTION_LENGTH = 4000;
+  public static final int BOOTH_LOCATION_LENGTH = 100;
 
   public static final int ANNOUNCEMENT_TITLE_LENGTH = 100;
   public static final int ANNOUNCEMENT_CONTENT_LENGTH = 4000;
