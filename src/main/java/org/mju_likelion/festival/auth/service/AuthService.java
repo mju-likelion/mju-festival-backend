@@ -86,7 +86,7 @@ public class AuthService {
 
   @Transactional(readOnly = true)
   public List<TermResponse> getTerms() {
-    return termJpaRepository.findTermsByOrderByOrderAsc().stream()
+    return termJpaRepository.findTermsByOrderBySequenceAsc().stream()
         .map(TermResponse::of)
         .collect(Collectors.toList());
   }

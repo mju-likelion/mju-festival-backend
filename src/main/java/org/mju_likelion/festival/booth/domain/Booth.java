@@ -1,8 +1,10 @@
 package org.mju_likelion.festival.booth.domain;
 
 import static org.mju_likelion.festival.common.domain.constant.ColumnLengths.BOOTH_DESCRIPTION_LENGTH;
+import static org.mju_likelion.festival.common.domain.constant.ColumnLengths.BOOTH_LOCATION_LENGTH;
 import static org.mju_likelion.festival.common.domain.constant.ColumnLengths.BOOTH_NAME_LENGTH;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -16,6 +18,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.mju_likelion.festival.admin.domain.Admin;
 import org.mju_likelion.festival.common.domain.BaseEntity;
+import org.mju_likelion.festival.image.domain.Image;
 
 @Getter
 @Builder
@@ -34,9 +37,19 @@ public class Booth extends BaseEntity {
   @Column(nullable = false, length = BOOTH_DESCRIPTION_LENGTH)
   private String description;
 
-  @OneToMany(mappedBy = "booth", fetch = FetchType.LAZY)
+  @Column(nullable = false, length = BOOTH_LOCATION_LENGTH)
+  private String location;
+
+  @Column(nullable = false)
+  private Short sequence;
+
+  @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @JoinColumn(name = "thumbnail_id")
+  private Image thumbnail;
+
+  @OneToMany(mappedBy = "booth", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   private List<BoothUser> boothUsers;
 
-  @OneToMany(mappedBy = "booth", fetch = FetchType.LAZY)
+  @OneToMany(mappedBy = "booth", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   private List<BoothImage> boothImages;
 }

@@ -21,6 +21,7 @@ public enum ErrorType {
   INVALID_CREDENTIALS(4010, "아이디나 비밀번호가 일치하지 않습니다."),
 
   NO_RESOURCE_ERROR(4040, "해당 리소스를 찾을 수 없습니다."),
+  BOOTH_NOT_FOUND(4041, "해당 부스를 찾을 수 없습니다."),
 
   METHOD_NOT_ALLOWED_ERROR(4050, "허용되지 않은 HTTP 메소드입니다."),
 
@@ -30,6 +31,7 @@ public enum ErrorType {
 
   INVALID_JWT(5000, "JWT 토큰이 유효하지 않습니다."),
   API_ERROR(5001, "API 호출 중 오류가 발생했습니다."),
+  UUID_FORMAT_ERROR(5002, "UUID 형식이 잘못되었습니다."),
 
   REDIS_ERROR(6000, "Redis 에러가 발생했습니다.");
 

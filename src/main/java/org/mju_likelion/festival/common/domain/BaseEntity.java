@@ -20,7 +20,7 @@ public abstract class BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO, generator = "uuid2")
-  @Column(name = "id", updatable = false, unique = true, nullable = false)
+  @Column(name = "id", updatable = false, unique = true, nullable = false, columnDefinition = "BINARY(16)")
   protected UUID id;
 
   @CreatedDate
