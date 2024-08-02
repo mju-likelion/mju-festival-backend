@@ -1,6 +1,6 @@
 package org.mju_likelion.festival.booth.service;
 
-import static org.mju_likelion.festival.common.exception.type.ErrorType.BOOTH_NOT_FOUND;
+import static org.mju_likelion.festival.common.exception.type.ErrorType.BOOTH_NOT_FOUND_ERROR;
 
 import java.util.List;
 import java.util.UUID;
@@ -27,7 +27,7 @@ public class BoothQueryService {
   public BoothDetailResponse getBooth(final UUID id) {
     return BoothDetailResponse.from(
         boothQueryRepository.findBoothById(id).orElseThrow(
-            () -> new NotFoundException(BOOTH_NOT_FOUND)
+            () -> new NotFoundException(BOOTH_NOT_FOUND_ERROR)
         )
     );
   }

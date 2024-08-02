@@ -36,7 +36,7 @@ public class ExceptionController {
     String message = e.getBindingResult().getAllErrors().get(0).getDefaultMessage();
 
     BadRequestException badRequestException = new BadRequestException(
-        ErrorType.INVALID_REQUEST_BODY, message);
+        ErrorType.INVALID_REQUEST_BODY_ERROR, message);
 
     writeLog(badRequestException);
     return ResponseEntity.badRequest().body(ErrorResponse.res(badRequestException));
@@ -47,7 +47,7 @@ public class ExceptionController {
   public ResponseEntity<ErrorResponse> missingServletRequestParameterExceptionHandler(
       final MissingServletRequestParameterException e) {
     BadRequestException badRequestException = new BadRequestException(
-        ErrorType.MISSING_REQUEST_PARAMETER, e.getParameterName());
+        ErrorType.MISSING_REQUEST_PARAMETER_ERROR, e.getParameterName());
 
     writeLog(badRequestException);
     return ResponseEntity.badRequest().body(ErrorResponse.res(badRequestException));

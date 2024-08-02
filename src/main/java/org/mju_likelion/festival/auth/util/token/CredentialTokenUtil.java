@@ -1,6 +1,6 @@
 package org.mju_likelion.festival.auth.util.token;
 
-import static org.mju_likelion.festival.common.exception.type.ErrorType.CREDENTIAL_TOKEN_EXPIRED;
+import static org.mju_likelion.festival.common.exception.type.ErrorType.CREDENTIAL_TOKEN_EXPIRED_ERROR;
 
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
@@ -58,7 +58,7 @@ public class CredentialTokenUtil {
    */
   private void validateCredentialToken(CredentialToken credentialToken) {
     if (credentialToken.getExpirationTime().isBefore(LocalDateTime.now())) {
-      throw new BadRequestException(CREDENTIAL_TOKEN_EXPIRED);
+      throw new BadRequestException(CREDENTIAL_TOKEN_EXPIRED_ERROR);
     }
   }
 }

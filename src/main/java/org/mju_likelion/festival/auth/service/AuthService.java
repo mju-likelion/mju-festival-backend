@@ -103,7 +103,7 @@ public class AuthService {
    */
   private Admin getExistingAdmin(String loginId, String password) {
     return adminJpaRepository.findByLoginIdAndPassword(loginId, password)
-        .orElseThrow(() -> new UnauthorizedException(ErrorType.INVALID_CREDENTIALS));
+        .orElseThrow(() -> new UnauthorizedException(ErrorType.INVALID_CREDENTIALS_ERROR));
   }
 
   /**
@@ -164,7 +164,7 @@ public class AuthService {
   private void validateTermIds(List<Term> termsInDb, Set<UUID> termIds) {
     Set<UUID> validTermIds = termsInDb.stream().map(Term::getId).collect(Collectors.toSet());
     if (!validTermIds.containsAll(termIds)) {
-      throw new BadRequestException(ErrorType.MISSING_TERM);
+      throw new BadRequestException(ErrorType.MISSING_TERM_ERROR);
     }
   }
 
@@ -176,7 +176,7 @@ public class AuthService {
    */
   private void validateUser(String studentId, String password) {
     if (!mjuApiUtil.doUserCheck(studentId, password)) {
-      throw new UnauthorizedException(ErrorType.INVALID_CREDENTIALS);
+      throw new UnauthorizedException(ErrorType.INVALID_CREDENTIALS_ERROR);
     }
   }
 
