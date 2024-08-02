@@ -91,6 +91,13 @@ public class AuthService {
         .collect(Collectors.toList());
   }
 
+  /**
+   * 관리자가 존재하는지 확인하고, 존재하는 경우 사용자를 반환한다.
+   *
+   * @param loginId  로그인 ID
+   * @param password 비밀번호
+   * @return 관리자
+   */
   private Admin getExistingAdmin(String loginId, String password) {
     return adminJpaRepository.findByLoginIdAndPassword(loginId, password)
         .orElseThrow(() -> new UnauthorizedException(ErrorType.INVALID_CREDENTIALS));

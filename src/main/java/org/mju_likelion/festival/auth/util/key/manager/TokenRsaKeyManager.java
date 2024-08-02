@@ -7,6 +7,11 @@ import org.mju_likelion.festival.auth.util.key.RsaKeyUtil;
 import org.mju_likelion.festival.auth.util.token.CredentialTokenUtil;
 import org.springframework.stereotype.Service;
 
+/**
+ * 토큰을 이용한 RsaKeyManager
+ *
+ * @see RsaKeyManager
+ */
 @Service
 @AllArgsConstructor
 public class TokenRsaKeyManager implements RsaKeyManager {

@@ -6,6 +6,9 @@ import java.util.UUID;
 import lombok.Getter;
 import org.mju_likelion.festival.booth.domain.BoothDetail;
 
+/**
+ * 부스 상세 응답 DTO.
+ */
 @Getter
 public class BoothDetailResponse extends SimpleBoothResponse {
 

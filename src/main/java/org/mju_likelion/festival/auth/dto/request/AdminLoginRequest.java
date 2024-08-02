@@ -4,6 +4,9 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+/**
+ * 관리자 로그인 요청 DTO.
+ */
 @Getter
 @AllArgsConstructor
 public class AdminLoginRequest {

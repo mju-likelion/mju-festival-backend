@@ -3,6 +3,11 @@ package org.mju_likelion.festival.auth.util.key.manager;
 import org.mju_likelion.festival.auth.domain.RsaKey;
 import org.mju_likelion.festival.auth.domain.RsaKeyStrategy;
 
+/**
+ * RSA Key 관리자 인터페이스
+ *
+ * @implSpec RedisRsaKeyManager, TokenRsaKeyManager
+ */
 public interface RsaKeyManager {
 
   // Rsa Key 의 유효 시간 (초)

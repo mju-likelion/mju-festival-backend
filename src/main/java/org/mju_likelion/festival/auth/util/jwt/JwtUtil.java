@@ -24,6 +24,12 @@ public class JwtUtil {
     this.validityInMilliseconds = validityInMilliseconds;
   }
 
+  /**
+   * payload를 받아 토큰을 생성한다.
+   *
+   * @param payload 토큰에 담을 정보
+   * @return 생성된 토큰
+   */
   public String create(final String payload) {
     Date now = new Date();
     Date expiration = new Date(now.getTime() + validityInMilliseconds);
@@ -36,6 +42,12 @@ public class JwtUtil {
         .compact();
   }
 
+  /**
+   * 토큰을 받아 payload를 반환한다.
+   *
+   * @param token 토큰
+   * @return payload
+   */
   public String getPayload(final String token) {
     try {
       return Jwts.parserBuilder()

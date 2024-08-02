@@ -11,6 +11,11 @@ import org.mju_likelion.festival.common.exception.InternalServerException;
 import org.mju_likelion.festival.common.util.redis.RedisUtil;
 import org.springframework.stereotype.Service;
 
+/**
+ * Redis 를 이용한 RsaKeyManager
+ *
+ * @see RsaKeyManager
+ */
 @Service
 @AllArgsConstructor
 public class RedisRsaKeyManager implements RsaKeyManager {

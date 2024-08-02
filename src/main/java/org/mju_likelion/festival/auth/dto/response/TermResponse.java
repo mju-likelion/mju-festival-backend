@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.mju_likelion.festival.term.domain.Term;
 
+/**
+ * 약관 조회 응답 DTO.
+ */
 @Getter
 @AllArgsConstructor(access = lombok.AccessLevel.PRIVATE)
 public class TermResponse {
