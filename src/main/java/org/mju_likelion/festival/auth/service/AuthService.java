@@ -16,7 +16,9 @@ import org.mju_likelion.festival.auth.dto.request.UserLoginRequest;
 import org.mju_likelion.festival.auth.dto.response.KeyResponse;
 import org.mju_likelion.festival.auth.dto.response.LoginResponse;
 import org.mju_likelion.festival.auth.dto.response.TermResponse;
+import org.mju_likelion.festival.auth.util.jwt.AuthenticationRole;
 import org.mju_likelion.festival.auth.util.jwt.JwtUtil;
+import org.mju_likelion.festival.auth.util.jwt.Payload;
 import org.mju_likelion.festival.auth.util.key.manager.RsaKeyManager;
 import org.mju_likelion.festival.auth.util.key.manager.RsaKeyManagerContext;
 import org.mju_likelion.festival.common.exception.BadRequestException;
@@ -65,7 +67,7 @@ public class AuthService {
 
     UUID userId = saveOrGetUserId(studentId, userLoginRequest.getTerms());
 
-    String accessToken = jwtUtil.create(userId.toString());
+    String accessToken = jwtUtil.create(new Payload(userId, AuthenticationRole.USER));
     return new LoginResponse(accessToken);
   }
 
@@ -80,7 +82,8 @@ public class AuthService {
 
     Admin admin = getExistingAdmin(loginId, password);
 
-    String accessToken = jwtUtil.create(admin.getId().toString());
+    String accessToken = jwtUtil.create(
+        new Payload(admin.getId(), AuthenticationRole.from(admin.getRole())));
     return new LoginResponse(accessToken);
   }
 
