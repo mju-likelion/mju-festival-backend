@@ -20,7 +20,7 @@ public class Term extends BaseEntity {
   private String content;
 
   @Column(nullable = false)
-  private Short order;
+  private Short sequence;
 
   @Override
   public String toString() {
