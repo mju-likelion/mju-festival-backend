@@ -1,14 +1,12 @@
 package org.mju_likelion.festival.auth.controller;
 
 import jakarta.validation.Valid;
-import java.util.List;
 import lombok.AllArgsConstructor;
 import org.mju_likelion.festival.auth.domain.RsaKeyStrategy;
 import org.mju_likelion.festival.auth.dto.request.AdminLoginRequest;
 import org.mju_likelion.festival.auth.dto.request.UserLoginRequest;
 import org.mju_likelion.festival.auth.dto.response.KeyResponse;
 import org.mju_likelion.festival.auth.dto.response.LoginResponse;
-import org.mju_likelion.festival.auth.dto.response.TermResponse;
 import org.mju_likelion.festival.auth.service.AuthQueryService;
 import org.mju_likelion.festival.auth.service.AuthService;
 import org.springframework.http.ResponseEntity;
@@ -44,10 +42,5 @@ public class AuthController {
       @RequestBody @Valid AdminLoginRequest adminLoginRequest,
       @RequestParam RsaKeyStrategy rsaKeyStrategy) {
     return ResponseEntity.ok(authQueryService.adminLogin(adminLoginRequest, rsaKeyStrategy));
-  }
-
-  @GetMapping("/terms")
-  public ResponseEntity<List<TermResponse>> getTerms() {
-    return ResponseEntity.ok(authQueryService.getTerms());
   }
 }
