@@ -2,19 +2,15 @@ package org.mju_likelion.festival.user.domain;
 
 import static org.mju_likelion.festival.common.domain.constant.ColumnLengths.USER_STUDENT_ID_LENGTH;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.OneToMany;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.mju_likelion.festival.booth.domain.BoothUser;
+import org.mju_likelion.festival.booth.domain.Booth;
+import org.mju_likelion.festival.booth.domain.BoothUsers;
 import org.mju_likelion.festival.common.domain.BaseEntity;
 import org.mju_likelion.festival.term.domain.Term;
 import org.mju_likelion.festival.term.domain.TermUsers;
@@ -30,17 +26,21 @@ public class User extends BaseEntity {
   @Embedded
   private TermUsers termUsers;
 
-  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-  private List<BoothUser> boothUsers;
+  @Embedded
+  private BoothUsers boothUsers;
 
   public User(String studentId) {
     this.studentId = studentId;
     this.termUsers = new TermUsers();
-    this.boothUsers = new ArrayList<>();
+    this.boothUsers = new BoothUsers();
   }
 
   public void agreeToTerm(Term term) {
     this.termUsers.agree(term, this);
+  }
+
+  public void visitBooth(Booth booth) {
+    this.boothUsers.visit(this, booth);
   }
 
   @Override
