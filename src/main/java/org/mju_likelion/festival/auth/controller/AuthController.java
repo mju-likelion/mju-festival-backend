@@ -9,6 +9,7 @@ import org.mju_likelion.festival.auth.dto.request.UserLoginRequest;
 import org.mju_likelion.festival.auth.dto.response.KeyResponse;
 import org.mju_likelion.festival.auth.dto.response.LoginResponse;
 import org.mju_likelion.festival.auth.dto.response.TermResponse;
+import org.mju_likelion.festival.auth.service.AuthQueryService;
 import org.mju_likelion.festival.auth.service.AuthService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,10 +25,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
   private final AuthService authService;
+  private final AuthQueryService authQueryService;
 
   @GetMapping("/key")
   public ResponseEntity<KeyResponse> getKey() {
-    return ResponseEntity.ok(authService.getKey());
+    return ResponseEntity.ok(authQueryService.getKey());
   }
 
   @PostMapping("/user/login")
@@ -41,11 +43,11 @@ public class AuthController {
   public ResponseEntity<LoginResponse> adminLogin(
       @RequestBody @Valid AdminLoginRequest adminLoginRequest,
       @RequestParam RsaKeyStrategy rsaKeyStrategy) {
-    return ResponseEntity.ok(authService.adminLogin(adminLoginRequest, rsaKeyStrategy));
+    return ResponseEntity.ok(authQueryService.adminLogin(adminLoginRequest, rsaKeyStrategy));
   }
 
   @GetMapping("/terms")
   public ResponseEntity<List<TermResponse>> getTerms() {
-    return ResponseEntity.ok(authService.getTerms());
+    return ResponseEntity.ok(authQueryService.getTerms());
   }
 }
