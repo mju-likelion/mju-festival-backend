@@ -25,4 +25,15 @@ public class BoothUser extends BaseEntity {
   @ManyToOne(optional = false, fetch = FetchType.LAZY)
   @JoinColumn(name = "user_id", nullable = false)
   private User user;
+
+  /**
+   * 사용자와 부스가 자신의 사용자와 부스와 같은지 확인한다.
+   *
+   * @param user  사용자
+   * @param booth 부스
+   * @return 사용자와 부스가 자신의 사용자와 부스와 같은지 여부
+   */
+  public boolean isSameUserAndBooth(User user, Booth booth) {
+    return this.user.equals(user) && this.booth.equals(booth);
+  }
 }

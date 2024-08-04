@@ -48,8 +48,5 @@ public class Booth extends BaseEntity {
   private Image thumbnail;
 
   @OneToMany(mappedBy = "booth", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-  private List<BoothUser> boothUsers;
-
-  @OneToMany(mappedBy = "booth", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   private List<BoothImage> boothImages;
 }
