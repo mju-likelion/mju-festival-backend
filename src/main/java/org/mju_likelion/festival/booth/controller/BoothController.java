@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import org.mju_likelion.festival.booth.dto.response.BoothDetailResponse;
+import org.mju_likelion.festival.booth.dto.response.BoothQrResponse;
 import org.mju_likelion.festival.booth.dto.response.SimpleBoothResponse;
 import org.mju_likelion.festival.booth.service.BoothQueryService;
 import org.springframework.http.ResponseEntity;
@@ -30,5 +31,10 @@ public class BoothController {
   @GetMapping("/{id}")
   public ResponseEntity<BoothDetailResponse> getBooth(@PathVariable final UUID id) {
     return ResponseEntity.ok(boothQueryService.getBooth(id));
+  }
+
+  @GetMapping("/{id}/qr")
+  public ResponseEntity<BoothQrResponse> getBoothQr(@PathVariable final UUID id) {
+    return ResponseEntity.ok(boothQueryService.getBoothQr(id));
   }
 }
