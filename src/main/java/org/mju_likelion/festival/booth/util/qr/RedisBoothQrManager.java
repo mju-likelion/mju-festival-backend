@@ -20,20 +20,19 @@ import org.springframework.stereotype.Component;
 public class RedisBoothQrManager implements BoothQrManager {
 
   private final QrGenerator qrGenerator;
-  private final RedisUtil<UUID, UUID> redisUtil;
+  private final RedisUtil<UUID, String> redisUtil;
 
   @Override
   public String generateBoothQr(final UUID boothId) {
     UUID qrId = UUID.randomUUID();
-    redisUtil.insert(qrId, boothId, qrExpireTime);
+    redisUtil.insert(qrId, boothId.toString(), qrExpireTime);
     return qrGenerator.generateQrCode("/booths/", qrId.toString(), getQuery());
   }
 
   @Override
   public UUID getBoothIdFromQrId(final String qrId) {
     UUID redisKey = UUID.fromString(qrId);
-
-    UUID boothId = getBoothId(redisKey);
+    UUID boothId = UUID.fromString(getBoothId(redisKey));
     deleteBoothId(redisKey);
 
     return boothId;
@@ -44,7 +43,7 @@ public class RedisBoothQrManager implements BoothQrManager {
     return BoothQrStrategy.REDIS;
   }
 
-  private UUID getBoothId(UUID qrId) {
+  private String getBoothId(UUID qrId) {
     return redisUtil.select(qrId)
         .orElseThrow(() -> new NotFoundException(BOOTH_QR_NOT_FOUND_ERROR));
   }
