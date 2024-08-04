@@ -51,4 +51,8 @@ public class Admin extends BaseEntity {
 
   @OneToMany(mappedBy = "writer", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
   private List<Announcement> announcements;
+
+  public boolean isOwner(final Booth booth) {
+    return this.booth.equals(booth);
+  }
 }
