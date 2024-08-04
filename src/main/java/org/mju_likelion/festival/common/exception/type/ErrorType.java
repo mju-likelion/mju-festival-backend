@@ -38,10 +38,13 @@ public enum ErrorType {
   CREDENTIAL_KEY_NOT_FOUND_ERROR(4042, "자격 증명 키를 찾을 수 없습니다."),
   BOOTH_QR_NOT_FOUND_ERROR(4043, "해당 부스 QR을 찾을 수 없습니다."),
   ADMIN_NOT_FOUND_ERROR(4044, "해당 관리자를 찾을 수 없습니다."),
+  USER_NOT_FOUND_ERROR(4045, "해당 사용자를 찾을 수 없습니다."),
 
   METHOD_NOT_ALLOWED_ERROR(4050, "허용되지 않은 HTTP 메소드입니다."),
 
   HTTP_MEDIA_TYPE_NOT_ACCEPTABLE_ERROR(4060, "수락할 수 없는 미디어 타입입니다."),
+
+  ALREADY_VISITED_BOOTH(4090, "이미 방문한 부스입니다."),
 
   HTTP_MEDIA_TYPE_NOT_SUPPORTED_ERROR(4150, "지원하지 않는 미디어 타입입니다."),
 

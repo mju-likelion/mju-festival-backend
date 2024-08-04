@@ -1,5 +1,6 @@
 package org.mju_likelion.festival.booth.util.qr;
 
+import java.util.Base64;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import org.mju_likelion.festival.booth.domain.BoothQrStrategy;
@@ -22,12 +23,15 @@ public class TokenBoothQrManager implements BoothQrManager {
   @Override
   public String generateBoothQr(final UUID boothId) {
     String encryptedToken = tokenUtil.getEncryptedToken(boothId.toString(), this.qrExpireTime);
-    return qrGenerator.generateQrCode("/booths/", encryptedToken, getQuery());
+    return qrGenerator.generateQrCode("/booths/",
+        Base64.getEncoder().encodeToString(encryptedToken.getBytes()),
+        getQuery());
   }
 
   @Override
   public UUID getBoothIdFromQrId(final String qrId) {
-    return UUID.fromString(tokenUtil.parseValue(qrId));
+    String base64Decoded = new String(Base64.getDecoder().decode(qrId));
+    return UUID.fromString(tokenUtil.parseValue(base64Decoded));
   }
 
   @Override
