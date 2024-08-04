@@ -27,6 +27,8 @@ public class S3ImageService {
   private final int MAX_FILE_SIZE = MB * 10;
   @Value("${cloud.aws.s3.bucket}")
   private String bucket;
+  @Value("${cloud.aws.cloudfront.url}")
+  private String cloudfrontUrl;
 
   /**
    * 이미지를 S3 에 저장하고 이미지 URL 을 반환한다. 이미지가 저장되는 위치는 ImageType 에 따라 달라진다.
@@ -39,17 +41,48 @@ public class S3ImageService {
     try {
       validate(image);
 
-      String filename = imageType.getLocation() + UUID.randomUUID();
+      String filename = makeFileName(image);
 
-      ObjectMetadata metadata = new ObjectMetadata();
-      metadata.setContentLength(image.getSize());
-      metadata.setContentType(image.getContentType());
+      ObjectMetadata metadata = createObjectMetadata(image);
 
       amazonS3.putObject(bucket, filename, image.getInputStream(), metadata);
-      return amazonS3.getUrl(bucket, filename).toString();
+      return getCloudfrontUrl(filename);
     } catch (Exception e) {
       throw new InternalServerException(IMAGE_UPLOAD_ERROR, e.getMessage());
     }
+  }
+
+  /**
+   * 이미지 파일 이름을 생성한다.
+   *
+   * @param image 이미지 파일
+   * @return 이미지 파일 이름
+   */
+  private String makeFileName(MultipartFile image) {
+    return UUID.randomUUID() + image.getOriginalFilename();
+  }
+
+  /**
+   * 이미지 파일의 메타데이터를 생성한다.
+   *
+   * @param image 이미지 파일
+   * @return 이미지 파일의 메타데이터
+   */
+  private ObjectMetadata createObjectMetadata(MultipartFile image) {
+    ObjectMetadata metadata = new ObjectMetadata();
+    metadata.setContentLength(image.getSize());
+    metadata.setContentType(image.getContentType());
+    return metadata;
+  }
+
+  /**
+   * Cloudfront URL 을 생성한다.
+   *
+   * @param filename 파일 이름
+   * @return Cloudfront URL
+   */
+  private String getCloudfrontUrl(String filename) {
+    return cloudfrontUrl.concat(filename);
   }
 
   /**
