@@ -1,9 +1,9 @@
-package org.mju_likelion.festival.auth.dto.response;
+package org.mju_likelion.festival.term.dto;
 
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.mju_likelion.festival.term.domain.Term;
+import org.mju_likelion.festival.term.domain.SimpleTerm;
 
 /**
  * 약관 조회 응답 DTO.
@@ -16,7 +16,7 @@ public class TermResponse {
   private final String title;
   private final String content;
 
-  public static TermResponse of(Term term) {
-    return new TermResponse(term.getId(), term.getTitle(), term.getContent());
+  public static TermResponse of(SimpleTerm simpleTerm) {
+    return new TermResponse(simpleTerm.getId(), simpleTerm.getTitle(), simpleTerm.getContent());
   }
 }
