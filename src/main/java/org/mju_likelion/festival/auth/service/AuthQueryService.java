@@ -1,7 +1,5 @@
 package org.mju_likelion.festival.auth.service;
 
-import java.util.List;
-import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import org.mju_likelion.festival.admin.domain.Admin;
 import org.mju_likelion.festival.admin.domain.repository.AdminJpaRepository;
@@ -10,7 +8,6 @@ import org.mju_likelion.festival.auth.domain.RsaKeyStrategy;
 import org.mju_likelion.festival.auth.dto.request.AdminLoginRequest;
 import org.mju_likelion.festival.auth.dto.response.KeyResponse;
 import org.mju_likelion.festival.auth.dto.response.LoginResponse;
-import org.mju_likelion.festival.auth.dto.response.TermResponse;
 import org.mju_likelion.festival.auth.util.jwt.AuthenticationRole;
 import org.mju_likelion.festival.auth.util.jwt.JwtUtil;
 import org.mju_likelion.festival.auth.util.jwt.Payload;
@@ -18,7 +15,6 @@ import org.mju_likelion.festival.auth.util.key.manager.RsaKeyManager;
 import org.mju_likelion.festival.auth.util.key.manager.RsaKeyManagerContext;
 import org.mju_likelion.festival.common.exception.UnauthorizedException;
 import org.mju_likelion.festival.common.exception.type.ErrorType;
-import org.mju_likelion.festival.term.domain.repository.TermJpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,7 +23,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class AuthQueryService {
 
   private final RsaKeyManagerContext rsaKeyManagerContext;
-  private final TermJpaRepository termJpaRepository;
   private final AdminJpaRepository adminJpaRepository;
   private final JwtUtil jwtUtil;
 
@@ -57,13 +52,6 @@ public class AuthQueryService {
     String accessToken = jwtUtil.create(
         new Payload(admin.getId(), AuthenticationRole.from(admin.getRole())));
     return new LoginResponse(accessToken);
-  }
-
-  @Transactional(readOnly = true)
-  public List<TermResponse> getTerms() {
-    return termJpaRepository.findTermsByOrderBySequenceAsc().stream()
-        .map(TermResponse::of)
-        .collect(Collectors.toList());
   }
 
   /**
