@@ -13,7 +13,7 @@ public class WebConfig implements WebMvcConfigurer {
 
   private static final String ALLOWED_METHOD_NAMES = "GET,HEAD,POST,PUT,DELETE,TRACE,OPTIONS,PATCH";
   private final long MAX_AGE_SECS = 3600;
-  @Value("${client.host}")
+  @Value("${client.hosts}")
   private List<String> clientHosts;
 
   @Override
