@@ -3,13 +3,10 @@ package org.mju_likelion.festival.auth.service;
 import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
 import static org.mockito.BDDMockito.willReturn;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mju_likelion.festival.auth.domain.RsaKeyStrategy;
-import org.mju_likelion.festival.auth.dto.request.UserLoginRequest;
+import org.mju_likelion.festival.auth.dto.request.AdminLoginRequest;
 import org.mju_likelion.festival.auth.dto.response.KeyResponse;
 import org.mju_likelion.festival.auth.dto.response.LoginResponse;
 import org.mju_likelion.festival.auth.util.key.RsaKeyUtil;
@@ -17,22 +14,18 @@ import org.mju_likelion.festival.auth.util.key.manager.RedisRsaKeyManager;
 import org.mju_likelion.festival.auth.util.key.manager.RsaKeyManagerContext;
 import org.mju_likelion.festival.auth.util.key.manager.TokenRsaKeyManager;
 import org.mju_likelion.festival.common.annotation.ApplicationTest;
-import org.mju_likelion.festival.term.domain.Term;
-import org.mju_likelion.festival.term.domain.repository.TermJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-@DisplayName("AuthService")
+@DisplayName("AuthQueryService")
 @ApplicationTest
-public class AuthServiceTest {
+public class AuthQueryServiceTest {
 
-  @Value("${student-id}")
-  private String studentId;
-  @Value("${student-password}")
-  private String studentPassword;
-  @Autowired
-  private AuthService authService;
+  @Value("${admin-login-id}")
+  private String adminLoginId;
+  @Value("${admin-password}")
+  private String adminPassword;
   @Autowired
   private AuthQueryService authQueryService;
   @MockBean
@@ -43,38 +36,35 @@ public class AuthServiceTest {
   private RedisRsaKeyManager redisRsaKeyManager;
   @Autowired
   private TokenRsaKeyManager tokenRsaKeyManager;
-  @Autowired
-  private TermJpaRepository termJpaRepository;
 
-
-  @DisplayName("RedisRsaKeyManager 를 사용하여 암호화된 studentId, password, key를 받아 로그인한다.")
+  @DisplayName("RedisRsaKeyManager 를 사용하여 암호화된 loginId, password, key를 받아 로그인한다.")
   @Test
-  void testUserLoginRedisRsaKeyManager() {
+  void testAdminLoginRedisRsaKeyManager() {
     // given
     willReturn(redisRsaKeyManager).given(rsaKeyManagerContext).rsaKeyManager();
     willReturn(redisRsaKeyManager).given(rsaKeyManagerContext).rsaKeyManager(RsaKeyStrategy.REDIS);
     KeyResponse keyResponse = authQueryService.getKey();
-    UserLoginRequest userLoginRequest = createUserLoginRequest(keyResponse);
+    AdminLoginRequest adminLoginRequest = createAdminLoginRequest(keyResponse);
 
     // when
-    LoginResponse loginResponse = authService.userLogin(userLoginRequest,
+    LoginResponse loginResponse = authQueryService.adminLogin(adminLoginRequest,
         RsaKeyStrategy.REDIS);
 
     // then
     assertNotNull(loginResponse.getAccessToken());
   }
 
-  @DisplayName("TokenRsaKeyManager 를 사용하여 암호화된 studentId, password, key를 받아 로그인한다.")
+  @DisplayName("TokenRsaKeyManager 를 사용하여 암호화된 loginId, password, key를 받아 로그인한다.")
   @Test
-  void testUserLoginWithTokenRsaKeyManager() {
+  void testAdminLoginWithTokenRsaKeyManager() {
     // given
     willReturn(tokenRsaKeyManager).given(rsaKeyManagerContext).rsaKeyManager();
     willReturn(tokenRsaKeyManager).given(rsaKeyManagerContext).rsaKeyManager(RsaKeyStrategy.TOKEN);
     KeyResponse keyResponse = authQueryService.getKey();
-    UserLoginRequest userLoginRequest = createUserLoginRequest(keyResponse);
+    AdminLoginRequest adminLoginRequest = createAdminLoginRequest(keyResponse);
 
     // when
-    LoginResponse loginResponse = authService.userLogin(userLoginRequest,
+    LoginResponse loginResponse = authQueryService.adminLogin(adminLoginRequest,
         RsaKeyStrategy.TOKEN);
 
     // then
@@ -82,23 +72,19 @@ public class AuthServiceTest {
   }
 
   /**
-   * UserLoginRequest 객체를 생성한다.
+   * AdminLoginRequest 객체를 생성한다.
    *
    * @param keyResponse 키 응답 객체
-   * @return UserLoginRequest 객체
+   * @return AdminLoginRequest 객체
    */
-  private UserLoginRequest createUserLoginRequest(KeyResponse keyResponse) {
+  private AdminLoginRequest createAdminLoginRequest(KeyResponse keyResponse) {
     String publicKey = keyResponse.getRsaPublicKey();
     String credentialKey = keyResponse.getCredentialKey();
 
-    String encryptedStudentId = rsaKeyUtil.rsaEncode(studentId, publicKey);
-    String encryptedPassword = rsaKeyUtil.rsaEncode(studentPassword, publicKey);
+    String encryptedLoginId = rsaKeyUtil.rsaEncode(adminLoginId, publicKey);
+    String encryptedPassword = rsaKeyUtil.rsaEncode(adminPassword, publicKey);
 
-    List<Term> terms = termJpaRepository.findAll();
-    HashMap<UUID, Boolean> termMap = new HashMap<>();
-    terms.forEach(term -> termMap.put(term.getId(), true));
-
-    return new UserLoginRequest(encryptedStudentId, encryptedPassword,
-        credentialKey, termMap);
+    return new AdminLoginRequest(encryptedLoginId, encryptedPassword,
+        credentialKey);
   }
 }
