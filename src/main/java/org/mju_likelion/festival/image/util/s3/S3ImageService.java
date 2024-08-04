@@ -41,7 +41,7 @@ public class S3ImageService {
     try {
       validate(image);
 
-      String filename = makeFileName(image);
+      String filename = makeFileName(imageType);
 
       ObjectMetadata metadata = createObjectMetadata(image);
 
@@ -55,11 +55,11 @@ public class S3ImageService {
   /**
    * 이미지 파일 이름을 생성한다.
    *
-   * @param image 이미지 파일
+   * @param imageType 이미지 타입
    * @return 이미지 파일 이름
    */
-  private String makeFileName(MultipartFile image) {
-    return UUID.randomUUID() + image.getOriginalFilename();
+  private String makeFileName(ImageType imageType) {
+    return imageType.getLocation() + UUID.randomUUID();
   }
 
   /**
