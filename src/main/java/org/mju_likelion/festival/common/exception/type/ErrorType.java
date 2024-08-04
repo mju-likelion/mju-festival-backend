@@ -31,11 +31,13 @@ public enum ErrorType {
   ADMIN_ONLY_ERROR(4031, "관리자만 접근할 수 있습니다."),
   STUDENT_COUNCIL_ONLY_ERROR(4032, "학생회만 접근할 수 있습니다."),
   BOOTH_MANAGER_ONLY_ERROR(4033, "부스 관리자만 접근할 수 있습니다."),
+  NOT_BOOTH_OWNER_ERROR(4034, "해당 부스 관리자만 접근할 수 있습니다."),
 
   NO_RESOURCE_ERROR(4040, "해당 리소스를 찾을 수 없습니다."),
   BOOTH_NOT_FOUND_ERROR(4041, "해당 부스를 찾을 수 없습니다."),
   CREDENTIAL_KEY_NOT_FOUND_ERROR(4042, "자격 증명 키를 찾을 수 없습니다."),
   BOOTH_QR_NOT_FOUND_ERROR(4043, "해당 부스 QR을 찾을 수 없습니다."),
+  ADMIN_NOT_FOUND_ERROR(4044, "해당 관리자를 찾을 수 없습니다."),
 
   METHOD_NOT_ALLOWED_ERROR(4050, "허용되지 않은 HTTP 메소드입니다."),
 
