@@ -4,6 +4,7 @@ import static org.mju_likelion.festival.common.exception.type.ErrorType.FILE_EMP
 import static org.mju_likelion.festival.common.exception.type.ErrorType.FILE_NOT_IMAGE_ERROR;
 import static org.mju_likelion.festival.common.exception.type.ErrorType.FILE_SIZE_EXCEED_ERROR;
 import static org.mju_likelion.festival.common.exception.type.ErrorType.IMAGE_UPLOAD_ERROR;
+import static org.mju_likelion.festival.image.util.s3.Constants.MAX_FILE_SIZE;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
@@ -23,8 +24,6 @@ import org.springframework.web.multipart.MultipartFile;
 public class S3ImageService {
 
   private final AmazonS3 amazonS3;
-  private final int MB = 1024 * 1024;
-  private final int MAX_FILE_SIZE = MB * 10;
   @Value("${cloud.aws.s3.bucket}")
   private String bucket;
   @Value("${cloud.aws.cloudfront.url}")
@@ -53,6 +52,15 @@ public class S3ImageService {
   }
 
   /**
+   * 이미지를 S3 에서 삭제한다.
+   *
+   * @param imageUrl 이미지 URL
+   */
+  public void deleteImage(String imageUrl) {
+    amazonS3.deleteObject(bucket, extractFilename(imageUrl));
+  }
+
+  /**
    * 이미지 파일 이름을 생성한다.
    *
    * @param imageType 이미지 타입
@@ -60,6 +68,16 @@ public class S3ImageService {
    */
   private String makeFileName(ImageType imageType) {
     return imageType.getLocation() + UUID.randomUUID();
+  }
+
+  /**
+   * 이미지 URL 에서 파일 이름을 추출한다.
+   *
+   * @param imageUrl 이미지 URL
+   * @return 파일 이름
+   */
+  private String extractFilename(String imageUrl) {
+    return imageUrl.substring(cloudfrontUrl.length());
   }
 
   /**
