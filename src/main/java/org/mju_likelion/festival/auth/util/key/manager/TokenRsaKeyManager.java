@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import org.mju_likelion.festival.auth.domain.RsaKey;
 import org.mju_likelion.festival.auth.domain.RsaKeyStrategy;
 import org.mju_likelion.festival.auth.util.key.RsaKeyUtil;
-import org.mju_likelion.festival.auth.util.token.CredentialTokenUtil;
+import org.mju_likelion.festival.common.util.token.TokenUtil;
 import org.springframework.stereotype.Service;
 
 /**
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 public class TokenRsaKeyManager implements RsaKeyManager {
 
   private final RsaKeyUtil rsaKeyUtil;
-  private final CredentialTokenUtil credentialTokenUtil;
+  private final TokenUtil tokenUtil;
 
   @Override
   public RsaKey generateRsaKey() {
@@ -26,12 +26,12 @@ public class TokenRsaKeyManager implements RsaKeyManager {
 
   @Override
   public String savePrivateKey(String privateKey) {
-    return credentialTokenUtil.getEncryptedCredentialToken(privateKey, this.rsaKeyExpireSecond);
+    return tokenUtil.getEncryptedToken(privateKey, this.rsaKeyExpireSecond);
   }
 
   @Override
   public String decryptByKey(String encryptedText, String key) {
-    String privateKey = credentialTokenUtil.parsePrivateKey(key);
+    String privateKey = tokenUtil.parseValue(key);
     return rsaKeyUtil.rsaDecode(encryptedText, privateKey);
   }
 

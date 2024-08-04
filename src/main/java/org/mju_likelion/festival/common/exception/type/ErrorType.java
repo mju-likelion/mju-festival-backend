@@ -10,8 +10,8 @@ public enum ErrorType {
   ENCRYPT_ERROR(1000, "암호화에 실패했습니다."),
   DECRYPT_ERROR(1001, "복호화에 실패했습니다."),
   RSA_KEY_ERROR(1002, "RSA 키 처리 중 오류가 발생했습니다."),
-  CREDENTIAL_TOKEN_EXPIRED_ERROR(1003, "자격 증명 토큰이 만료되었습니다."),
-  CREDENTIAL_KEY_INVALID_ERROR(1004, "자격 증명 키가 유효하지 않습니다."),
+  TOKEN_EXPIRED_ERROR(1003, "토큰이 만료되었습니다."),
+
 
   INVALID_REQUEST_BODY_ERROR(4000, "요청 바디가 잘못되었습니다."),
   MISSING_REQUEST_PARAMETER_ERROR(4001, "필수 요청 파라미터가 누락되었습니다."),
@@ -31,9 +31,13 @@ public enum ErrorType {
   ADMIN_ONLY_ERROR(4031, "관리자만 접근할 수 있습니다."),
   STUDENT_COUNCIL_ONLY_ERROR(4032, "학생회만 접근할 수 있습니다."),
   BOOTH_MANAGER_ONLY_ERROR(4033, "부스 관리자만 접근할 수 있습니다."),
+  NOT_BOOTH_OWNER_ERROR(4034, "해당 부스 관리자만 접근할 수 있습니다."),
 
   NO_RESOURCE_ERROR(4040, "해당 리소스를 찾을 수 없습니다."),
   BOOTH_NOT_FOUND_ERROR(4041, "해당 부스를 찾을 수 없습니다."),
+  CREDENTIAL_KEY_NOT_FOUND_ERROR(4042, "자격 증명 키를 찾을 수 없습니다."),
+  BOOTH_QR_NOT_FOUND_ERROR(4043, "해당 부스 QR을 찾을 수 없습니다."),
+  ADMIN_NOT_FOUND_ERROR(4044, "해당 관리자를 찾을 수 없습니다."),
 
   METHOD_NOT_ALLOWED_ERROR(4050, "허용되지 않은 HTTP 메소드입니다."),
 
@@ -44,9 +48,10 @@ public enum ErrorType {
   API_ERROR(5000, "MSI API 호출 중 오류가 발생했습니다."),
   UUID_FORMAT_ERROR(5001, "UUID 형식이 잘못되었습니다."),
   IMAGE_UPLOAD_ERROR(5002, "이미지 업로드 중 오류가 발생했습니다."),
+  TOKEN_GENERATE_ERROR(5003, "토큰 생성 중 오류가 발생했습니다."),
 
   REDIS_ERROR(6000, "Redis 에러가 발생했습니다.");
-  
+
   private final int code;
   private final String message;
 }
