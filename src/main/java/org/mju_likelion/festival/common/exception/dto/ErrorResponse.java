@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.mju_likelion.festival.common.exception.CustomException;
+import org.mju_likelion.festival.common.exception.type.ErrorType;
 
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
@@ -21,7 +22,11 @@ public class ErrorResponse {
   }
 
   public static ErrorResponse res(final Exception e) {
-    return new ErrorResponse(9999, e.getMessage(), null);
+    ErrorType errorType = ErrorType.UNEXPECTED_ERROR;
+    int errorCode = errorType.getCode();
+    String message = errorType.getMessage();
+    String detail = e.getMessage();
+    return new ErrorResponse(errorCode, message, detail);
   }
 
   @Override
