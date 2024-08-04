@@ -102,20 +102,4 @@ public class BoothQueryRepository {
         .ofNullable(
             DataAccessUtils.singleResult(jdbcTemplate.query(sql, params, boothDetailRowMapper)));
   }
-
-  /**
-   * 부스 존재 여부 조회.
-   *
-   * @param id 부스 ID
-   * @return 부스 존재 여부
-   */
-  public boolean existsById(final UUID id) {
-    String sql = "SELECT EXISTS(SELECT 1 FROM booth WHERE id = UNHEX(:id))";
-
-    MapSqlParameterSource params = new MapSqlParameterSource()
-        .addValue("id", uuidToHex(id));
-
-    int count = jdbcTemplate.queryForObject(sql, params, Integer.class);
-    return count > 0;
-  }
 }
