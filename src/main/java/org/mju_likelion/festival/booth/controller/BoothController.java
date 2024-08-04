@@ -7,6 +7,7 @@ import org.mju_likelion.festival.booth.dto.response.BoothDetailResponse;
 import org.mju_likelion.festival.booth.dto.response.BoothQrResponse;
 import org.mju_likelion.festival.booth.dto.response.SimpleBoothResponse;
 import org.mju_likelion.festival.booth.service.BoothQueryService;
+import org.mju_likelion.festival.common.authentication.AuthenticationPrincipal;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,7 +35,8 @@ public class BoothController {
   }
 
   @GetMapping("/{id}/qr")
-  public ResponseEntity<BoothQrResponse> getBoothQr(@PathVariable final UUID id) {
-    return ResponseEntity.ok(boothQueryService.getBoothQr(id));
+  public ResponseEntity<BoothQrResponse> getBoothQr(@PathVariable final UUID id,
+      @AuthenticationPrincipal final UUID boothAdminId) {
+    return ResponseEntity.ok(boothQueryService.getBoothQr(id, boothAdminId));
   }
 }
