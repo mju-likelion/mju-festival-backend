@@ -1,13 +1,13 @@
 package org.mju_likelion.festival.auth.util.key.manager;
 
-import static org.mju_likelion.festival.common.exception.type.ErrorType.CREDENTIAL_KEY_INVALID_ERROR;
+import static org.mju_likelion.festival.common.exception.type.ErrorType.CREDENTIAL_KEY_NOT_FOUND_ERROR;
 
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import org.mju_likelion.festival.auth.domain.RsaKey;
 import org.mju_likelion.festival.auth.domain.RsaKeyStrategy;
 import org.mju_likelion.festival.auth.util.key.RsaKeyUtil;
-import org.mju_likelion.festival.common.exception.InternalServerException;
+import org.mju_likelion.festival.common.exception.NotFoundException;
 import org.mju_likelion.festival.common.util.redis.RedisUtil;
 import org.springframework.stereotype.Service;
 
@@ -56,7 +56,7 @@ public class RedisRsaKeyManager implements RsaKeyManager {
 
   private String getPrivateKey(String key) {
     return redisUtil.select(key).orElseThrow(
-        () -> new InternalServerException(CREDENTIAL_KEY_INVALID_ERROR));
+        () -> new NotFoundException(CREDENTIAL_KEY_NOT_FOUND_ERROR));
   }
 
   private String formatRedisKey(String key) {
