@@ -52,6 +52,7 @@ public enum ErrorType {
   UUID_FORMAT_ERROR(5001, "UUID 형식이 잘못되었습니다."),
   IMAGE_UPLOAD_ERROR(5002, "이미지 업로드 중 오류가 발생했습니다."),
   TOKEN_GENERATE_ERROR(5003, "토큰 생성 중 오류가 발생했습니다."),
+  TOKEN_PARSE_ERROR(5004, "토큰 파싱 중 오류가 발생했습니다."),
 
   REDIS_ERROR(6000, "Redis 에러가 발생했습니다.");
 
