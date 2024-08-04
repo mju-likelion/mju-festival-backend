@@ -1,11 +1,14 @@
 package org.mju_likelion.festival.common.util.token;
 
 import static org.mju_likelion.festival.common.exception.type.ErrorType.TOKEN_EXPIRED_ERROR;
+import static org.mju_likelion.festival.common.exception.type.ErrorType.TOKEN_GENERATE_ERROR;
+import static org.mju_likelion.festival.common.exception.type.ErrorType.TOKEN_PARSE_ERROR;
 
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import org.mju_likelion.festival.auth.util.encryption.EncryptionUtil;
 import org.mju_likelion.festival.common.exception.BadRequestException;
+import org.mju_likelion.festival.common.exception.InternalServerException;
 import org.springframework.stereotype.Component;
 
 /**
@@ -25,8 +28,12 @@ public class TokenUtil {
    * @return 암호화된 Token
    */
   public String getEncryptedToken(String value, long tokenExpirationSeconds) {
-    Token token = generateToken(value, tokenExpirationSeconds);
-    return encryptionUtil.encrypt(token.toTokenString());
+    try {
+      Token token = generateToken(value, tokenExpirationSeconds);
+      return encryptionUtil.encrypt(token.toTokenString());
+    } catch (Exception e) {
+      throw new InternalServerException(TOKEN_GENERATE_ERROR, e.getMessage());
+    }
   }
 
   /**
@@ -48,11 +55,15 @@ public class TokenUtil {
    * @return value
    */
   public String parseValue(String encryptedToken) {
-    String decryptedToken = encryptionUtil.decrypt(encryptedToken);
-    Token token = Token.fromTokenString(decryptedToken);
-    validateToken(token);
+    try {
+      String decryptedToken = encryptionUtil.decrypt(encryptedToken);
+      Token token = Token.fromTokenString(decryptedToken);
+      validateToken(token);
 
-    return token.getValue();
+      return token.getValue();
+    } catch (Exception e) {
+      throw new InternalServerException(TOKEN_PARSE_ERROR, e.getMessage());
+    }
   }
 
   /**
