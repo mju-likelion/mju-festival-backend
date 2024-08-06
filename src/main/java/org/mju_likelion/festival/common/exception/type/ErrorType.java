@@ -14,6 +14,8 @@ public enum ErrorType {
   FILE_EMPTY_ERROR(40004, "파일이 비어있습니다."),
   FILE_NOT_IMAGE_ERROR(40005, "이미지 파일이 아닙니다."),
   FILE_SIZE_EXCEED_ERROR(40006, "파일 크기가 초과되었습니다."),
+  INVALID_RSA_KEY_STRATEGY_ERROR(40007, "유효하지 않은 RSA Key 전략입니다."),
+  INVALID_BOOTH_QR_STRATEGY_ERROR(40008, "유효하지 않은 부스 QR 전략입니다."),
 
   INVALID_CREDENTIALS_ERROR(40100, "아이디나 비밀번호가 일치하지 않습니다."),
   NOT_AUTHENTICATED_ERROR(40101, "인증되지 않았습니다."),
