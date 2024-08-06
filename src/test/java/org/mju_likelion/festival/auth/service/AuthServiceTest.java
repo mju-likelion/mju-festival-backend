@@ -1,6 +1,7 @@
 package org.mju_likelion.festival.auth.service;
 
 import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.BDDMockito.willReturn;
 
 import java.util.HashMap;
@@ -17,6 +18,7 @@ import org.mju_likelion.festival.auth.util.key.manager.RedisRsaKeyManager;
 import org.mju_likelion.festival.auth.util.key.manager.RsaKeyManagerContext;
 import org.mju_likelion.festival.auth.util.key.manager.TokenRsaKeyManager;
 import org.mju_likelion.festival.common.annotation.ApplicationTest;
+import org.mju_likelion.festival.common.exception.BadRequestException;
 import org.mju_likelion.festival.term.domain.Term;
 import org.mju_likelion.festival.term.domain.repository.TermJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -100,5 +102,39 @@ public class AuthServiceTest {
 
     return new UserLoginRequest(encryptedStudentId, encryptedPassword,
         credentialKey, termMap);
+  }
+
+  @DisplayName("TokenRsaKeyManager 를 사용하여 동의 약관이 누락된 경우 로그인에 실패한다.")
+  @Test
+  void testUserLoginTokenRsaKeyManagerWithMissingTerms() {
+    // given
+    willReturn(tokenRsaKeyManager).given(rsaKeyManagerContext).rsaKeyManager();
+    willReturn(tokenRsaKeyManager).given(rsaKeyManagerContext).rsaKeyManager(RsaKeyStrategy.TOKEN);
+    KeyResponse keyResponse = authQueryService.getKey();
+    UserLoginRequest userLoginRequest = createUserLoginRequest(keyResponse);
+    userLoginRequest.getTerms().keySet().stream().findFirst()
+        .ifPresent(uuid -> userLoginRequest.getTerms().remove(uuid));
+
+    // when & then
+    assertThrows(BadRequestException.class,
+        () -> authService.userLogin(userLoginRequest,
+            RsaKeyStrategy.TOKEN));
+  }
+
+  @DisplayName("RedisRsaKeyManager 를 사용하여 동의 약관이 누락된 경우 로그인에 실패한다.")
+  @Test
+  void testUserLoginRedisRsaKeyManagerWithMissingTerms() {
+    // given
+    willReturn(redisRsaKeyManager).given(rsaKeyManagerContext).rsaKeyManager();
+    willReturn(redisRsaKeyManager).given(rsaKeyManagerContext).rsaKeyManager(RsaKeyStrategy.REDIS);
+    KeyResponse keyResponse = authQueryService.getKey();
+    UserLoginRequest userLoginRequest = createUserLoginRequest(keyResponse);
+    userLoginRequest.getTerms().keySet().stream().findFirst()
+        .ifPresent(uuid -> userLoginRequest.getTerms().remove(uuid));
+
+    // when & then
+    assertThrows(BadRequestException.class,
+        () -> authService.userLogin(userLoginRequest,
+            RsaKeyStrategy.REDIS));
   }
 }
