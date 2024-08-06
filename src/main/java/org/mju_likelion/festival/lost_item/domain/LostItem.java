@@ -10,14 +10,14 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import java.util.List;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.mju_likelion.festival.admin.domain.Admin;
 import org.mju_likelion.festival.common.domain.BaseEntity;
+import org.mju_likelion.festival.image.domain.Image;
 
 @Getter
 @Builder
@@ -39,6 +39,7 @@ public class LostItem extends BaseEntity {
   @Column(nullable = false, length = LOST_ITEM_OWNER_INFO_LENGTH)
   private String retrieverInfo;
 
-  @OneToMany(mappedBy = "lostItem", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-  private List<LostItemImage> lostItemImages;
+  @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @JoinColumn(name = "image_id")
+  private Image image;
 }
