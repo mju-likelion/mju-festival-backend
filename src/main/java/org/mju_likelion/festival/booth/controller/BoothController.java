@@ -46,9 +46,9 @@ public class BoothController {
 
   @PostMapping("/{qrId}/visit")
   public ResponseEntity<Void> visitBooth(@PathVariable final String qrId,
-      @RequestParam final BoothQrStrategy strategy,
+      @RequestParam final String strategy,
       @AuthenticationPrincipal final UUID userId) {
-    boothService.visitBooth(qrId, strategy, userId);
+    boothService.visitBooth(qrId, BoothQrStrategy.fromString(strategy), userId);
     return ResponseEntity.ok().build();
   }
 }
