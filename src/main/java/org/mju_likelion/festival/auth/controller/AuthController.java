@@ -33,14 +33,16 @@ public class AuthController {
   @PostMapping("/user/login")
   public ResponseEntity<LoginResponse> userLogin(
       @RequestBody @Valid UserLoginRequest userLoginRequest,
-      @RequestParam RsaKeyStrategy rsaKeyStrategy) {
-    return ResponseEntity.ok(authService.userLogin(userLoginRequest, rsaKeyStrategy));
+      @RequestParam String rsaKeyStrategy) {
+    return ResponseEntity.ok(
+        authService.userLogin(userLoginRequest, RsaKeyStrategy.fromString(rsaKeyStrategy)));
   }
 
   @PostMapping("/admin/login")
   public ResponseEntity<LoginResponse> adminLogin(
       @RequestBody @Valid AdminLoginRequest adminLoginRequest,
-      @RequestParam RsaKeyStrategy rsaKeyStrategy) {
-    return ResponseEntity.ok(authQueryService.adminLogin(adminLoginRequest, rsaKeyStrategy));
+      @RequestParam String rsaKeyStrategy) {
+    return ResponseEntity.ok(
+        authQueryService.adminLogin(adminLoginRequest, RsaKeyStrategy.fromString(rsaKeyStrategy)));
   }
 }
