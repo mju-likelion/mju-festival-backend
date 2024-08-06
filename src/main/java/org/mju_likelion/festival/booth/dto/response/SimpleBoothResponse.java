@@ -15,10 +15,11 @@ public class SimpleBoothResponse {
   private final UUID id;
   private final String name;
   private final String description;
-  private final String thumbnailUrl;
+  private final String imageUrl;
 
   public static SimpleBoothResponse from(final SimpleBooth simpleBooth) {
     return new SimpleBoothResponse(simpleBooth.getId(), simpleBooth.getName(),
-        simpleBooth.getDescription(), simpleBooth.getThumbnailUrl());
+        simpleBooth.getDescription(), simpleBooth
+        .getImageUrl());
   }
 }
