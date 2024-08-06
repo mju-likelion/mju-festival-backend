@@ -5,34 +5,34 @@ import static org.mju_likelion.festival.common.domain.constant.ColumnLengths.IMA
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
-import java.util.ArrayList;
-import java.util.List;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.mju_likelion.festival.announcement.domain.AnnouncementImage;
+import org.mju_likelion.festival.announcement.domain.Announcement;
 import org.mju_likelion.festival.booth.domain.Booth;
-import org.mju_likelion.festival.booth.domain.BoothImage;
 import org.mju_likelion.festival.common.domain.BaseEntity;
-import org.mju_likelion.festival.lost_item.domain.LostItemImage;
+import org.mju_likelion.festival.lost_item.domain.LostItem;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity(name = "image")
 public class Image extends BaseEntity {
 
-  @OneToMany(mappedBy = "image", fetch = FetchType.LAZY)
-  private final List<LostItemImage> lostItemImages = new ArrayList<>();
-  @OneToMany(mappedBy = "image", fetch = FetchType.LAZY)
-  private final List<BoothImage> boothImages = new ArrayList<>();
-  @OneToMany(mappedBy = "image", fetch = FetchType.LAZY)
-  private final List<AnnouncementImage> announcementImages = new ArrayList<>();
+  @OneToOne(mappedBy = "image", fetch = FetchType.LAZY)
+  private Booth boothThumbnail;
+
+  @OneToOne(mappedBy = "image", fetch = FetchType.LAZY)
+  private Booth boothImage;
+
+  @OneToOne(mappedBy = "image", fetch = FetchType.LAZY)
+  private LostItem lostItem;
+
+  @OneToOne(mappedBy = "image", fetch = FetchType.LAZY)
+  private Announcement announcement;
+
   @Column(nullable = false, length = IMAGE_URL_LENGTH, unique = true)
   private String url;
-  @OneToOne(mappedBy = "thumbnail", fetch = FetchType.LAZY)
-  private Booth booth;
 
   public Image(String url) {
     this.url = url;
