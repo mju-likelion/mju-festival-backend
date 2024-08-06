@@ -34,7 +34,7 @@ public class BoothQueryRepository {
           uuid,
           rs.getString("boothName"),
           rs.getString("boothDescription"),
-          rs.getString("thumbnailUrl")
+          rs.getString("imageUrl")
       );
     };
   }
@@ -48,8 +48,8 @@ public class BoothQueryRepository {
           rs.getString("boothName"),
           rs.getString("boothDescription"),
           rs.getString("boothLocation"),
-          rs.getString("thumbnailUrl"),
-          List.of(rs.getString("imageUrl")),
+          rs.getString("imageUrl"),
+          rs.getString("locationImageUrl"),
           rs.getTimestamp("createdAt").toLocalDateTime()
       );
     };
@@ -65,9 +65,9 @@ public class BoothQueryRepository {
   public List<SimpleBooth> findOrderedSimpleBoothsWithPagination(final int page, final int size) {
     String sql =
         "SELECT HEX(b.id) AS boothId, b.name AS boothName, b.description AS boothDescription, "
-            + "i.url AS thumbnailUrl "
+            + "i.url AS imageUrl "
             + "FROM booth b "
-            + "LEFT JOIN image i ON b.thumbnail_id = i.id "
+            + "LEFT JOIN image i ON b.image_id = i.id "
             + "ORDER BY b.sequence ASC "
             + "LIMIT :limit OFFSET :offset";
 
@@ -87,12 +87,11 @@ public class BoothQueryRepository {
   public Optional<BoothDetail> findBoothById(final UUID id) {
     String sql =
         "SELECT HEX(b.id) AS boothId, b.name AS boothName, b.description AS boothDescription, "
-            + "b.location AS boothLocation, i.url AS imageUrl, ti.url AS thumbnailUrl, "
+            + "b.location AS boothLocation, i.url AS imageUrl, li.url AS locationImageUrl, "
             + "b.created_at AS createdAt "
             + "FROM booth b "
-            + "LEFT JOIN booth_image bi ON b.id = bi.booth_id "
-            + "LEFT JOIN image i ON bi.image_id = i.id "
-            + "LEFT JOIN image ti ON b.thumbnail_id = ti.id "
+            + "LEFT JOIN image i ON b.image_id = i.id "
+            + "LEFT JOIN image li ON b.location_image_id = li.id "
             + "WHERE b.id = UNHEX(:id)";
 
     MapSqlParameterSource params = new MapSqlParameterSource()
