@@ -9,9 +9,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
-import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -44,9 +42,10 @@ public class Booth extends BaseEntity {
   private Short sequence;
 
   @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-  @JoinColumn(name = "thumbnail_id")
-  private Image thumbnail;
+  @JoinColumn(name = "location_image_id")
+  private Image locationImage;
 
-  @OneToMany(mappedBy = "booth", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-  private List<BoothImage> boothImages;
+  @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @JoinColumn(name = "image_id")
+  private Image image;
 }
