@@ -62,14 +62,11 @@ public class AuthService {
    * @return 사용자의 ID
    */
   private UUID saveOrGetUserId(String studentId, Map<UUID, Boolean> terms) {
+    List<Term> validTerms = getValidTerms(terms);
+
     Optional<UUID> userId = userJpaRepository.findIdByStudentId(studentId);
 
-    if (userId.isPresent()) {
-      return userId.get();
-    }
-
-    List<Term> validTerms = getValidTerms(terms.keySet());
-    return saveUser(studentId, validTerms);
+    return userId.orElseGet(() -> saveUser(studentId, validTerms));
   }
 
   /**
@@ -92,13 +89,13 @@ public class AuthService {
   /**
    * 약관 ID 목록을 이용하여 유효한 약관 목록을 반환한다.
    *
-   * @param termIds 약관 ID 목록
+   * @param terms 사용자가 동의한 약관
    * @return 유효한 약관 목록
    */
-  private List<Term> getValidTerms(Set<UUID> termIds) {
-    List<Term> terms = termJpaRepository.findAll();
-    validateTermIds(terms, termIds);
-    return terms;
+  private List<Term> getValidTerms(Map<UUID, Boolean> terms) {
+    List<Term> termsInDb = termJpaRepository.findAll();
+    validateTermIds(termsInDb, terms.keySet());
+    return termsInDb;
   }
 
   /**
@@ -109,7 +106,7 @@ public class AuthService {
    */
   private void validateTermIds(List<Term> termsInDb, Set<UUID> termIds) {
     Set<UUID> validTermIds = termsInDb.stream().map(Term::getId).collect(Collectors.toSet());
-    if (!validTermIds.containsAll(termIds)) {
+    if (!termIds.containsAll(validTermIds)) {
       throw new BadRequestException(ErrorType.MISSING_TERM_ERROR);
     }
   }
