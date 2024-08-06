@@ -3,6 +3,7 @@ package org.mju_likelion.festival.auth.dto.request;
 import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import java.util.Map;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
@@ -25,5 +26,6 @@ public class UserLoginRequest {
   private String key;
 
   @NotNull(message = "동의 항목이 누락되었습니다.")
+  @Size(min = 1, message = "적어도 하나의 동의 항목이 필요합니다.")
   private Map<UUID, @AssertTrue(message = "동의 항목에 동의해야 합니다.") Boolean> terms;
 }
