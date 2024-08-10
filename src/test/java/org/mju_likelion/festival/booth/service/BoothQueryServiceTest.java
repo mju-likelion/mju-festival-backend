@@ -13,7 +13,7 @@ import org.mju_likelion.festival.admin.domain.repository.AdminJpaRepository;
 import org.mju_likelion.festival.booth.domain.Booth;
 import org.mju_likelion.festival.booth.domain.repository.BoothJpaRepository;
 import org.mju_likelion.festival.booth.dto.response.BoothDetailResponse;
-import org.mju_likelion.festival.booth.dto.response.SimpleBoothResponse;
+import org.mju_likelion.festival.booth.dto.response.SimpleBoothsResponse;
 import org.mju_likelion.festival.booth.util.qr.BoothQrManagerContext;
 import org.mju_likelion.festival.booth.util.qr.RedisBoothQrManager;
 import org.mju_likelion.festival.booth.util.qr.TokenBoothQrManager;
@@ -47,10 +47,10 @@ public class BoothQueryServiceTest {
     int size = 5;
 
     // when
-    List<SimpleBoothResponse> booths = boothQueryService.getBooths(page, size);
+    SimpleBoothsResponse booths = boothQueryService.getBooths(page, size);
 
     // then
-    assertThat(booths).isNotEmpty();
+    assertThat(booths).isNotNull();
   }
 
   @DisplayName("부스 상세 정보 조회")
