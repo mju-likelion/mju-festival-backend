@@ -79,6 +79,21 @@ public class BoothQueryRepository {
   }
 
   /**
+   * 페이지네이션 시 부스 간단 정보 List 총 페이지 수 조회.
+   *
+   * @param size 크기
+   * @return 총 페이지 수
+   */
+  public int findTotalPage(final int size) {
+    String sql = "SELECT CEIL(COUNT(*) / :size) FROM booth";
+
+    MapSqlParameterSource params = new MapSqlParameterSource()
+        .addValue("size", size);
+
+    return jdbcTemplate.queryForObject(sql, params, Integer.class);
+  }
+
+  /**
    * 부스 상세 정보 조회.
    *
    * @param id 부스 ID
