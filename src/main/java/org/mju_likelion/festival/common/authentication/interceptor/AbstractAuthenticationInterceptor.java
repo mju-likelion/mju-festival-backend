@@ -4,6 +4,7 @@ import static org.mju_likelion.festival.common.exception.type.ErrorType.JWT_NOT_
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.Objects;
 import org.mju_likelion.festival.auth.util.jwt.JwtUtil;
 import org.mju_likelion.festival.auth.util.jwt.Payload;
 import org.mju_likelion.festival.common.authentication.AuthenticationContext;
@@ -27,6 +28,11 @@ public abstract class AbstractAuthenticationInterceptor implements HandlerInterc
   @Override
   public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
       Object handler) {
+
+    if (isOptionsRequest(request)) {
+      return true;
+    }
+
     String accessToken = AuthorizationExtractor.extract(request)
         .orElseThrow(() -> new UnauthorizedException(JWT_NOT_FOUND_ERROR));
     Payload payload = userJwtUtil.getPayload(accessToken);
@@ -37,6 +43,11 @@ public abstract class AbstractAuthenticationInterceptor implements HandlerInterc
 
     authenticationContext.setPrincipal(payload.getId());
     return true;
+  }
+
+  // OPTIONS 는 허용
+  private boolean isOptionsRequest(HttpServletRequest request) {
+    return Objects.equals(request.getMethod(), "OPTIONS");
   }
 
   protected abstract boolean isAuthorized(Payload payload);
