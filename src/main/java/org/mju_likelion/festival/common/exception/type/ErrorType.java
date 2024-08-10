@@ -36,6 +36,7 @@ public enum ErrorType {
   BOOTH_QR_NOT_FOUND_ERROR(40403, "해당 부스 QR을 찾을 수 없습니다."),
   ADMIN_NOT_FOUND_ERROR(40404, "해당 관리자를 찾을 수 없습니다."),
   USER_NOT_FOUND_ERROR(40405, "해당 사용자를 찾을 수 없습니다."),
+  PAGE_OUT_OF_BOUND_ERROR(40406, "페이지 범위를 벗어났습니다."),
 
   METHOD_NOT_ALLOWED_ERROR(40500, "허용되지 않은 HTTP 메소드입니다."),
 
