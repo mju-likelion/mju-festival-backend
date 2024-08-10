@@ -1,12 +1,11 @@
 package org.mju_likelion.festival.booth.controller;
 
-import java.util.List;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import org.mju_likelion.festival.booth.domain.BoothQrStrategy;
 import org.mju_likelion.festival.booth.dto.response.BoothDetailResponse;
 import org.mju_likelion.festival.booth.dto.response.BoothQrResponse;
-import org.mju_likelion.festival.booth.dto.response.SimpleBoothResponse;
+import org.mju_likelion.festival.booth.dto.response.SimpleBoothsResponse;
 import org.mju_likelion.festival.booth.service.BoothQueryService;
 import org.mju_likelion.festival.booth.service.BoothService;
 import org.mju_likelion.festival.common.authentication.AuthenticationPrincipal;
@@ -27,7 +26,7 @@ public class BoothController {
   private final BoothService boothService;
 
   @GetMapping
-  public ResponseEntity<List<SimpleBoothResponse>> getBooths(
+  public ResponseEntity<SimpleBoothsResponse> getBooths(
       @RequestParam final int page,
       @RequestParam final int size) {
     return ResponseEntity.ok(boothQueryService.getBooths(page, size));

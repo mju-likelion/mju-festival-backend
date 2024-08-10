@@ -52,4 +52,20 @@ public class AnnouncementQueryRepository {
 
     return jdbcTemplate.query(sql, params, simpleAnnouncementRowMapper);
   }
+
+  /**
+   * 페이지 크기를 기준으로 총 페이지 수 조회.
+   *
+   * @param size 크기
+   * @return 총 페이지 수
+   */
+  public int getTotalPage(final int size) {
+    String sql = "SELECT CEIL(COUNT(*) / :size) "
+        + "FROM announcement";
+
+    MapSqlParameterSource params = new MapSqlParameterSource()
+        .addValue("size", size);
+
+    return jdbcTemplate.queryForObject(sql, params, Integer.class);
+  }
 }
