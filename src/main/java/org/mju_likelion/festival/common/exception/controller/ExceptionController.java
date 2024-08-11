@@ -17,6 +17,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 @Slf4j
@@ -37,6 +38,17 @@ public class ExceptionController {
 
     BadRequestException badRequestException = new BadRequestException(
         ErrorType.INVALID_REQUEST_BODY_ERROR, message);
+
+    writeLog(badRequestException);
+    return ResponseEntity.badRequest().body(ErrorResponse.res(badRequestException));
+  }
+
+  // MethodArgumentTypeMismatchException 예외를 처리하는 핸들러 (요청 파라메터의 타입이 잘못된 경우)
+  @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+  public ResponseEntity<ErrorResponse> methodArgumentTypeMismatchExceptionHandler(
+      final MethodArgumentTypeMismatchException e) {
+    BadRequestException badRequestException = new BadRequestException(
+        ErrorType.INVALID_REQUEST_PARAMETER_ERROR, e.getName());
 
     writeLog(badRequestException);
     return ResponseEntity.badRequest().body(ErrorResponse.res(badRequestException));
