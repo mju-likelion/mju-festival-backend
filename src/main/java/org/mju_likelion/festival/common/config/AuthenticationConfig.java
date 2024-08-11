@@ -25,7 +25,7 @@ public class AuthenticationConfig implements WebMvcConfigurer {
   @Override
   public void addInterceptors(final InterceptorRegistry registry) {
     addUserAuthenticationInterceptor(registry);
-    // addStudentCouncilAuthenticationInterceptor(registry);
+    addStudentCouncilAuthenticationInterceptor(registry);
     addBoothAdminAuthenticationInterceptor(registry);
     addAdminAuthenticationInterceptor(registry);
   }
@@ -47,7 +47,7 @@ public class AuthenticationConfig implements WebMvcConfigurer {
    */
   private void addStudentCouncilAuthenticationInterceptor(final InterceptorRegistry registry) {
     registry.addInterceptor(studentCouncilAuthenticationInterceptor)
-        .addPathPatterns();
+        .addPathPatterns("/announcements");
   }
 
   /**
