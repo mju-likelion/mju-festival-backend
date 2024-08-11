@@ -39,7 +39,7 @@ public class LostItem extends BaseEntity {
   @Column(nullable = false, length = LOST_ITEM_OWNER_INFO_LENGTH)
   private String retrieverInfo;
 
-  @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-  @JoinColumn(name = "image_id")
+  @OneToOne(optional = false, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @JoinColumn(nullable = false, name = "image_id")
   private Image image;
 }

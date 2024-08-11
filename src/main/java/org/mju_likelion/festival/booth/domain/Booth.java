@@ -41,11 +41,11 @@ public class Booth extends BaseEntity {
   @Column(nullable = false)
   private Short sequence;
 
-  @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-  @JoinColumn(name = "location_image_id")
+  @OneToOne(optional = false, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @JoinColumn(nullable = false, name = "location_image_id")
   private Image locationImage;
 
-  @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-  @JoinColumn(name = "image_id")
+  @OneToOne(optional = false, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @JoinColumn(nullable = false, name = "image_id")
   private Image image;
 }
