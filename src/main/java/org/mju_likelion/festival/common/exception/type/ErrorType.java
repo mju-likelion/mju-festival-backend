@@ -16,6 +16,7 @@ public enum ErrorType {
   FILE_SIZE_EXCEED_ERROR(40006, "파일 크기가 초과되었습니다."),
   INVALID_RSA_KEY_STRATEGY_ERROR(40007, "유효하지 않은 RSA Key 전략입니다."),
   INVALID_BOOTH_QR_STRATEGY_ERROR(40008, "유효하지 않은 부스 QR 전략입니다."),
+  INVALID_REQUEST_PARAMETER_ERROR(40009, "요청 파라미터가 잘못되었습니다."),
 
   INVALID_CREDENTIALS_ERROR(40100, "아이디나 비밀번호가 일치하지 않습니다."),
   NOT_AUTHENTICATED_ERROR(40101, "인증되지 않았습니다."),
@@ -37,6 +38,7 @@ public enum ErrorType {
   ADMIN_NOT_FOUND_ERROR(40404, "해당 관리자를 찾을 수 없습니다."),
   USER_NOT_FOUND_ERROR(40405, "해당 사용자를 찾을 수 없습니다."),
   PAGE_OUT_OF_BOUND_ERROR(40406, "페이지 범위를 벗어났습니다."),
+  ANNOUNCEMENT_NOT_FOUND_ERROR(40407, "해당 공지사항을 찾을 수 없습니다."),
 
   METHOD_NOT_ALLOWED_ERROR(40500, "허용되지 않은 HTTP 메소드입니다."),
 
