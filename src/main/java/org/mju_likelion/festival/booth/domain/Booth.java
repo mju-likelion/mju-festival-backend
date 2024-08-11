@@ -48,4 +48,8 @@ public class Booth extends BaseEntity {
   @OneToOne(optional = false, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @JoinColumn(nullable = false, name = "image_id")
   private Image image;
+
+  public boolean isManagedBy(Admin admin) {
+    return owner.equals(admin);
+  }
 }

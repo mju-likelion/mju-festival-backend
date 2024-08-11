@@ -12,20 +12,19 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import java.util.List;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.mju_likelion.festival.announcement.domain.Announcement;
-import org.mju_likelion.festival.booth.domain.Booth;
 import org.mju_likelion.festival.common.domain.BaseEntity;
 import org.mju_likelion.festival.lost_item.domain.LostItem;
 
 @Getter
 @Builder
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Entity(name = "admin")
 public class Admin extends BaseEntity {
@@ -43,16 +42,9 @@ public class Admin extends BaseEntity {
   @Enumerated(EnumType.STRING)
   private AdminRole role;
 
-  @OneToOne(mappedBy = "owner", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
-  private Booth booth;
-
   @OneToMany(mappedBy = "writer", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
   private List<LostItem> lostItems;
 
   @OneToMany(mappedBy = "writer", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
   private List<Announcement> announcements;
-
-  public boolean isOwner(final Booth booth) {
-    return this.booth.equals(booth);
-  }
 }
