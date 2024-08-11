@@ -58,7 +58,7 @@ public class BoothServiceTest {
   void setUp() {
     booth = boothJpaRepository.findAll().get(0);
     user = userJpaRepository.findAll().get(0);
-    admin = adminJpaRepository.findByBoothId(booth.getId()).get();
+    admin = booth.getOwner();
   }
 
   @AfterEach
