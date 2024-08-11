@@ -17,9 +17,4 @@ public interface AdminJpaRepository extends JpaRepository<Admin, UUID> {
    * @return Admin
    */
   Optional<Admin> findByLoginIdAndPassword(String loginId, String password);
-
-  /**
-   * 부스 ID 로 Admin 조회.
-   */
-  Optional<Admin> findByBoothId(UUID boothId);
 }
