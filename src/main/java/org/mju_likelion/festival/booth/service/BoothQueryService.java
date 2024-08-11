@@ -72,7 +72,7 @@ public class BoothQueryService {
   }
 
   private void validateBoothAdminOwner(Admin admin, Booth booth) {
-    if (!admin.isOwner(booth)) {
+    if (!booth.isManagedBy(admin)) {
       throw new ForbiddenException(NOT_BOOTH_OWNER_ERROR);
     }
   }

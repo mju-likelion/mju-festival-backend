@@ -17,6 +17,9 @@ public enum ErrorType {
   INVALID_RSA_KEY_STRATEGY_ERROR(40007, "유효하지 않은 RSA Key 전략입니다."),
   INVALID_BOOTH_QR_STRATEGY_ERROR(40008, "유효하지 않은 부스 QR 전략입니다."),
   INVALID_REQUEST_PARAMETER_ERROR(40009, "요청 파라미터가 잘못되었습니다."),
+  INVALID_TITLE_LENGTH_ERROR(40010, "올바르지 않은 제목 길이입니다."),
+  INVALID_CONTENT_LENGTH_ERROR(40011, "올바르지 않은 내용 길이입니다."),
+  INVALID_IMAGE_URL_LENGTH_ERROR(40012, "올바르지 않은 이미지 URL 길이입니다."),
 
   INVALID_CREDENTIALS_ERROR(40100, "아이디나 비밀번호가 일치하지 않습니다."),
   NOT_AUTHENTICATED_ERROR(40101, "인증되지 않았습니다."),
