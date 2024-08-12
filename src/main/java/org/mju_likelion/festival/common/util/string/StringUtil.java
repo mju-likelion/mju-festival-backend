@@ -5,7 +5,7 @@ package org.mju_likelion.festival.common.util.string;
  */
 public class StringUtil {
 
-  public static boolean isEmptyOrLargerThan(String str, int length) {
-    return str.isEmpty() || str.length() > length;
+  public static boolean isBlankOrLargerThan(String str, int length) {
+    return str.isBlank() || str.length() > length;
   }
 }

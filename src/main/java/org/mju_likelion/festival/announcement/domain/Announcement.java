@@ -25,10 +25,6 @@ import org.mju_likelion.festival.image.domain.Image;
 @Entity(name = "announcement")
 public class Announcement extends BaseEntity {
 
-  @ManyToOne(optional = false, fetch = FetchType.LAZY)
-  @JoinColumn(name = "writer_id")
-  private Admin writer;
-
   @Column(nullable = false, length = ANNOUNCEMENT_TITLE_LENGTH)
   private String title;
 
@@ -38,6 +34,10 @@ public class Announcement extends BaseEntity {
   @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @JoinColumn(name = "image_id")
   private Image image;
+
+  @ManyToOne(optional = false, fetch = FetchType.LAZY)
+  @JoinColumn(name = "writer_id")
+  private Admin writer;
 
   public Announcement(
       final String title,
@@ -52,19 +52,33 @@ public class Announcement extends BaseEntity {
     this.writer = writer;
   }
 
+  public void updateTitle(final String title) {
+    validateTitle(title);
+    this.title = title;
+  }
+
+  public void updateContent(final String content) {
+    validateContent(content);
+    this.content = content;
+  }
+
+  public void updateImage(final Image image) {
+    this.image = image;
+  }
+
   private void validate(final String title, final String content) {
     validateTitle(title);
     validateContent(content);
   }
 
   private void validateTitle(final String title) {
-    if (StringUtil.isEmptyOrLargerThan(title, ANNOUNCEMENT_TITLE_LENGTH)) {
+    if (StringUtil.isBlankOrLargerThan(title, ANNOUNCEMENT_TITLE_LENGTH)) {
       throw new BadRequestException(INVALID_TITLE_LENGTH_ERROR);
     }
   }
 
   private void validateContent(final String content) {
-    if (StringUtil.isEmptyOrLargerThan(content, ANNOUNCEMENT_CONTENT_LENGTH)) {
+    if (StringUtil.isBlankOrLargerThan(content, ANNOUNCEMENT_CONTENT_LENGTH)) {
       throw new BadRequestException(INVALID_CONTENT_LENGTH_ERROR);
     }
   }
