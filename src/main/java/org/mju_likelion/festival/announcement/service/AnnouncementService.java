@@ -15,9 +15,11 @@ import org.mju_likelion.festival.announcement.dto.request.UpdateAnnouncementRequ
 import org.mju_likelion.festival.common.exception.NotFoundException;
 import org.mju_likelion.festival.image.domain.Image;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @AllArgsConstructor
+@Transactional
 public class AnnouncementService {
 
   private final AnnouncementJpaRepository announcementJpaRepository;
