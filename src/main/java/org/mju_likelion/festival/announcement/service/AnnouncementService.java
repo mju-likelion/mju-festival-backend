@@ -61,6 +61,13 @@ public class AnnouncementService {
     announcementJpaRepository.save(announcement);
   }
 
+  public void deleteAnnouncement(UUID announcementId, UUID adminId) {
+
+    Announcement announcement = getExistingAnnouncement(announcementId);
+    validateAdminExistence(adminId);
+    announcementJpaRepository.delete(announcement);
+  }
+
   private void validateAdminExistence(UUID adminId) {
     if (!adminJpaRepository.existsById(adminId)) {
       throw new NotFoundException(ADMIN_NOT_FOUND_ERROR);
