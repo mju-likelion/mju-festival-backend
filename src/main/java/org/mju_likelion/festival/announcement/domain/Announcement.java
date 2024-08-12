@@ -52,6 +52,20 @@ public class Announcement extends BaseEntity {
     this.writer = writer;
   }
 
+  public void updateTitle(final String title) {
+    validateTitle(title);
+    this.title = title;
+  }
+
+  public void updateContent(final String content) {
+    validateContent(content);
+    this.content = content;
+  }
+
+  public void updateImage(final Image image) {
+    this.image = image;
+  }
+
   private void validate(final String title, final String content) {
     validateTitle(title);
     validateContent(content);
