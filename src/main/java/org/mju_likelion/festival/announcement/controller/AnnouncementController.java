@@ -12,6 +12,7 @@ import org.mju_likelion.festival.announcement.service.AnnouncementService;
 import org.mju_likelion.festival.common.authentication.AuthenticationPrincipal;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -60,6 +61,14 @@ public class AnnouncementController {
       @AuthenticationPrincipal UUID adminId) {
 
     qnnouncementService.updateAnnouncement(id, updateAnnouncementRequest, adminId);
+    return ResponseEntity.noContent().build();
+  }
+
+  @DeleteMapping("/{id}")
+  public ResponseEntity<Void> deleteAnnouncement(@PathVariable UUID id,
+      @AuthenticationPrincipal UUID adminId) {
+
+    qnnouncementService.deleteAnnouncement(id, adminId);
     return ResponseEntity.noContent().build();
   }
 }
