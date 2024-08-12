@@ -26,7 +26,7 @@ public class Image extends BaseEntity {
   }
 
   public void validateUrl(String url) {
-    if (StringUtil.isEmptyOrLargerThan(url, IMAGE_URL_LENGTH)) {
+    if (StringUtil.isBlankOrLargerThan(url, IMAGE_URL_LENGTH)) {
       throw new BadRequestException(INVALID_IMAGE_URL_LENGTH_ERROR);
     }
   }
