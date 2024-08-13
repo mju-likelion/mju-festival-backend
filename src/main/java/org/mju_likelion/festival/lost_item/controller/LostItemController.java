@@ -21,7 +21,8 @@ public class LostItemController {
 
   @GetMapping
   public ResponseEntity<SimpleLostItemsResponse> getLostItems(@RequestParam String sort,
-      @RequestParam int page, @RequestParam int size) {
+      @RequestParam @PageNumber int page,
+      @RequestParam @PageSize int size) {
 
     return ResponseEntity.ok(
         lostItemQueryService.getLostItems(SortOrder.fromString(sort), page, size));

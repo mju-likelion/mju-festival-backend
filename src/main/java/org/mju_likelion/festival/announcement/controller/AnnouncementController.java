@@ -9,6 +9,8 @@ import org.mju_likelion.festival.announcement.dto.response.AnnouncementDetailRes
 import org.mju_likelion.festival.announcement.dto.response.SimpleAnnouncementsResponse;
 import org.mju_likelion.festival.announcement.service.AnnouncementQueryService;
 import org.mju_likelion.festival.announcement.service.AnnouncementService;
+import org.mju_likelion.festival.common.annotaion.page_number.PageNumber;
+import org.mju_likelion.festival.common.annotaion.page_size.PageSize;
 import org.mju_likelion.festival.common.authentication.AuthenticationPrincipal;
 import org.mju_likelion.festival.common.enums.SortOrder;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +35,8 @@ public class AnnouncementController {
   @GetMapping
   public ResponseEntity<SimpleAnnouncementsResponse> getAnnouncements(
       @RequestParam String sort,
-      @RequestParam int page, @RequestParam int size) {
+      @RequestParam @PageNumber int page,
+      @RequestParam @PageSize int size) {
 
     return ResponseEntity.ok(
         announcementQueryService.getAnnouncements(SortOrder.fromString(sort), page, size));
