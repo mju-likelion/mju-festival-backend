@@ -57,6 +57,7 @@ public enum ErrorType {
   HTTP_MEDIA_TYPE_NOT_ACCEPTABLE_ERROR(40600, "수락할 수 없는 미디어 타입입니다."),
 
   ALREADY_VISITED_BOOTH(40900, "이미 방문한 부스입니다."),
+  LOST_ITEM_ALREADY_FOUND_ERROR(40901, "이미 찾은 분실물입니다."),
 
   HTTP_MEDIA_TYPE_NOT_SUPPORTED_ERROR(41500, "지원하지 않는 미디어 타입입니다."),
 
