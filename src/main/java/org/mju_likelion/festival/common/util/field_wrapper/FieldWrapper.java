@@ -1,5 +1,6 @@
 package org.mju_likelion.festival.common.util.field_wrapper;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import java.util.function.Consumer;
 
 /**
@@ -15,6 +16,22 @@ public class FieldWrapper<T> {
   public FieldWrapper(boolean present, T value) {
     this.present = present;
     this.value = value;
+  }
+
+  /**
+   * JSON 노드에서 문자열 필드를 가져와 필드 래퍼로 반환한다.
+   *
+   * @param node      JSON 노드
+   * @param fieldName 필드 이름
+   * @return 필드 래퍼
+   */
+  public static FieldWrapper<String> getStringFieldWrapper(JsonNode node, String fieldName) {
+    if (node.has(fieldName)) {
+      JsonNode fieldNode = node.get(fieldName);
+      return new FieldWrapper<>(true, fieldNode.isNull() ? null : fieldNode.asText());
+    } else {
+      return new FieldWrapper<>(false, null);
+    }
   }
 
   public boolean isPresent() {

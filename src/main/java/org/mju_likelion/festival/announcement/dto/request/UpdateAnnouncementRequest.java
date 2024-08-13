@@ -16,7 +16,7 @@ import org.mju_likelion.festival.common.util.field_wrapper.FieldWrapper;
 @JsonDeserialize(using = UpdateAnnouncementRequestDeserializer.class)
 public class UpdateAnnouncementRequest {
 
-  private FieldWrapper<String> title;
-  private FieldWrapper<String> content;
+  private String title;
+  private String content;
   private FieldWrapper<String> imageUrl;
 }

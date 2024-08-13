@@ -2,6 +2,7 @@ package org.mju_likelion.festival.announcement.service;
 
 import static org.mju_likelion.festival.common.exception.type.ErrorType.ADMIN_NOT_FOUND_ERROR;
 import static org.mju_likelion.festival.common.exception.type.ErrorType.ANNOUNCEMENT_NOT_FOUND_ERROR;
+import static org.mju_likelion.festival.common.util.null_handler.NullHandler.doIfNotNull;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -46,15 +47,9 @@ public class AnnouncementService {
 
     validateAdminExistence(adminId);
 
-    // title 은 null 을 허용하지 않는다.
-    updateAnnouncementRequest.getTitle()
-        .doIfPresentAndNotNull(announcement::updateTitle);
+    doIfNotNull(updateAnnouncementRequest.getTitle(), announcement::updateTitle);
+    doIfNotNull(updateAnnouncementRequest.getContent(), announcement::updateContent);
 
-    // content 는 null 을 허용하지 않는다.
-    updateAnnouncementRequest.getContent()
-        .doIfPresentAndNotNull(announcement::updateContent);
-
-    // imageUrl 은 null 을 허용한다.
     updateAnnouncementRequest.getImageUrl().doIfPresent(imageUrl -> {
       Image image = Optional.ofNullable(imageUrl).map(Image::new).orElse(null);
       announcement.updateImage(image);

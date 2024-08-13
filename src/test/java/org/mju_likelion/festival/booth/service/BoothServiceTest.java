@@ -10,12 +10,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mju_likelion.festival.admin.domain.Admin;
-import org.mju_likelion.festival.admin.domain.repository.AdminJpaRepository;
 import org.mju_likelion.festival.booth.domain.Booth;
 import org.mju_likelion.festival.booth.domain.BoothQrStrategy;
 import org.mju_likelion.festival.booth.domain.BoothUser;
 import org.mju_likelion.festival.booth.domain.repository.BoothJpaRepository;
 import org.mju_likelion.festival.booth.domain.repository.BoothUserJpaRepository;
+import org.mju_likelion.festival.booth.dto.request.UpdateBoothRequest;
 import org.mju_likelion.festival.booth.dto.response.BoothQrResponse;
 import org.mju_likelion.festival.booth.util.qr.BoothQrManagerContext;
 import org.mju_likelion.festival.booth.util.qr.RedisBoothQrManager;
@@ -23,13 +23,17 @@ import org.mju_likelion.festival.booth.util.qr.TokenBoothQrManager;
 import org.mju_likelion.festival.common.annotation.ApplicationTest;
 import org.mju_likelion.festival.common.exception.ConflictException;
 import org.mju_likelion.festival.common.exception.NotFoundException;
+import org.mju_likelion.festival.image.domain.Image;
+import org.mju_likelion.festival.image.domain.repository.ImageJpaRepository;
 import org.mju_likelion.festival.user.domain.User;
 import org.mju_likelion.festival.user.domain.repository.UserJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.transaction.annotation.Transactional;
 
 @DisplayName("BoothService")
 @ApplicationTest
+@Transactional
 public class BoothServiceTest {
 
   @Autowired
@@ -39,7 +43,7 @@ public class BoothServiceTest {
   @Autowired
   private BoothJpaRepository boothJpaRepository;
   @Autowired
-  private AdminJpaRepository adminJpaRepository;
+  private ImageJpaRepository imageJpaRepository;
   @Autowired
   private UserJpaRepository userJpaRepository;
   @Autowired
@@ -138,6 +142,92 @@ public class BoothServiceTest {
     assertThatThrownBy(() -> boothService.visitBooth(qrId, BoothQrStrategy.TOKEN, user.getId()))
         .isInstanceOf(ConflictException.class);
   }
+
+  @DisplayName("부스 이름을 업데이트한다.")
+  @Test
+  void testUpdateBoothName() {
+    // given
+    UpdateBoothRequest updateBoothRequest = new UpdateBoothRequest("new name",
+        null, null, null, null);
+
+    // when
+    boothService.updateBooth(booth.getId(), updateBoothRequest, admin.getId());
+
+    // then
+    Booth updatedBooth = boothJpaRepository.findById(booth.getId()).get();
+    assertThat(updatedBooth.getName()).isEqualTo(updateBoothRequest.getName());
+  }
+
+  @DisplayName("부스 설명을 업데이트한다.")
+  @Test
+  void testUpdateBoothDescription() {
+    // given
+    UpdateBoothRequest updateBoothRequest = new UpdateBoothRequest(null,
+        "new description", null, null, null);
+
+    // when
+    boothService.updateBooth(booth.getId(), updateBoothRequest, admin.getId());
+
+    // then
+    Booth updatedBooth = boothJpaRepository.findById(booth.getId()).get();
+    assertThat(updatedBooth.getDescription()).isEqualTo(updateBoothRequest.getDescription());
+  }
+
+  @DisplayName("부스 위치를 업데이트한다.")
+  @Test
+  void testUpdateBoothLocation() {
+    // given
+    UpdateBoothRequest updateBoothRequest = new UpdateBoothRequest(null,
+        null, "new location", null, null);
+
+    // when
+    boothService.updateBooth(booth.getId(), updateBoothRequest, admin.getId());
+
+    // then
+    Booth updatedBooth = boothJpaRepository.findById(booth.getId()).get();
+    assertThat(updatedBooth.getLocation()).isEqualTo(updateBoothRequest.getLocation());
+  }
+
+  @DisplayName("부스 위치 이미지 URL을 업데이트한다.")
+  @Test
+  void testUpdateBoothLocationImageUrl() {
+    // given
+    Image locationImage = new Image("new location image url");
+    UpdateBoothRequest updateBoothRequest = new UpdateBoothRequest(null,
+        null, null, locationImage.getUrl(), null);
+    imageJpaRepository.saveAndFlush(locationImage);
+
+    // when
+    boothService.updateBooth(booth.getId(), updateBoothRequest, admin.getId());
+
+    // then
+    Booth updatedBooth = boothJpaRepository.findById(booth.getId()).get();
+    assertThat(updatedBooth.getLocationImage().getUrl()).isEqualTo(
+        locationImage.getUrl());
+
+    // clean up
+    imageJpaRepository.delete(locationImage);
+  }
+
+  @DisplayName("부스 이미지 URL을 업데이트한다.")
+  @Test
+  void testUpdateBoothImageUrl() {
+    // given
+    Image boothImage = new Image("new image url");
+    UpdateBoothRequest updateBoothRequest = new UpdateBoothRequest(null,
+        null, null, null, boothImage.getUrl());
+
+    // when
+    boothService.updateBooth(booth.getId(), updateBoothRequest, admin.getId());
+
+    // then
+    Booth updatedBooth = boothJpaRepository.findById(booth.getId()).get();
+    assertThat(updatedBooth.getImage().getUrl()).isEqualTo(boothImage.getUrl());
+
+    // clean up
+    imageJpaRepository.delete(boothImage);
+  }
+
 
   private String getQrIdFromQrCode(String qrCode) {
     return qrCode.split("/")[4].split("\\?")[0];
