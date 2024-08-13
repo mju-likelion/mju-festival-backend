@@ -43,7 +43,7 @@ public class AnnouncementQueryService {
   }
 
   private void validatePage(int page, int totalPage) {
-    if (page >= totalPage) {
+    if (page != 0 && page >= totalPage) {
       throw new NotFoundException(PAGE_OUT_OF_BOUND_ERROR);
     }
   }
