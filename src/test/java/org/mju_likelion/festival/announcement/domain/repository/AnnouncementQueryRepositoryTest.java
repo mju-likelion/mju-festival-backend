@@ -3,6 +3,7 @@ package org.mju_likelion.festival.announcement.domain.repository;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;
@@ -58,8 +59,7 @@ public class AnnouncementQueryRepositoryTest {
       assertAll(
           () -> {
             assertThat(pageContent).isSortedAccordingTo(
-                (a, b) -> announcementJpaRepository.findById(a.getId()).get().getCreatedAt()
-                    .compareTo(announcementJpaRepository.findById(b.getId()).get().getCreatedAt()));
+                Comparator.comparing(SimpleAnnouncement::getCreatedAt));
 
             assertThat(pageContent)
                 .hasSize(expectedSize)
@@ -87,8 +87,8 @@ public class AnnouncementQueryRepositoryTest {
       assertAll(
           () -> {
             assertThat(pageContent).isSortedAccordingTo(
-                (a, b) -> announcementJpaRepository.findById(b.getId()).get().getCreatedAt()
-                    .compareTo(announcementJpaRepository.findById(a.getId()).get().getCreatedAt()));
+                (a, b) -> b.getCreatedAt()
+                    .compareTo(a.getCreatedAt()));
 
             assertThat(pageContent)
                 .hasSize(expectedSize)
