@@ -1,8 +1,5 @@
 package org.mju_likelion.festival.booth.domain;
 
-import static org.mju_likelion.festival.common.domain.constant.ColumnLengths.BOOTH_DESCRIPTION_LENGTH;
-import static org.mju_likelion.festival.common.domain.constant.ColumnLengths.BOOTH_LOCATION_LENGTH;
-import static org.mju_likelion.festival.common.domain.constant.ColumnLengths.BOOTH_NAME_LENGTH;
 import static org.mju_likelion.festival.common.exception.type.ErrorType.INVALID_BOOTH_DESCRIPTION_LENGTH_ERROR;
 import static org.mju_likelion.festival.common.exception.type.ErrorType.INVALID_BOOTH_LOCATION_LENGTH_ERROR;
 import static org.mju_likelion.festival.common.exception.type.ErrorType.INVALID_BOOTH_NAME_LENGTH_ERROR;
@@ -27,17 +24,21 @@ import org.mju_likelion.festival.image.domain.Image;
 @Entity(name = "booth")
 public class Booth extends BaseEntity {
 
+  private final int NAME_LENGTH = 100;
+  private final int DESCRIPTION_LENGTH = 4000;
+  private final int LOCATION_LENGTH = 100;
+
   @OneToOne(optional = false, fetch = FetchType.LAZY)
   @JoinColumn(name = "owner_id")
   private Admin owner;
 
-  @Column(nullable = false, length = BOOTH_NAME_LENGTH, unique = true)
+  @Column(nullable = false, length = NAME_LENGTH, unique = true)
   private String name;
 
-  @Column(nullable = false, length = BOOTH_DESCRIPTION_LENGTH)
+  @Column(nullable = false, length = DESCRIPTION_LENGTH)
   private String description;
 
-  @Column(nullable = false, length = BOOTH_LOCATION_LENGTH)
+  @Column(nullable = false, length = LOCATION_LENGTH)
   private String location;
 
   @Column(nullable = false)
@@ -98,19 +99,19 @@ public class Booth extends BaseEntity {
   }
 
   public void validateName(String name) {
-    if (StringUtil.isBlankOrLargerThan(name, BOOTH_NAME_LENGTH)) {
+    if (StringUtil.isBlankOrLargerThan(name, NAME_LENGTH)) {
       throw new BadRequestException(INVALID_BOOTH_NAME_LENGTH_ERROR);
     }
   }
 
   public void validateDescription(String description) {
-    if (StringUtil.isBlankOrLargerThan(description, BOOTH_DESCRIPTION_LENGTH)) {
+    if (StringUtil.isBlankOrLargerThan(description, DESCRIPTION_LENGTH)) {
       throw new BadRequestException(INVALID_BOOTH_DESCRIPTION_LENGTH_ERROR);
     }
   }
 
   public void validateLocation(String location) {
-    if (StringUtil.isBlankOrLargerThan(location, BOOTH_LOCATION_LENGTH)) {
+    if (StringUtil.isBlankOrLargerThan(location, LOCATION_LENGTH)) {
       throw new BadRequestException(INVALID_BOOTH_LOCATION_LENGTH_ERROR);
     }
   }

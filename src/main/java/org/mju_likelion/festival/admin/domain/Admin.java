@@ -1,10 +1,5 @@
 package org.mju_likelion.festival.admin.domain;
 
-import static org.mju_likelion.festival.common.domain.constant.ColumnLengths.ADMIN_ID_LENGTH;
-import static org.mju_likelion.festival.common.domain.constant.ColumnLengths.ADMIN_NAME_LENGTH;
-import static org.mju_likelion.festival.common.domain.constant.ColumnLengths.ADMIN_PASSWORD_LENGTH;
-import static org.mju_likelion.festival.common.domain.constant.ColumnLengths.ADMIN_ROLE_LENGTH;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -29,16 +24,21 @@ import org.mju_likelion.festival.lost_item.domain.LostItem;
 @Entity(name = "admin")
 public class Admin extends BaseEntity {
 
-  @Column(nullable = false, unique = true, length = ADMIN_ID_LENGTH)
+  private final int NAME_LENGTH = 50;
+  private final int ID_LENGTH = 50;
+  private final int PASSWORD_LENGTH = 100;
+  private final int ROLE_LENGTH = 20;
+
+  @Column(nullable = false, unique = true, length = NAME_LENGTH)
   private String loginId;
 
-  @Column(nullable = false, length = ADMIN_PASSWORD_LENGTH)
+  @Column(nullable = false, length = PASSWORD_LENGTH)
   private String password;
 
-  @Column(nullable = false, length = ADMIN_NAME_LENGTH)
+  @Column(nullable = false, length = NAME_LENGTH)
   private String name;
 
-  @Column(nullable = false, length = ADMIN_ROLE_LENGTH)
+  @Column(nullable = false, length = ROLE_LENGTH)
   @Enumerated(EnumType.STRING)
   private AdminRole role;
 

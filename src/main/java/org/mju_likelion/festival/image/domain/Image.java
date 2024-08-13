@@ -1,6 +1,5 @@
 package org.mju_likelion.festival.image.domain;
 
-import static org.mju_likelion.festival.common.domain.constant.ColumnLengths.IMAGE_URL_LENGTH;
 import static org.mju_likelion.festival.common.exception.type.ErrorType.INVALID_IMAGE_URL_LENGTH_ERROR;
 
 import jakarta.persistence.Column;
@@ -17,7 +16,9 @@ import org.mju_likelion.festival.common.util.string.StringUtil;
 @Entity(name = "image")
 public class Image extends BaseEntity {
 
-  @Column(nullable = false, length = IMAGE_URL_LENGTH)
+  private final int URL_LENGTH = 256;
+
+  @Column(nullable = false, length = URL_LENGTH)
   private String url;
 
   public Image(String url) {
@@ -26,7 +27,7 @@ public class Image extends BaseEntity {
   }
 
   public void validateUrl(String url) {
-    if (StringUtil.isBlankOrLargerThan(url, IMAGE_URL_LENGTH)) {
+    if (StringUtil.isBlankOrLargerThan(url, URL_LENGTH)) {
       throw new BadRequestException(INVALID_IMAGE_URL_LENGTH_ERROR);
     }
   }

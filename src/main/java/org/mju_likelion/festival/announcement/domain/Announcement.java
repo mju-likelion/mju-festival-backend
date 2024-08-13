@@ -1,9 +1,7 @@
 package org.mju_likelion.festival.announcement.domain;
 
-import static org.mju_likelion.festival.common.domain.constant.ColumnLengths.ANNOUNCEMENT_CONTENT_LENGTH;
-import static org.mju_likelion.festival.common.domain.constant.ColumnLengths.ANNOUNCEMENT_TITLE_LENGTH;
-import static org.mju_likelion.festival.common.exception.type.ErrorType.INVALID_CONTENT_LENGTH_ERROR;
-import static org.mju_likelion.festival.common.exception.type.ErrorType.INVALID_TITLE_LENGTH_ERROR;
+import static org.mju_likelion.festival.common.exception.type.ErrorType.INVALID_ANNOUNCEMENT_CONTENT_LENGTH_ERROR;
+import static org.mju_likelion.festival.common.exception.type.ErrorType.INVALID_ANNOUNCEMENT_TITLE_LENGTH_ERROR;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -25,10 +23,13 @@ import org.mju_likelion.festival.image.domain.Image;
 @Entity(name = "announcement")
 public class Announcement extends BaseEntity {
 
-  @Column(nullable = false, length = ANNOUNCEMENT_TITLE_LENGTH)
+  private final int TITLE_LENGTH = 50;
+  private final int CONTENT_LENGTH = 100;
+
+  @Column(nullable = false, length = TITLE_LENGTH)
   private String title;
 
-  @Column(nullable = false, length = ANNOUNCEMENT_CONTENT_LENGTH)
+  @Column(nullable = false, length = CONTENT_LENGTH)
   private String content;
 
   @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -72,14 +73,14 @@ public class Announcement extends BaseEntity {
   }
 
   private void validateTitle(final String title) {
-    if (StringUtil.isBlankOrLargerThan(title, ANNOUNCEMENT_TITLE_LENGTH)) {
-      throw new BadRequestException(INVALID_TITLE_LENGTH_ERROR);
+    if (StringUtil.isBlankOrLargerThan(title, TITLE_LENGTH)) {
+      throw new BadRequestException(INVALID_ANNOUNCEMENT_TITLE_LENGTH_ERROR);
     }
   }
 
   private void validateContent(final String content) {
-    if (StringUtil.isBlankOrLargerThan(content, ANNOUNCEMENT_CONTENT_LENGTH)) {
-      throw new BadRequestException(INVALID_CONTENT_LENGTH_ERROR);
+    if (StringUtil.isBlankOrLargerThan(content, CONTENT_LENGTH)) {
+      throw new BadRequestException(INVALID_ANNOUNCEMENT_CONTENT_LENGTH_ERROR);
     }
   }
 }

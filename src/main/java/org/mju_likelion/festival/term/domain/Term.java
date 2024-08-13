@@ -1,8 +1,5 @@
 package org.mju_likelion.festival.term.domain;
 
-import static org.mju_likelion.festival.common.domain.constant.ColumnLengths.TERM_CONTENT_LENGTH;
-import static org.mju_likelion.festival.common.domain.constant.ColumnLengths.TERM_TITLE_LENGTH;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import java.util.Objects;
@@ -13,10 +10,13 @@ import org.mju_likelion.festival.common.domain.BaseEntity;
 @Entity(name = "term")
 public class Term extends BaseEntity {
 
-  @Column(nullable = false, length = TERM_TITLE_LENGTH)
+  private final int TITLE_LENGTH = 100;
+  private final int CONTENT_LENGTH = 4000;
+
+  @Column(nullable = false, length = TITLE_LENGTH)
   private String title;
 
-  @Column(nullable = false, length = TERM_CONTENT_LENGTH)
+  @Column(nullable = false, length = CONTENT_LENGTH)
   private String content;
 
   @Column(nullable = false)
