@@ -106,7 +106,7 @@ public class LostItemQueryRepositoryTest {
     Admin admin = new Admin("lost_item_admin", "1234", "분실물 관리자", AdminRole.STUDENT_COUNCIL, null,
         null);
     adminJpaRepository.saveAndFlush(admin);
-    LostItem lostItem = new LostItem(admin, "지갑 발견", "발견했습니다.", null, new Image("asdf"));
+    LostItem lostItem = new LostItem("지갑 발견", "발견했습니다.", new Image("asdf"), admin);
     lostItemJpaRepository.saveAndFlush(lostItem);
 
     // when & then
@@ -139,7 +139,7 @@ public class LostItemQueryRepositoryTest {
     Admin admin = new Admin("lost_item_admin", "1234", "분실물 관리자", AdminRole.STUDENT_COUNCIL, null,
         null);
     adminJpaRepository.saveAndFlush(admin);
-    LostItem lostItem = new LostItem(admin, "발견", "지갑 발견했습니다.", null, new Image("asdf"));
+    LostItem lostItem = new LostItem("발견", "지갑 발견했습니다.", new Image("asdf"), admin);
     lostItemJpaRepository.saveAndFlush(lostItem);
 
     // when & then
