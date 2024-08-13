@@ -17,6 +17,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.HandlerMethodValidationException;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
@@ -38,6 +39,22 @@ public class ExceptionController {
 
     BadRequestException badRequestException = new BadRequestException(
         ErrorType.INVALID_REQUEST_BODY_ERROR, message);
+
+    writeLog(badRequestException);
+    return ResponseEntity.badRequest().body(ErrorResponse.res(badRequestException));
+  }
+
+  // HandlerMethodValidationException 예외를 처리하는 핸들러(요청 시 검증을 통과하지 못한 경우)
+  @ExceptionHandler(HandlerMethodValidationException.class)
+  public ResponseEntity<ErrorResponse> handlerMethodValidationExceptionHandler(
+      final HandlerMethodValidationException e) {
+
+    String failedParameter = e.getValueResults().get(0).getMethodParameter().getParameterName()
+        + " : "
+        + e.getDetailMessageArguments()[0].toString();
+
+    BadRequestException badRequestException = new BadRequestException(
+        ErrorType.INVALID_REQUEST_PARAMETER_ERROR, failedParameter);
 
     writeLog(badRequestException);
     return ResponseEntity.badRequest().body(ErrorResponse.res(badRequestException));
