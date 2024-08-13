@@ -1,6 +1,7 @@
 package org.mju_likelion.festival.lost_item.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,9 +11,11 @@ import org.mju_likelion.festival.admin.domain.Admin;
 import org.mju_likelion.festival.admin.domain.AdminRole;
 import org.mju_likelion.festival.admin.domain.repository.AdminJpaRepository;
 import org.mju_likelion.festival.common.annotation.ApplicationTest;
+import org.mju_likelion.festival.common.exception.ConflictException;
 import org.mju_likelion.festival.lost_item.domain.LostItem;
 import org.mju_likelion.festival.lost_item.domain.repository.LostItemJpaRepository;
 import org.mju_likelion.festival.lost_item.dto.request.CreateLostItemRequest;
+import org.mju_likelion.festival.lost_item.dto.request.LostItemFoundRequest;
 import org.mju_likelion.festival.lost_item.dto.request.UpdateLostItemRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -125,5 +128,45 @@ public class LostItemServiceTest {
     LostItem updatedLostItem = lostItemJpaRepository.findByWriterId(studentCouncilAdmin.getId())
         .get(0);
     assertThat(updatedLostItem.getImage().getUrl()).isEqualTo(newImageUrl);
+  }
+
+  @DisplayName("분실물을 찾는다.")
+  @Test
+  void foundLostItem() {
+    // given
+    CreateLostItemRequest request = new CreateLostItemRequest("분실물 제목", "분실물 내용", "이미지 URL");
+    lostItemService.createLostItem(request, studentCouncilAdmin.getId());
+
+    LostItem lostItem = lostItemJpaRepository.findByWriterId(studentCouncilAdmin.getId()).get(0);
+
+    String retrieverInfo = "분실물을 찾은 사람 정보";
+    LostItemFoundRequest foundRequest = new LostItemFoundRequest(retrieverInfo);
+
+    // when
+    lostItemService.foundLostItem(lostItem.getId(), foundRequest, studentCouncilAdmin.getId());
+
+    // then
+    LostItem foundLostItem = lostItemJpaRepository.findByWriterId(studentCouncilAdmin.getId())
+        .get(0);
+    assertThat(foundLostItem.getRetrieverInfo()).isEqualTo(retrieverInfo);
+  }
+
+  @DisplayName("이미 찾은 분실물을 다시 찾을 수 없다.")
+  @Test
+  void foundLostItemTwice() {
+    // given
+    CreateLostItemRequest request = new CreateLostItemRequest("분실물 제목", "분실물 내용", "이미지 URL");
+    lostItemService.createLostItem(request, studentCouncilAdmin.getId());
+
+    LostItem lostItem = lostItemJpaRepository.findByWriterId(studentCouncilAdmin.getId()).get(0);
+
+    String retrieverInfo = "분실물을 찾은 사람 정보";
+    LostItemFoundRequest foundRequest = new LostItemFoundRequest(retrieverInfo);
+    lostItemService.foundLostItem(lostItem.getId(), foundRequest, studentCouncilAdmin.getId());
+
+    // when, then
+    assertThatThrownBy(() -> lostItemService.foundLostItem(lostItem.getId(), foundRequest,
+        studentCouncilAdmin.getId()))
+        .isInstanceOf(ConflictException.class);
   }
 }

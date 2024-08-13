@@ -13,6 +13,7 @@ import org.mju_likelion.festival.image.domain.Image;
 import org.mju_likelion.festival.lost_item.domain.LostItem;
 import org.mju_likelion.festival.lost_item.domain.repository.LostItemJpaRepository;
 import org.mju_likelion.festival.lost_item.dto.request.CreateLostItemRequest;
+import org.mju_likelion.festival.lost_item.dto.request.LostItemFoundRequest;
 import org.mju_likelion.festival.lost_item.dto.request.UpdateLostItemRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -48,6 +49,16 @@ public class LostItemService {
     doIfNotNull(updateLostItemRequest.getTitle(), lostItem::updateTitle);
     doIfNotNull(updateLostItemRequest.getContent(), lostItem::updateContent);
     doIfNotNull(updateLostItemRequest.getImageUrl(), url -> lostItem.updateImage(new Image(url)));
+
+    lostItemJpaRepository.save(lostItem);
+  }
+
+  public void foundLostItem(UUID lostItemId, LostItemFoundRequest lostItemFoundRequest,
+      UUID studentCouncilId) {
+    LostItem lostItem = getExistLostItem(lostItemId);
+    validateAdminExistence(studentCouncilId);
+
+    lostItem.found(lostItemFoundRequest.getRetrieverInfo());
 
     lostItemJpaRepository.save(lostItem);
   }

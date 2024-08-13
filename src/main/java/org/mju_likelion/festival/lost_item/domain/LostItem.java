@@ -1,6 +1,7 @@
 package org.mju_likelion.festival.lost_item.domain;
 
 import static org.mju_likelion.festival.common.exception.type.ErrorType.INVALID_LOST_ITEM_TITLE_LENGTH_ERROR;
+import static org.mju_likelion.festival.common.exception.type.ErrorType.LOST_ITEM_ALREADY_FOUND_ERROR;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -15,6 +16,7 @@ import lombok.NoArgsConstructor;
 import org.mju_likelion.festival.admin.domain.Admin;
 import org.mju_likelion.festival.common.domain.BaseEntity;
 import org.mju_likelion.festival.common.exception.BadRequestException;
+import org.mju_likelion.festival.common.exception.ConflictException;
 import org.mju_likelion.festival.common.exception.type.ErrorType;
 import org.mju_likelion.festival.common.util.string.StringUtil;
 import org.mju_likelion.festival.image.domain.Image;
@@ -75,6 +77,13 @@ public class LostItem extends BaseEntity {
   public void updateImage(final Image image) {
     validateImage(image);
     this.image = image;
+  }
+
+  public void found(final String retrieverInfo) {
+    if (this.retrieverInfo != null) {
+      throw new ConflictException(LOST_ITEM_ALREADY_FOUND_ERROR);
+    }
+    this.retrieverInfo = retrieverInfo;
   }
 
   private void validate(
