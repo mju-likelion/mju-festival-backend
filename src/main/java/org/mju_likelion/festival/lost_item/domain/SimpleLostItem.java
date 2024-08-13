@@ -14,4 +14,5 @@ public class SimpleLostItem {
   private final String content;
   private final String imageUrl;
   private final LocalDateTime createdAt;
+  private final Boolean isFounded;
 }

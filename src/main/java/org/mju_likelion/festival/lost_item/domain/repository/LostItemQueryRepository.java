@@ -28,7 +28,8 @@ public class LostItemQueryRepository {
           rs.getString("title"),
           rs.getString("content"),
           rs.getString("imageUrl"),
-          rs.getTimestamp("createdAt").toLocalDateTime()
+          rs.getTimestamp("createdAt").toLocalDateTime(),
+          rs.getBoolean("isFounded")
       );
     };
   }
@@ -46,6 +47,7 @@ public class LostItemQueryRepository {
       final int size) {
     String sql =
         "SELECT HEX(li.id) AS lostItemId, li.title AS title, li.content AS content, "
+            + "CASE WHEN li.retriever_info IS NULL THEN FALSE ELSE TRUE END AS isFounded, "
             + "i.url AS imageUrl, li.created_at AS createdAt "
             + "FROM lost_item li "
             + "LEFT JOIN image i ON li.image_id = i.id "
@@ -90,6 +92,7 @@ public class LostItemQueryRepository {
       final int size) {
 
     String sql = "SELECT HEX(li.id) AS lostItemId, li.title AS title, li.content AS content, "
+        + "CASE WHEN li.retriever_info IS NULL THEN FALSE ELSE TRUE END AS isFounded, "
         + "i.url AS imageUrl, li.created_at AS createdAt "
         + "FROM lost_item li "
         + "LEFT JOIN image i ON li.image_id = i.id "
