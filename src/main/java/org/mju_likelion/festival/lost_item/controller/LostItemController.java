@@ -1,13 +1,20 @@
 package org.mju_likelion.festival.lost_item.controller;
 
+import jakarta.validation.Valid;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import org.mju_likelion.festival.common.annotaion.page_number.PageNumber;
 import org.mju_likelion.festival.common.annotaion.page_size.PageSize;
+import org.mju_likelion.festival.common.authentication.AuthenticationPrincipal;
 import org.mju_likelion.festival.common.enums.SortOrder;
+import org.mju_likelion.festival.lost_item.dto.request.CreateLostItemRequest;
 import org.mju_likelion.festival.lost_item.dto.response.SimpleLostItemsResponse;
 import org.mju_likelion.festival.lost_item.service.LostItemQueryService;
+import org.mju_likelion.festival.lost_item.service.LostItemService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class LostItemController {
 
   private final LostItemQueryService lostItemQueryService;
+  private final LostItemService lostItemService;
 
   @GetMapping
   public ResponseEntity<SimpleLostItemsResponse> getLostItems(
@@ -39,4 +47,14 @@ public class LostItemController {
     return ResponseEntity.ok(
         lostItemQueryService.searchLostItems(SortOrder.fromString(sort), keyword, page, size));
   }
+
+  @PostMapping
+  public ResponseEntity<Void> createLostItem(
+      @RequestBody @Valid CreateLostItemRequest createLostItemRequest,
+      @AuthenticationPrincipal UUID studentCouncilId) {
+
+    lostItemService.createLostItem(createLostItemRequest, studentCouncilId);
+    return ResponseEntity.noContent().build();
+  }
+
 }
