@@ -169,4 +169,20 @@ public class LostItemServiceTest {
         studentCouncilAdmin.getId()))
         .isInstanceOf(ConflictException.class);
   }
+
+  @DisplayName("분실물을 삭제한다.")
+  @Test
+  void deleteLostItem() {
+    // given
+    CreateLostItemRequest request = new CreateLostItemRequest("분실물 제목", "분실물 내용", "이미지 URL");
+    lostItemService.createLostItem(request, studentCouncilAdmin.getId());
+
+    LostItem lostItem = lostItemJpaRepository.findByWriterId(studentCouncilAdmin.getId()).get(0);
+
+    // when
+    lostItemService.deleteLostItem(lostItem.getId(), studentCouncilAdmin.getId());
+
+    // then
+    assertThat(lostItemJpaRepository.findByWriterId(studentCouncilAdmin.getId())).isEmpty();
+  }
 }
