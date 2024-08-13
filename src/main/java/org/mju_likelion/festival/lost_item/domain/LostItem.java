@@ -40,7 +40,7 @@ public class LostItem extends BaseEntity {
   @Column(nullable = false, length = CONTENT_LENGTH)
   private String content;
 
-  @Column(nullable = false, length = OWNER_INFO_LENGTH)
+  @Column(length = OWNER_INFO_LENGTH)
   private String retrieverInfo;
 
   @OneToOne(optional = false, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
