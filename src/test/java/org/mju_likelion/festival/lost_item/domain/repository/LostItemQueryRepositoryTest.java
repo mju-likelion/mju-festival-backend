@@ -11,9 +11,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mju_likelion.festival.common.annotation.ApplicationTest;
+import org.mju_likelion.festival.common.enums.SortOrder;
 import org.mju_likelion.festival.lost_item.domain.SimpleLostItem;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort.Direction;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -50,7 +50,7 @@ public class LostItemQueryRepositoryTest {
     // when & then
     IntStream.range(0, totalPages).forEach(page -> {
       List<SimpleLostItem> pageContent = lostItemQueryRepository.findOrderedSimpleLostItemsWithPagenation(
-          Direction.ASC, page, pageSize);
+          SortOrder.ASC, page, pageSize);
 
       int expectedSize = calculateExpectedSize(page, pageSize, totalLostItemNum);
 
@@ -74,7 +74,7 @@ public class LostItemQueryRepositoryTest {
     // when & then
     IntStream.range(0, totalPages).forEach(page -> {
       List<SimpleLostItem> pageContent = lostItemQueryRepository.findOrderedSimpleLostItemsWithPagenation(
-          Direction.DESC, page, pageSize);
+          SortOrder.DESC, page, pageSize);
 
       int expectedSize = calculateExpectedSize(page, pageSize, totalLostItemNum);
 

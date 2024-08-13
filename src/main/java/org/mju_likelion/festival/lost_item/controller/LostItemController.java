@@ -1,9 +1,11 @@
 package org.mju_likelion.festival.lost_item.controller;
 
 import lombok.AllArgsConstructor;
+import org.mju_likelion.festival.common.annotaion.page_number.PageNumber;
+import org.mju_likelion.festival.common.annotaion.page_size.PageSize;
+import org.mju_likelion.festival.common.enums.SortOrder;
 import org.mju_likelion.festival.lost_item.dto.response.SimpleLostItemsResponse;
 import org.mju_likelion.festival.lost_item.service.LostItemQueryService;
-import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +24,6 @@ public class LostItemController {
       @RequestParam int page, @RequestParam int size) {
 
     return ResponseEntity.ok(
-        lostItemQueryService.getLostItems(Direction.fromString(sort), page, size));
+        lostItemQueryService.getLostItems(SortOrder.fromString(sort), page, size));
   }
 }

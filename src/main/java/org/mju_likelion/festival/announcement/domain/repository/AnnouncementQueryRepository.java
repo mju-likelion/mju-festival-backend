@@ -9,8 +9,8 @@ import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.mju_likelion.festival.announcement.domain.AnnouncementDetail;
 import org.mju_likelion.festival.announcement.domain.SimpleAnnouncement;
+import org.mju_likelion.festival.common.enums.SortOrder;
 import org.springframework.dao.support.DataAccessUtils;
-import org.springframework.data.domain.Sort.Direction;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -54,18 +54,18 @@ public class AnnouncementQueryRepository {
   /**
    * 페이지네이션을 적용하여 공지사항 간단 정보 List 조회.
    *
-   * @param direction 정렬
+   * @param sortOrder 정렬
    * @param page      페이지
    * @param size      크기
    * @return 공지사항 간단 정보 List
    */
-  public List<SimpleAnnouncement> findOrderedSimpleAnnouncementsWithPagenation(Direction direction,
+  public List<SimpleAnnouncement> findOrderedSimpleAnnouncementsWithPagenation(SortOrder sortOrder,
       final int page,
       final int size) {
     String sql =
         "SELECT HEX(a.id) AS announcementId, a.title AS title, a.content AS content, a.created_at AS createdAt "
             + "FROM announcement a "
-            + "ORDER BY a.created_at " + direction.toString() + " "
+            + "ORDER BY a.created_at " + sortOrder.toString() + " "
             + "LIMIT :limit OFFSET :offset";
 
     MapSqlParameterSource params = new MapSqlParameterSource()

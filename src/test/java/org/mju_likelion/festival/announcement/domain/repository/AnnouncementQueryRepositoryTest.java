@@ -15,8 +15,8 @@ import org.mju_likelion.festival.announcement.domain.Announcement;
 import org.mju_likelion.festival.announcement.domain.AnnouncementDetail;
 import org.mju_likelion.festival.announcement.domain.SimpleAnnouncement;
 import org.mju_likelion.festival.common.annotation.ApplicationTest;
+import org.mju_likelion.festival.common.enums.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort.Direction;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -52,7 +52,7 @@ public class AnnouncementQueryRepositoryTest {
     // when & then
     IntStream.range(0, totalPages).forEach(page -> {
       List<SimpleAnnouncement> pageContent = announcementQueryRepository.findOrderedSimpleAnnouncementsWithPagenation(
-          Direction.ASC, page, pageSize);
+          SortOrder.ASC, page, pageSize);
 
       int expectedSize = calculateExpectedSize(page, pageSize, totalAnnouncementNum);
 
@@ -80,7 +80,7 @@ public class AnnouncementQueryRepositoryTest {
     // when & then
     IntStream.range(0, totalPages).forEach(page -> {
       List<SimpleAnnouncement> pageContent = announcementQueryRepository.findOrderedSimpleAnnouncementsWithPagenation(
-          Direction.DESC, page, pageSize);
+          SortOrder.DESC, page, pageSize);
 
       int expectedSize = calculateExpectedSize(page, pageSize, totalAnnouncementNum);
 

@@ -10,8 +10,8 @@ import org.mju_likelion.festival.announcement.domain.SimpleAnnouncement;
 import org.mju_likelion.festival.announcement.domain.repository.AnnouncementQueryRepository;
 import org.mju_likelion.festival.announcement.dto.response.AnnouncementDetailResponse;
 import org.mju_likelion.festival.announcement.dto.response.SimpleAnnouncementsResponse;
+import org.mju_likelion.festival.common.enums.SortOrder;
 import org.mju_likelion.festival.common.exception.NotFoundException;
-import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,7 +22,7 @@ public class AnnouncementQueryService {
 
   private final AnnouncementQueryRepository announcementQueryRepository;
 
-  public SimpleAnnouncementsResponse getAnnouncements(Direction sort, int page, int size) {
+  public SimpleAnnouncementsResponse getAnnouncements(SortOrder sort, int page, int size) {
 
     int totalPage = announcementQueryRepository.getTotalPage(size);
 

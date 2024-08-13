@@ -4,11 +4,11 @@ import static org.mju_likelion.festival.common.exception.type.ErrorType.PAGE_OUT
 
 import java.util.List;
 import lombok.AllArgsConstructor;
+import org.mju_likelion.festival.common.enums.SortOrder;
 import org.mju_likelion.festival.common.exception.NotFoundException;
 import org.mju_likelion.festival.lost_item.domain.SimpleLostItem;
 import org.mju_likelion.festival.lost_item.domain.repository.LostItemQueryRepository;
 import org.mju_likelion.festival.lost_item.dto.response.SimpleLostItemsResponse;
-import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,7 +18,7 @@ public class LostItemQueryService {
   private final LostItemQueryRepository lostItemQueryRepository;
 
 
-  public SimpleLostItemsResponse getLostItems(final Direction sort, final int page,
+  public SimpleLostItemsResponse getLostItems(final SortOrder sort, final int page,
       final int size) {
 
     int totalPage = lostItemQueryRepository.findTotalPage(size);

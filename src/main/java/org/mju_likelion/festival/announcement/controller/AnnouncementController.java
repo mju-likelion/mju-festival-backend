@@ -10,7 +10,7 @@ import org.mju_likelion.festival.announcement.dto.response.SimpleAnnouncementsRe
 import org.mju_likelion.festival.announcement.service.AnnouncementQueryService;
 import org.mju_likelion.festival.announcement.service.AnnouncementService;
 import org.mju_likelion.festival.common.authentication.AuthenticationPrincipal;
-import org.springframework.data.domain.Sort.Direction;
+import org.mju_likelion.festival.common.enums.SortOrder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,7 +36,7 @@ public class AnnouncementController {
       @RequestParam int page, @RequestParam int size) {
 
     return ResponseEntity.ok(
-        announcementQueryService.getAnnouncements(Direction.fromString(sort), page, size));
+        announcementQueryService.getAnnouncements(SortOrder.fromString(sort), page, size));
   }
 
   @GetMapping("/{id}")
