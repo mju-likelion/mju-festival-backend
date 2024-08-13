@@ -73,8 +73,8 @@ public class AnnouncementServiceTest {
     // given
     Announcement announcement = createAndSaveAnnouncement("공지사항 제목", "공지사항 내용", "이미지 URL");
     UpdateAnnouncementRequest request = new UpdateAnnouncementRequest();
-    request.setTitle(new FieldWrapper<>(true, "수정된 공지사항 제목"));
-    request.setContent(new FieldWrapper<>(true, "수정된 공지사항 내용"));
+    request.setTitle("수정된 공지사항 제목");
+    request.setContent("수정된 공지사항 내용");
     request.setImageUrl(new FieldWrapper<>(true, "수정된 이미지 URL"));
 
     // when
@@ -93,8 +93,8 @@ public class AnnouncementServiceTest {
     // given
     Announcement announcement = createAndSaveAnnouncement("공지사항 제목", "공지사항 내용", "이미지 URL");
     UpdateAnnouncementRequest request = new UpdateAnnouncementRequest();
-    request.setTitle(new FieldWrapper<>(true, "수정된 공지사항 제목"));
-    request.setContent(new FieldWrapper<>(true, "수정된 공지사항 내용"));
+    request.setTitle("수정된 공지사항 제목");
+    request.setContent("수정된 공지사항 내용");
     request.setImageUrl(new FieldWrapper<>(false, null));
 
     // when
@@ -113,8 +113,8 @@ public class AnnouncementServiceTest {
     // given
     Announcement announcement = createAndSaveAnnouncement("공지사항 제목", "공지사항 내용", "이미지 URL");
     UpdateAnnouncementRequest request = new UpdateAnnouncementRequest();
-    request.setTitle(new FieldWrapper<>(true, "수정된 공지사항 제목"));
-    request.setContent(new FieldWrapper<>(true, "수정된 공지사항 내용"));
+    request.setTitle("수정된 공지사항 제목");
+    request.setContent("수정된 공지사항 내용");
     request.setImageUrl(new FieldWrapper<>(true, null));
 
     // when
