@@ -14,6 +14,7 @@ import org.mju_likelion.festival.lost_item.dto.response.SimpleLostItemsResponse;
 import org.mju_likelion.festival.lost_item.service.LostItemQueryService;
 import org.mju_likelion.festival.lost_item.service.LostItemService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -78,6 +79,15 @@ public class LostItemController {
       @AuthenticationPrincipal UUID studentCouncilId) {
 
     lostItemService.foundLostItem(id, lostItemFoundRequest, studentCouncilId);
+    return ResponseEntity.noContent().build();
+  }
+
+  @DeleteMapping("/{id}")
+  public ResponseEntity<Void> deleteLostItem(
+      @PathVariable UUID id,
+      @AuthenticationPrincipal UUID studentCouncilId) {
+
+    lostItemService.deleteLostItem(id, studentCouncilId);
     return ResponseEntity.noContent().build();
   }
 }
