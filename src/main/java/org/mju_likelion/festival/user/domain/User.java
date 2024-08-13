@@ -3,6 +3,7 @@ package org.mju_likelion.festival.user.domain;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Transient;
 import java.util.Objects;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -18,6 +19,7 @@ import org.mju_likelion.festival.term.domain.TermUsers;
 @Entity(name = "user")
 public class User extends BaseEntity {
 
+  @Transient
   private final int STUDENT_ID_LENGTH = 8;
 
   @Column(name = "student_id", nullable = false, unique = true, length = STUDENT_ID_LENGTH)

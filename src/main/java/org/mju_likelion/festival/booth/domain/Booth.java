@@ -10,6 +10,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.Transient;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,8 +25,11 @@ import org.mju_likelion.festival.image.domain.Image;
 @Entity(name = "booth")
 public class Booth extends BaseEntity {
 
+  @Transient
   private final int NAME_LENGTH = 100;
+  @Transient
   private final int DESCRIPTION_LENGTH = 4000;
+  @Transient
   private final int LOCATION_LENGTH = 100;
 
   @OneToOne(optional = false, fetch = FetchType.LAZY)

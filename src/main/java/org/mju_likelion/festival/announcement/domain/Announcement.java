@@ -10,6 +10,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.Transient;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.mju_likelion.festival.admin.domain.Admin;
@@ -23,7 +24,9 @@ import org.mju_likelion.festival.image.domain.Image;
 @Entity(name = "announcement")
 public class Announcement extends BaseEntity {
 
+  @Transient
   private final int TITLE_LENGTH = 50;
+  @Transient
   private final int CONTENT_LENGTH = 100;
 
   @Column(nullable = false, length = TITLE_LENGTH)
