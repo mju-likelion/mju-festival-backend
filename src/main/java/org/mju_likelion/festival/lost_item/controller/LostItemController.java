@@ -8,6 +8,7 @@ import org.mju_likelion.festival.common.annotaion.page_size.PageSize;
 import org.mju_likelion.festival.common.authentication.AuthenticationPrincipal;
 import org.mju_likelion.festival.common.enums.SortOrder;
 import org.mju_likelion.festival.lost_item.dto.request.CreateLostItemRequest;
+import org.mju_likelion.festival.lost_item.dto.request.LostItemFoundRequest;
 import org.mju_likelion.festival.lost_item.dto.request.UpdateLostItemRequest;
 import org.mju_likelion.festival.lost_item.dto.response.SimpleLostItemsResponse;
 import org.mju_likelion.festival.lost_item.service.LostItemQueryService;
@@ -67,6 +68,16 @@ public class LostItemController {
       @AuthenticationPrincipal UUID studentCouncilId) {
 
     lostItemService.updateLostItem(id, updateLostItemRequest, studentCouncilId);
+    return ResponseEntity.noContent().build();
+  }
+
+  @PatchMapping("/{id}/found")
+  public ResponseEntity<Void> foundLostItem(
+      @PathVariable UUID id,
+      @RequestBody @Valid LostItemFoundRequest lostItemFoundRequest,
+      @AuthenticationPrincipal UUID studentCouncilId) {
+
+    lostItemService.foundLostItem(id, lostItemFoundRequest, studentCouncilId);
     return ResponseEntity.noContent().build();
   }
 }
