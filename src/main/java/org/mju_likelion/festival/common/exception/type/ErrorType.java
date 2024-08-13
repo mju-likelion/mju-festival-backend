@@ -23,6 +23,7 @@ public enum ErrorType {
   INVALID_BOOTH_NAME_LENGTH_ERROR(40013, "올바르지 않은 부스 이름 길이입니다."),
   INVALID_BOOTH_DESCRIPTION_LENGTH_ERROR(40014, "올바르지 않은 부스 설명 길이입니다."),
   INVALID_BOOTH_LOCATION_LENGTH_ERROR(40015, "올바르지 않은 부스 위치 길이입니다."),
+  INVALID_SORT_ORDER_ERROR(40016, "올바르지 않은 정렬 순서입니다."),
 
   INVALID_CREDENTIALS_ERROR(40100, "아이디나 비밀번호가 일치하지 않습니다."),
   NOT_AUTHENTICATED_ERROR(40101, "인증되지 않았습니다."),

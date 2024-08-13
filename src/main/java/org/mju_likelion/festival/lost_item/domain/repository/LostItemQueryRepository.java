@@ -5,8 +5,8 @@ import static org.mju_likelion.festival.common.util.uuid.UUIDUtil.hexToUUID;
 import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import org.mju_likelion.festival.common.enums.SortOrder;
 import org.mju_likelion.festival.lost_item.domain.SimpleLostItem;
-import org.springframework.data.domain.Sort.Direction;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -36,12 +36,12 @@ public class LostItemQueryRepository {
   /**
    * 페이지네이션을 적용하여 분실물 간단 정보 List 조회.
    *
-   * @param direction 정렬
+   * @param sortOrder 정렬
    * @param page      페이지
    * @param size      크기
    * @return 분실물 간단 정보 List
    */
-  public List<SimpleLostItem> findOrderedSimpleLostItemsWithPagenation(final Direction direction,
+  public List<SimpleLostItem> findOrderedSimpleLostItemsWithPagenation(final SortOrder sortOrder,
       final int page,
       final int size) {
     String sql =
@@ -49,7 +49,7 @@ public class LostItemQueryRepository {
             + "i.url AS imageUrl, li.created_at AS createdAt "
             + "FROM lost_item li "
             + "LEFT JOIN image i ON li.image_id = i.id "
-            + "ORDER BY li.created_at " + direction.toString() + " "
+            + "ORDER BY li.created_at " + sortOrder.toString() + " "
             + "LIMIT :limit OFFSET :offset";
 
     MapSqlParameterSource params = new MapSqlParameterSource()
