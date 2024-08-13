@@ -31,7 +31,8 @@ public class AnnouncementQueryRepository {
       return new SimpleAnnouncement(
           uuid,
           rs.getString("title"),
-          rs.getString("content")
+          rs.getString("content"),
+          rs.getTimestamp("createdAt").toLocalDateTime()
       );
     };
   }
@@ -44,6 +45,7 @@ public class AnnouncementQueryRepository {
           uuid,
           rs.getString("title"),
           rs.getString("content"),
+          rs.getTimestamp("createdAt").toLocalDateTime(),
           rs.getString("imageUrl")
       );
     };
@@ -60,10 +62,11 @@ public class AnnouncementQueryRepository {
   public List<SimpleAnnouncement> findOrderedSimpleAnnouncementsWithPagenation(Direction direction,
       final int page,
       final int size) {
-    String sql = "SELECT HEX(a.id) AS announcementId, a.title AS title, a.content AS content "
-        + "FROM announcement a "
-        + "ORDER BY a.created_at " + direction.toString() + " "
-        + "LIMIT :limit OFFSET :offset";
+    String sql =
+        "SELECT HEX(a.id) AS announcementId, a.title AS title, a.content AS content, a.created_at AS createdAt "
+            + "FROM announcement a "
+            + "ORDER BY a.created_at " + direction.toString() + " "
+            + "LIMIT :limit OFFSET :offset";
 
     MapSqlParameterSource params = new MapSqlParameterSource()
         .addValue("limit", size)
@@ -79,7 +82,8 @@ public class AnnouncementQueryRepository {
    */
   public Optional<AnnouncementDetail> findAnnouncementById(final UUID id) {
     String sql =
-        "SELECT HEX(a.id) AS announcementId, a.title AS title, a.content AS content,  i.url AS imageUrl "
+        "SELECT HEX(a.id) AS announcementId, a.title AS title, a.content AS content, "
+            + "a.created_at AS createdAt, i.url AS imageUrl "
             + "FROM announcement a "
             + "LEFT JOIN image i ON a.image_id = i.id "
             + "WHERE a.id = UNHEX(:id)";
