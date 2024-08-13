@@ -12,8 +12,8 @@ public abstract class ColumnLengths {
   public static final int TERM_TITLE_LENGTH = 100;
   public static final int TERM_CONTENT_LENGTH = 4000;
 
-  public static final int LOST_ITEM_TITLE_LENGTH = 100;
-  public static final int LOST_ITEM_CONTENT_LENGTH = 400;
+  public static final int LOST_ITEM_TITLE_LENGTH = 70;
+  public static final int LOST_ITEM_CONTENT_LENGTH = 100;
   public static final int LOST_ITEM_OWNER_INFO_LENGTH = 150;
 
   public static final int BOOTH_NAME_LENGTH = 100;
