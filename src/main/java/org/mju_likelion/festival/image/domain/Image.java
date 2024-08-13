@@ -4,6 +4,7 @@ import static org.mju_likelion.festival.common.exception.type.ErrorType.INVALID_
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Transient;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,6 +17,7 @@ import org.mju_likelion.festival.common.util.string.StringUtil;
 @Entity(name = "image")
 public class Image extends BaseEntity {
 
+  @Transient
   private final int URL_LENGTH = 256;
 
   @Column(nullable = false, length = URL_LENGTH)

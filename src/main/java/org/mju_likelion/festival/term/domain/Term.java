@@ -2,6 +2,7 @@ package org.mju_likelion.festival.term.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Transient;
 import java.util.Objects;
 import lombok.Getter;
 import org.mju_likelion.festival.common.domain.BaseEntity;
@@ -10,7 +11,9 @@ import org.mju_likelion.festival.common.domain.BaseEntity;
 @Entity(name = "term")
 public class Term extends BaseEntity {
 
+  @Transient
   private final int TITLE_LENGTH = 100;
+  @Transient
   private final int CONTENT_LENGTH = 4000;
 
   @Column(nullable = false, length = TITLE_LENGTH)

@@ -7,6 +7,7 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Transient;
 import java.util.List;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -24,9 +25,13 @@ import org.mju_likelion.festival.lost_item.domain.LostItem;
 @Entity(name = "admin")
 public class Admin extends BaseEntity {
 
+  @Transient
   private final int NAME_LENGTH = 50;
+  @Transient
   private final int ID_LENGTH = 50;
+  @Transient
   private final int PASSWORD_LENGTH = 100;
+  @Transient
   private final int ROLE_LENGTH = 20;
 
   @Column(nullable = false, unique = true, length = NAME_LENGTH)
