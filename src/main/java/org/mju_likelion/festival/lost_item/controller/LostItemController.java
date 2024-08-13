@@ -20,11 +20,23 @@ public class LostItemController {
   private final LostItemQueryService lostItemQueryService;
 
   @GetMapping
-  public ResponseEntity<SimpleLostItemsResponse> getLostItems(@RequestParam String sort,
+  public ResponseEntity<SimpleLostItemsResponse> getLostItems(
+      @RequestParam String sort,
       @RequestParam @PageNumber int page,
       @RequestParam @PageSize int size) {
 
     return ResponseEntity.ok(
         lostItemQueryService.getLostItems(SortOrder.fromString(sort), page, size));
+  }
+
+  @GetMapping("/search")
+  public ResponseEntity<SimpleLostItemsResponse> getLostItems(
+      @RequestParam String sort,
+      @RequestParam String keyword,
+      @RequestParam @PageNumber int page,
+      @RequestParam @PageSize int size) {
+
+    return ResponseEntity.ok(
+        lostItemQueryService.searchLostItems(SortOrder.fromString(sort), keyword, page, size));
   }
 }
