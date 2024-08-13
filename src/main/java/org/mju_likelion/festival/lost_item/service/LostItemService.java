@@ -63,6 +63,13 @@ public class LostItemService {
     lostItemJpaRepository.save(lostItem);
   }
 
+  public void deleteLostItem(UUID lostItemId, UUID studentCouncilId) {
+    LostItem lostItem = getExistLostItem(lostItemId);
+    validateAdminExistence(studentCouncilId);
+
+    lostItemJpaRepository.delete(lostItem);
+  }
+
   private void validateAdminExistence(UUID adminId) {
     if (!adminJpaRepository.existsById(adminId)) {
       throw new NotFoundException(ADMIN_NOT_FOUND_ERROR);
