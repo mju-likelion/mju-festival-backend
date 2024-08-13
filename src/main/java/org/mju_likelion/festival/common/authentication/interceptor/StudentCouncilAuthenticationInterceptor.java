@@ -27,6 +27,7 @@ public class StudentCouncilAuthenticationInterceptor extends AbstractAuthenticat
     List<RequestMatcher> allowedRequestMatchers = new LinkedList<>();
     allowedRequestMatchers.add(new RequestMatcher(HttpMethod.GET, "/announcements"));
     allowedRequestMatchers.add(new RequestMatcher(HttpMethod.GET, "/announcements/{id}"));
+    allowedRequestMatchers.add(new RequestMatcher(HttpMethod.GET, "/lost-items"));
 
     return allowedRequestMatchers;
   }
