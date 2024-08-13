@@ -1,7 +1,5 @@
 package org.mju_likelion.festival.user.domain;
 
-import static org.mju_likelion.festival.common.domain.constant.ColumnLengths.USER_STUDENT_ID_LENGTH;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -20,7 +18,9 @@ import org.mju_likelion.festival.term.domain.TermUsers;
 @Entity(name = "user")
 public class User extends BaseEntity {
 
-  @Column(name = "student_id", nullable = false, unique = true, length = USER_STUDENT_ID_LENGTH)
+  private final int STUDENT_ID_LENGTH = 8;
+
+  @Column(name = "student_id", nullable = false, unique = true, length = STUDENT_ID_LENGTH)
   private String studentId;
 
   @Embedded

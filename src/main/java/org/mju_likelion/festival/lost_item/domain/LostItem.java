@@ -1,9 +1,5 @@
 package org.mju_likelion.festival.lost_item.domain;
 
-import static org.mju_likelion.festival.common.domain.constant.ColumnLengths.LOST_ITEM_CONTENT_LENGTH;
-import static org.mju_likelion.festival.common.domain.constant.ColumnLengths.LOST_ITEM_OWNER_INFO_LENGTH;
-import static org.mju_likelion.festival.common.domain.constant.ColumnLengths.LOST_ITEM_TITLE_LENGTH;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -26,17 +22,21 @@ import org.mju_likelion.festival.image.domain.Image;
 @Entity(name = "lost_item")
 public class LostItem extends BaseEntity {
 
+  private final int TITLE_LENGTH = 70;
+  private final int CONTENT_LENGTH = 100;
+  private final int OWNER_INFO_LENGTH = 150;
+
   @ManyToOne(optional = false, fetch = FetchType.LAZY)
   @JoinColumn(name = "writer_id", nullable = false)
   private Admin writer;
 
-  @Column(nullable = false, length = LOST_ITEM_TITLE_LENGTH)
+  @Column(nullable = false, length = TITLE_LENGTH)
   private String title;
 
-  @Column(nullable = false, length = LOST_ITEM_CONTENT_LENGTH)
+  @Column(nullable = false, length = CONTENT_LENGTH)
   private String content;
 
-  @Column(nullable = false, length = LOST_ITEM_OWNER_INFO_LENGTH)
+  @Column(nullable = false, length = OWNER_INFO_LENGTH)
   private String retrieverInfo;
 
   @OneToOne(optional = false, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
