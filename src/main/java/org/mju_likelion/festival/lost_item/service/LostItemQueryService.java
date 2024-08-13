@@ -10,9 +10,11 @@ import org.mju_likelion.festival.lost_item.domain.SimpleLostItem;
 import org.mju_likelion.festival.lost_item.domain.repository.LostItemQueryRepository;
 import org.mju_likelion.festival.lost_item.dto.response.SimpleLostItemsResponse;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @AllArgsConstructor
+@Transactional(readOnly = true)
 public class LostItemQueryService {
 
   private final LostItemQueryRepository lostItemQueryRepository;
@@ -32,8 +34,21 @@ public class LostItemQueryService {
     return SimpleLostItemsResponse.of(simpleLostItems, totalPage);
   }
 
+  public SimpleLostItemsResponse searchLostItems(final SortOrder sort, final String keyword,
+      final int page, final int size) {
+
+    int totalPage = lostItemQueryRepository.findTotalPageByKeyword(keyword, size);
+
+    validatePage(page, totalPage);
+
+    List<SimpleLostItem> simpleLostItems = lostItemQueryRepository
+        .findOrderedSimpleLostItemsWithPagenationByKeyword(sort, keyword, page, size);
+
+    return SimpleLostItemsResponse.of(simpleLostItems, totalPage);
+  }
+
   private void validatePage(int page, int totalPage) {
-    if (page >= totalPage) {
+    if (page != 0 && page >= totalPage) {
       throw new NotFoundException(PAGE_OUT_OF_BOUND_ERROR);
     }
   }

@@ -73,4 +73,54 @@ public class LostItemQueryRepository {
 
     return jdbcTemplate.queryForObject(sql, params, Integer.class);
   }
+
+  /**
+   * 페이지네이션을 적용하여 분실물 검색.
+   *
+   * @param sortOrder 정렬
+   * @param keyword   검색어
+   * @param page      페이지
+   * @param size      크기
+   * @return 검색 결과
+   */
+  public List<SimpleLostItem> findOrderedSimpleLostItemsWithPagenationByKeyword(
+      final SortOrder sortOrder,
+      final String keyword,
+      final int page,
+      final int size) {
+
+    String sql = "SELECT HEX(li.id) AS lostItemId, li.title AS title, li.content AS content, "
+        + "i.url AS imageUrl, li.created_at AS createdAt "
+        + "FROM lost_item li "
+        + "LEFT JOIN image i ON li.image_id = i.id "
+        + "WHERE li.title LIKE :keyword OR li.content LIKE :keyword "
+        + "ORDER BY li.created_at " + sortOrder.name() + " "
+        + "LIMIT :limit OFFSET :offset";
+
+    MapSqlParameterSource params = new MapSqlParameterSource()
+        .addValue("keyword", "%" + keyword + "%")
+        .addValue("limit", size)
+        .addValue("offset", page * size);
+
+    return jdbcTemplate.query(sql, params, simpleLostItemRowMapper);
+  }
+
+  /**
+   * 키워드에 해당하는 총 페이지 수 조회.
+   *
+   * @param keyword 키워드
+   * @param size    크기
+   * @return 총 페이지 수
+   */
+  public int findTotalPageByKeyword(final String keyword, final int size) {
+    String sql = "SELECT CEIL(COUNT(*) / :size) "
+        + "FROM lost_item "
+        + "WHERE title LIKE :keyword OR content LIKE :keyword";
+
+    MapSqlParameterSource params = new MapSqlParameterSource()
+        .addValue("keyword", "%" + keyword + "%")
+        .addValue("size", size);
+
+    return jdbcTemplate.queryForObject(sql, params, Integer.class);
+  }
 }

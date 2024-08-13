@@ -10,8 +10,13 @@ import javax.sql.DataSource;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mju_likelion.festival.admin.domain.Admin;
+import org.mju_likelion.festival.admin.domain.AdminRole;
+import org.mju_likelion.festival.admin.domain.repository.AdminJpaRepository;
 import org.mju_likelion.festival.common.annotation.ApplicationTest;
 import org.mju_likelion.festival.common.enums.SortOrder;
+import org.mju_likelion.festival.image.domain.Image;
+import org.mju_likelion.festival.lost_item.domain.LostItem;
 import org.mju_likelion.festival.lost_item.domain.SimpleLostItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -19,7 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @DisplayName("LostItemQueryRepository")
 @ApplicationTest
-@Transactional(readOnly = true)
+@Transactional
 public class LostItemQueryRepositoryTest {
 
   @Autowired
@@ -30,6 +35,9 @@ public class LostItemQueryRepositoryTest {
 
   @Autowired
   private LostItemJpaRepository lostItemJpaRepository;
+
+  @Autowired
+  private AdminJpaRepository adminJpaRepository;
 
   private int totalLostItemNum;
 
@@ -86,6 +94,72 @@ public class LostItemQueryRepositoryTest {
           }
       );
     });
+  }
+
+  @DisplayName("제목에 포함된 키워드를 통해 분실물 간단 정보 List 조회")
+  @Test
+  void testFindOrderedSimpleLostItemsWithKeywordAndPagination() {
+    // given
+    String keyword = "지갑";
+    int pageSize = 1;
+    int totalPages = 1;
+    Admin admin = new Admin("lost_item_admin", "1234", "분실물 관리자", AdminRole.STUDENT_COUNCIL, null,
+        null);
+    adminJpaRepository.saveAndFlush(admin);
+    LostItem lostItem = new LostItem(admin, "지갑 발견", "발견했습니다.", null, new Image("asdf"));
+    lostItemJpaRepository.saveAndFlush(lostItem);
+
+    // when & then
+    IntStream.range(0, totalPages).forEach(page -> {
+      List<SimpleLostItem> pageContent = lostItemQueryRepository.findOrderedSimpleLostItemsWithPagenationByKeyword(
+          SortOrder.ASC, keyword, page, pageSize);
+
+      int expectedSize = calculateExpectedSize(page, pageSize, totalLostItemNum);
+
+      assertAll(
+          () -> {
+            assertThat(pageContent).hasSize(expectedSize);
+            assertThat(pageContent).isSortedAccordingTo(
+                Comparator.comparing(SimpleLostItem::getCreatedAt));
+          }
+      );
+    });
+
+    // clean up
+    adminJpaRepository.delete(admin);
+  }
+
+  @DisplayName("본문에 포함된 키워드를 통해 분실물 간단 정보 List 조회")
+  @Test
+  void testFindOrderedSimpleLostItemsWithContentKeywordAndPagination() {
+    // given
+    String keyword = "지갑";
+    int pageSize = 1;
+    int totalPages = 1;
+    Admin admin = new Admin("lost_item_admin", "1234", "분실물 관리자", AdminRole.STUDENT_COUNCIL, null,
+        null);
+    adminJpaRepository.saveAndFlush(admin);
+    LostItem lostItem = new LostItem(admin, "발견", "지갑 발견했습니다.", null, new Image("asdf"));
+    lostItemJpaRepository.saveAndFlush(lostItem);
+
+    // when & then
+    IntStream.range(0, totalPages).forEach(page -> {
+      List<SimpleLostItem> pageContent = lostItemQueryRepository.findOrderedSimpleLostItemsWithPagenationByKeyword(
+          SortOrder.ASC, keyword, page, pageSize);
+
+      int expectedSize = calculateExpectedSize(page, pageSize, totalLostItemNum);
+
+      assertAll(
+          () -> {
+            assertThat(pageContent).hasSize(expectedSize);
+            assertThat(pageContent).isSortedAccordingTo(
+                Comparator.comparing(SimpleLostItem::getCreatedAt));
+          }
+      );
+    });
+
+    // clean up
+    adminJpaRepository.delete(admin);
   }
 
   private int calculateTotalPages(int totalItems, int pageSize) {
