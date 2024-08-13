@@ -3,6 +3,7 @@ package org.mju_likelion.festival.booth.controller;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import org.mju_likelion.festival.booth.domain.BoothQrStrategy;
+import org.mju_likelion.festival.booth.dto.request.UpdateBoothRequest;
 import org.mju_likelion.festival.booth.dto.response.BoothDetailResponse;
 import org.mju_likelion.festival.booth.dto.response.BoothQrResponse;
 import org.mju_likelion.festival.booth.dto.response.SimpleBoothsResponse;
@@ -11,8 +12,10 @@ import org.mju_likelion.festival.booth.service.BoothService;
 import org.mju_likelion.festival.common.authentication.AuthenticationPrincipal;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -49,5 +52,13 @@ public class BoothController {
       @AuthenticationPrincipal final UUID userId) {
     boothService.visitBooth(qrId, BoothQrStrategy.fromString(strategy), userId);
     return ResponseEntity.ok().build();
+  }
+
+  @PatchMapping("/{id}")
+  public ResponseEntity<Void> updateBooth(@PathVariable final UUID id,
+      @RequestBody final UpdateBoothRequest updateBoothRequest,
+      @AuthenticationPrincipal final UUID boothAdminId) {
+    boothService.updateBooth(id, updateBoothRequest, boothAdminId);
+    return ResponseEntity.noContent().build();
   }
 }
