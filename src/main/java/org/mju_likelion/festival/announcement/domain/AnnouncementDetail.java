@@ -1,5 +1,6 @@
 package org.mju_likelion.festival.announcement.domain;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,5 +15,6 @@ public class AnnouncementDetail {
   private final UUID id;
   private final String title;
   private final String content;
+  private final LocalDateTime createdAt;
   private final String imageUrl;
 }

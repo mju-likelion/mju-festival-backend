@@ -31,7 +31,7 @@ public class AnnouncementQueryService {
     List<SimpleAnnouncement> simpleAnnouncements = announcementQueryRepository
         .findOrderedSimpleAnnouncementsWithPagenation(sort, page, size);
 
-    return SimpleAnnouncementsResponse.from(simpleAnnouncements, totalPage);
+    return SimpleAnnouncementsResponse.of(simpleAnnouncements, totalPage);
   }
 
   public AnnouncementDetailResponse getAnnouncement(UUID id) {

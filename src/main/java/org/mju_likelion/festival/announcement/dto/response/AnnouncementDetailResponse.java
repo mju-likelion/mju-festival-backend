@@ -1,6 +1,7 @@
 package org.mju_likelion.festival.announcement.dto.response;
 
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -17,6 +18,7 @@ public class AnnouncementDetailResponse {
   private final UUID id;
   private final String title;
   private final String content;
+  private final LocalDateTime createdAt;
   private final String imageUrl;
 
   public static AnnouncementDetailResponse from(final AnnouncementDetail announcementDetail) {
@@ -25,6 +27,7 @@ public class AnnouncementDetailResponse {
         announcementDetail.getId(),
         announcementDetail.getTitle(),
         announcementDetail.getContent(),
+        announcementDetail.getCreatedAt(),
         announcementDetail.getImageUrl()
     );
   }

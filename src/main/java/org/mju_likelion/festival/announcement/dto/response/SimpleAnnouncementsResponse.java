@@ -13,7 +13,7 @@ public class SimpleAnnouncementsResponse {
   private final List<SimpleAnnouncement> simpleAnnouncements;
   private final int totalPage;
 
-  public static SimpleAnnouncementsResponse from(
+  public static SimpleAnnouncementsResponse of(
       List<SimpleAnnouncement> simpleAnnouncements,
       int totalPage) {
 
