@@ -50,7 +50,8 @@ public class AuthenticationConfig implements WebMvcConfigurer {
     registry.addInterceptor(studentCouncilAuthenticationInterceptor)
         .addPathPatterns("/announcements")
         .addPathPatterns("/announcements/{id}")
-        .addPathPatterns("/lost-items");
+        .addPathPatterns("/lost-items")
+        .addPathPatterns("/lost-items/{id}");
   }
 
   /**

@@ -50,6 +50,7 @@ public enum ErrorType {
   USER_NOT_FOUND_ERROR(40405, "해당 사용자를 찾을 수 없습니다."),
   PAGE_OUT_OF_BOUND_ERROR(40406, "페이지 범위를 벗어났습니다."),
   ANNOUNCEMENT_NOT_FOUND_ERROR(40407, "해당 공지사항을 찾을 수 없습니다."),
+  LOST_ITEM_NOT_FOUND_ERROR(40408, "해당 분실물을 찾을 수 없습니다."),
 
   METHOD_NOT_ALLOWED_ERROR(40500, "허용되지 않은 HTTP 메소드입니다."),
 

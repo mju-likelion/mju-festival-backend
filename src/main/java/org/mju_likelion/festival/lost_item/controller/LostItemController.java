@@ -8,11 +8,14 @@ import org.mju_likelion.festival.common.annotaion.page_size.PageSize;
 import org.mju_likelion.festival.common.authentication.AuthenticationPrincipal;
 import org.mju_likelion.festival.common.enums.SortOrder;
 import org.mju_likelion.festival.lost_item.dto.request.CreateLostItemRequest;
+import org.mju_likelion.festival.lost_item.dto.request.UpdateLostItemRequest;
 import org.mju_likelion.festival.lost_item.dto.response.SimpleLostItemsResponse;
 import org.mju_likelion.festival.lost_item.service.LostItemQueryService;
 import org.mju_likelion.festival.lost_item.service.LostItemService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -57,4 +60,13 @@ public class LostItemController {
     return ResponseEntity.noContent().build();
   }
 
+  @PatchMapping("/{id}")
+  public ResponseEntity<Void> updateLostItem(
+      @PathVariable UUID id,
+      @RequestBody @Valid UpdateLostItemRequest updateLostItemRequest,
+      @AuthenticationPrincipal UUID studentCouncilId) {
+
+    lostItemService.updateLostItem(id, updateLostItemRequest, studentCouncilId);
+    return ResponseEntity.noContent().build();
+  }
 }
