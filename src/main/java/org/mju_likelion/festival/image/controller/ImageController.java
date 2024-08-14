@@ -21,8 +21,9 @@ public class ImageController {
 
   @PostMapping
   public ResponseEntity<ImageResponse> uploadImage(
-      @RequestPart MultipartFile image,
-      @RequestParam ImageType type) {
+      @RequestPart final MultipartFile image,
+      @RequestParam final ImageType type) {
+
     return ResponseEntity.ok(imageService.saveImage(image, type));
   }
 }

@@ -13,7 +13,7 @@ public enum RsaKeyStrategy {
   REDIS, // Private Key 를 Redis 에 저장
   TOKEN; // Private Key 와 만료 시간을 Token 에 저장
 
-  public static RsaKeyStrategy fromString(String value) {
+  public static RsaKeyStrategy fromString(final String value) {
     try {
       return valueOf(value.toUpperCase());
     } catch (Exception e) {

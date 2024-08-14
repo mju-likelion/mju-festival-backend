@@ -34,9 +34,9 @@ public class LostItemController {
 
   @GetMapping
   public ResponseEntity<SimpleLostItemsResponse> getLostItems(
-      @RequestParam String sort,
-      @RequestParam @PageNumber int page,
-      @RequestParam @PageSize int size) {
+      @RequestParam final String sort,
+      @RequestParam @PageNumber final int page,
+      @RequestParam @PageSize final int size) {
 
     return ResponseEntity.ok(
         lostItemQueryService.getLostItems(SortOrder.fromString(sort), page, size));
@@ -44,10 +44,10 @@ public class LostItemController {
 
   @GetMapping("/search")
   public ResponseEntity<SimpleLostItemsResponse> getLostItems(
-      @RequestParam String sort,
-      @RequestParam String keyword,
-      @RequestParam @PageNumber int page,
-      @RequestParam @PageSize int size) {
+      @RequestParam final String sort,
+      @RequestParam final String keyword,
+      @RequestParam @PageNumber final int page,
+      @RequestParam @PageSize final int size) {
 
     return ResponseEntity.ok(
         lostItemQueryService.searchLostItems(SortOrder.fromString(sort), keyword, page, size));
@@ -55,8 +55,8 @@ public class LostItemController {
 
   @PostMapping
   public ResponseEntity<Void> createLostItem(
-      @RequestBody @Valid CreateLostItemRequest createLostItemRequest,
-      @AuthenticationPrincipal UUID studentCouncilId) {
+      @RequestBody @Valid final CreateLostItemRequest createLostItemRequest,
+      @AuthenticationPrincipal final UUID studentCouncilId) {
 
     lostItemService.createLostItem(createLostItemRequest, studentCouncilId);
     return ResponseEntity.noContent().build();
@@ -64,9 +64,9 @@ public class LostItemController {
 
   @PatchMapping("/{id}")
   public ResponseEntity<Void> updateLostItem(
-      @PathVariable UUID id,
-      @RequestBody @Valid UpdateLostItemRequest updateLostItemRequest,
-      @AuthenticationPrincipal UUID studentCouncilId) {
+      @PathVariable final UUID id,
+      @RequestBody @Valid final UpdateLostItemRequest updateLostItemRequest,
+      @AuthenticationPrincipal final UUID studentCouncilId) {
 
     lostItemService.updateLostItem(id, updateLostItemRequest, studentCouncilId);
     return ResponseEntity.noContent().build();
@@ -74,9 +74,9 @@ public class LostItemController {
 
   @PatchMapping("/{id}/found")
   public ResponseEntity<Void> foundLostItem(
-      @PathVariable UUID id,
-      @RequestBody @Valid LostItemFoundRequest lostItemFoundRequest,
-      @AuthenticationPrincipal UUID studentCouncilId) {
+      @PathVariable final UUID id,
+      @RequestBody @Valid final LostItemFoundRequest lostItemFoundRequest,
+      @AuthenticationPrincipal final UUID studentCouncilId) {
 
     lostItemService.foundLostItem(id, lostItemFoundRequest, studentCouncilId);
     return ResponseEntity.noContent().build();
@@ -84,8 +84,8 @@ public class LostItemController {
 
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> deleteLostItem(
-      @PathVariable UUID id,
-      @AuthenticationPrincipal UUID studentCouncilId) {
+      @PathVariable final UUID id,
+      @AuthenticationPrincipal final UUID studentCouncilId) {
 
     lostItemService.deleteLostItem(id, studentCouncilId);
     return ResponseEntity.noContent().build();

@@ -29,7 +29,6 @@ public class BoothQueryService {
   private final BoothServiceUtils boothServiceUtils;
 
   public SimpleBoothsResponse getBooths(final int page, final int size) {
-
     int totalPage = boothQueryRepository.findTotalPage(size);
 
     validatePage(page, totalPage);
@@ -59,7 +58,7 @@ public class BoothQueryService {
     return new BoothQrResponse(boothQrManager.generateBoothQr(boothId));
   }
 
-  private void validatePage(int page, int totalPage) {
+  private void validatePage(final int page, final int totalPage) {
     if (page != 0 && page >= totalPage) {
       throw new NotFoundException(PAGE_OUT_OF_BOUND_ERROR);
     }

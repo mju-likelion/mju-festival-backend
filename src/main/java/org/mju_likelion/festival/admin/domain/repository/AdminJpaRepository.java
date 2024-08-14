@@ -16,5 +16,5 @@ public interface AdminJpaRepository extends JpaRepository<Admin, UUID> {
    * @param password 비밀번호
    * @return Admin
    */
-  Optional<Admin> findByLoginIdAndPassword(String loginId, String password);
+  Optional<Admin> findByLoginIdAndPassword(final String loginId, final String password);
 }

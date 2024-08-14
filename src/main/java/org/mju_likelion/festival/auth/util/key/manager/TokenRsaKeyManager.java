@@ -25,12 +25,12 @@ public class TokenRsaKeyManager implements RsaKeyManager {
   }
 
   @Override
-  public String savePrivateKey(String privateKey) {
+  public String savePrivateKey(final String privateKey) {
     return tokenUtil.getEncryptedToken(privateKey, this.rsaKeyExpireSecond);
   }
 
   @Override
-  public String decryptByKey(String encryptedText, String key) {
+  public String decryptByKey(final String encryptedText, final String key) {
     String privateKey = tokenUtil.parseValue(key);
     return rsaKeyUtil.rsaDecode(encryptedText, privateKey);
   }

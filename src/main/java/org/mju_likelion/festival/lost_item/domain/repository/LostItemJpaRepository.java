@@ -17,5 +17,5 @@ public interface LostItemJpaRepository extends JpaRepository<LostItem, UUID> {
    * @param writerId 작성자 ID
    * @return 분실물 목록
    */
-  List<LostItem> findByWriterId(UUID writerId);
+  List<LostItem> findByWriterId(final UUID writerId);
 }

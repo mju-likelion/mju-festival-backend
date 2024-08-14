@@ -56,8 +56,14 @@ public class Booth extends BaseEntity {
   @JoinColumn(nullable = false, name = "image_id")
   private Image image;
 
-  public Booth(Admin owner, String name, String description, String location, Short sequence,
-      Image locationImage, Image image) {
+  public Booth(
+      final Admin owner,
+      final String name,
+      final String description,
+      final String location,
+      final Short sequence,
+      final Image locationImage,
+      final Image image) {
 
     validate(name, description, location);
     this.owner = owner;
@@ -69,52 +75,56 @@ public class Booth extends BaseEntity {
     this.image = image;
   }
 
-  public boolean isManagedBy(Admin admin) {
+  public boolean isManagedBy(final Admin admin) {
     return owner.equals(admin);
   }
 
-  public void updateName(String name) {
+  public void updateName(final String name) {
     validateName(name);
     this.name = name;
   }
 
-  public void updateDescription(String description) {
+  public void updateDescription(final String description) {
     validateDescription(description);
     this.description = description;
   }
 
-  public void updateLocation(String location) {
+  public void updateLocation(final String location) {
     validateLocation(location);
     this.location = location;
   }
 
-  public void updateLocationImage(Image locationImage) {
+  public void updateLocationImage(final Image locationImage) {
     this.locationImage = locationImage;
   }
 
-  public void updateImage(Image image) {
+  public void updateImage(final Image image) {
     this.image = image;
   }
 
-  public void validate(String name, String description, String location) {
+  public void validate(
+      final String name,
+      final String description,
+      final String location) {
+
     validateName(name);
     validateDescription(description);
     validateLocation(location);
   }
 
-  public void validateName(String name) {
+  public void validateName(final String name) {
     if (StringUtil.isBlankOrLargerThan(name, NAME_LENGTH)) {
       throw new BadRequestException(INVALID_BOOTH_NAME_LENGTH_ERROR);
     }
   }
 
-  public void validateDescription(String description) {
+  public void validateDescription(final String description) {
     if (StringUtil.isBlankOrLargerThan(description, DESCRIPTION_LENGTH)) {
       throw new BadRequestException(INVALID_BOOTH_DESCRIPTION_LENGTH_ERROR);
     }
   }
 
-  public void validateLocation(String location) {
+  public void validateLocation(final String location) {
     if (StringUtil.isBlankOrLargerThan(location, LOCATION_LENGTH)) {
       throw new BadRequestException(INVALID_BOOTH_LOCATION_LENGTH_ERROR);
     }

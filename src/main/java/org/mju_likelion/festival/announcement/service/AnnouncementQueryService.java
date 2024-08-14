@@ -22,7 +22,10 @@ public class AnnouncementQueryService {
 
   private final AnnouncementQueryRepository announcementQueryRepository;
 
-  public SimpleAnnouncementsResponse getAnnouncements(SortOrder sort, int page, int size) {
+  public SimpleAnnouncementsResponse getAnnouncements(
+      final SortOrder sort,
+      final int page,
+      final int size) {
 
     int totalPage = announcementQueryRepository.getTotalPage(size);
 
@@ -34,7 +37,7 @@ public class AnnouncementQueryService {
     return SimpleAnnouncementsResponse.of(simpleAnnouncements, totalPage);
   }
 
-  public AnnouncementDetailResponse getAnnouncement(UUID id) {
+  public AnnouncementDetailResponse getAnnouncement(final UUID id) {
     return AnnouncementDetailResponse.from(
         announcementQueryRepository.findAnnouncementById(id).orElseThrow(
             () -> new NotFoundException(ANNOUNCEMENT_NOT_FOUND_ERROR)
@@ -42,7 +45,7 @@ public class AnnouncementQueryService {
     );
   }
 
-  private void validatePage(int page, int totalPage) {
+  private void validatePage(final int page, final int totalPage) {
     if (page != 0 && page >= totalPage) {
       throw new NotFoundException(PAGE_OUT_OF_BOUND_ERROR);
     }

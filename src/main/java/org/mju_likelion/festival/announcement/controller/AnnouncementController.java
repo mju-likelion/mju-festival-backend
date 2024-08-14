@@ -34,24 +34,25 @@ public class AnnouncementController {
 
   @GetMapping
   public ResponseEntity<SimpleAnnouncementsResponse> getAnnouncements(
-      @RequestParam String sort,
-      @RequestParam @PageNumber int page,
-      @RequestParam @PageSize int size) {
+      @RequestParam final String sort,
+      @RequestParam @PageNumber final int page,
+      @RequestParam @PageSize final int size) {
 
     return ResponseEntity.ok(
         announcementQueryService.getAnnouncements(SortOrder.fromString(sort), page, size));
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<AnnouncementDetailResponse> getAnnouncement(@PathVariable UUID id) {
+  public ResponseEntity<AnnouncementDetailResponse> getAnnouncement(
+      @PathVariable final UUID id) {
 
     return ResponseEntity.ok(announcementQueryService.getAnnouncement(id));
   }
 
   @PostMapping
   public ResponseEntity<Void> createAnnouncement(
-      @RequestBody @Valid CreateAnnouncementRequest createAnnouncementRequest,
-      @AuthenticationPrincipal UUID adminId) {
+      @RequestBody @Valid final CreateAnnouncementRequest createAnnouncementRequest,
+      @AuthenticationPrincipal final UUID adminId) {
 
     qnnouncementService.createAnnouncement(createAnnouncementRequest, adminId);
     return ResponseEntity.noContent().build();
@@ -59,17 +60,18 @@ public class AnnouncementController {
 
   @PatchMapping("/{id}")
   public ResponseEntity<Void> updateAnnouncement(
-      @PathVariable UUID id,
-      @RequestBody @Valid UpdateAnnouncementRequest updateAnnouncementRequest,
-      @AuthenticationPrincipal UUID adminId) {
+      @PathVariable final UUID id,
+      @RequestBody @Valid final UpdateAnnouncementRequest updateAnnouncementRequest,
+      @AuthenticationPrincipal final UUID adminId) {
 
     qnnouncementService.updateAnnouncement(id, updateAnnouncementRequest, adminId);
     return ResponseEntity.noContent().build();
   }
 
   @DeleteMapping("/{id}")
-  public ResponseEntity<Void> deleteAnnouncement(@PathVariable UUID id,
-      @AuthenticationPrincipal UUID adminId) {
+  public ResponseEntity<Void> deleteAnnouncement(
+      @PathVariable final UUID id,
+      @AuthenticationPrincipal final UUID adminId) {
 
     qnnouncementService.deleteAnnouncement(id, adminId);
     return ResponseEntity.noContent().build();

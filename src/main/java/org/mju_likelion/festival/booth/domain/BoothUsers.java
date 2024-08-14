@@ -23,8 +23,7 @@ public class BoothUsers {
    * @param user  사용자
    * @param booth 부스
    */
-  public void visit(User user, Booth booth) {
-
+  public void visit(final User user, final Booth booth) {
     validateVisitBooth(user, booth);
 
     BoothUser boothUser = BoothUser.builder()
@@ -41,7 +40,7 @@ public class BoothUsers {
    * @param user  사용자
    * @param booth 부스
    */
-  private void validateVisitBooth(User user, Booth booth) {
+  private void validateVisitBooth(final User user, final Booth booth) {
     if (isVisitedBooth(user, booth)) {
       throw new ConflictException(ALREADY_VISITED_BOOTH);
     }
@@ -54,7 +53,7 @@ public class BoothUsers {
    * @param booth 부스
    * @return 사용자가 부스를 방문했는지 여부
    */
-  private boolean isVisitedBooth(User user, Booth booth) {
+  private boolean isVisitedBooth(final User user, final Booth booth) {
     return this.boothUsers.stream()
         .anyMatch(boothUser -> boothUser.isSameUserAndBooth(user, booth));
   }

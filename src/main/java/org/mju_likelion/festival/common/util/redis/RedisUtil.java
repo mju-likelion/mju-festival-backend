@@ -16,7 +16,7 @@ public class RedisUtil<K, V> {
 
   private final RedisTemplate<K, V> redisTemplate;
 
-  public void insert(K key, V value, long offset) {
+  public void insert(final K key, final V value, final long offset) {
     try {
       this.redisTemplate.opsForValue().set(key, value, Duration.ofSeconds(offset));
     } catch (Exception e) {
@@ -24,7 +24,7 @@ public class RedisUtil<K, V> {
     }
   }
 
-  public Optional<V> select(K key) {
+  public Optional<V> select(final K key) {
     try {
       V value = this.redisTemplate.opsForValue().get(key);
       return Optional.ofNullable(value);
@@ -33,7 +33,7 @@ public class RedisUtil<K, V> {
     }
   }
 
-  public void delete(K key) {
+  public void delete(final K key) {
     try {
       this.redisTemplate.delete(key);
     } catch (Exception e) {

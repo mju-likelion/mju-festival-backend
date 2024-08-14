@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @AllArgsConstructor
+@Transactional(readOnly = true)
 public class AuthQueryService {
 
   private final RsaKeyManagerContext rsaKeyManagerContext;
@@ -38,9 +39,10 @@ public class AuthQueryService {
     return new KeyResponse(rsaKey.publicKey(), credentialKey, rsaKeyStrategy);
   }
 
-  @Transactional(readOnly = true)
-  public LoginResponse adminLogin(AdminLoginRequest adminLoginRequest,
-      RsaKeyStrategy rsaKeyStrategy) {
+  public LoginResponse adminLogin(
+      final AdminLoginRequest adminLoginRequest,
+      final RsaKeyStrategy rsaKeyStrategy) {
+
     RsaKeyManager rsaKeyManager = rsaKeyManagerContext.rsaKeyManager(rsaKeyStrategy);
 
     String key = adminLoginRequest.getKey();
@@ -50,7 +52,9 @@ public class AuthQueryService {
     Admin admin = getExistingAdmin(loginId, password);
 
     String accessToken = jwtUtil.create(
-        new Payload(admin.getId(), AuthenticationRole.from(admin.getRole())));
+        new Payload(admin.getId(), AuthenticationRole.from(admin.getRole()))
+    );
+
     return new LoginResponse(accessToken);
   }
 
@@ -61,7 +65,7 @@ public class AuthQueryService {
    * @param password 비밀번호
    * @return 관리자
    */
-  private Admin getExistingAdmin(String loginId, String password) {
+  private Admin getExistingAdmin(final String loginId, final String password) {
     return adminJpaRepository.findByLoginIdAndPassword(loginId, password)
         .orElseThrow(() -> new UnauthorizedException(ErrorType.INVALID_CREDENTIALS_ERROR));
   }

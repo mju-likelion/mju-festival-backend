@@ -13,13 +13,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class AdminAuthenticationInterceptor extends AbstractAuthenticationInterceptor {
 
-  public AdminAuthenticationInterceptor(AuthenticationContext authenticationContext,
-      JwtUtil userJwtUtil) {
+  public AdminAuthenticationInterceptor(
+      final AuthenticationContext authenticationContext,
+      final JwtUtil userJwtUtil) {
+
     super(authenticationContext, userJwtUtil);
   }
 
   @Override
-  protected boolean isAuthorized(Payload payload) {
+  protected boolean isAuthorized(final Payload payload) {
     return !Objects.equals(payload.getRole(), AuthenticationRole.USER);
   }
 

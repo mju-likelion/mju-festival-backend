@@ -27,25 +27,25 @@ public class BoothServiceUtils {
   private final BoothJpaRepository boothJpaRepository;
   private final UserJpaRepository userJpaRepository;
 
-  public void validateBoothAdminOwner(Admin admin, Booth booth) {
+  public void validateBoothAdminOwner(final Admin admin, final Booth booth) {
     if (!booth.isManagedBy(admin)) {
       throw new ForbiddenException(NOT_BOOTH_OWNER_ERROR);
     }
   }
 
-  public Admin getExistingAdmin(UUID adminId) {
+  public Admin getExistingAdmin(final UUID adminId) {
     return adminJpaRepository.findById(adminId).orElseThrow(
         () -> new NotFoundException(ADMIN_NOT_FOUND_ERROR)
     );
   }
 
-  public Booth getExistingBooth(UUID boothId) {
+  public Booth getExistingBooth(final UUID boothId) {
     return boothJpaRepository.findById(boothId).orElseThrow(
         () -> new NotFoundException(BOOTH_NOT_FOUND_ERROR)
     );
   }
 
-  public User getExistingUser(UUID userId) {
+  public User getExistingUser(final UUID userId) {
     return userJpaRepository.findById(userId).orElseThrow(
         () -> new NotFoundException(USER_NOT_FOUND_ERROR)
     );

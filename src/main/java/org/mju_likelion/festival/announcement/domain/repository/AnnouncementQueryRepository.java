@@ -59,9 +59,11 @@ public class AnnouncementQueryRepository {
    * @param size      크기
    * @return 공지사항 간단 정보 List
    */
-  public List<SimpleAnnouncement> findOrderedSimpleAnnouncementsWithPagenation(SortOrder sortOrder,
+  public List<SimpleAnnouncement> findOrderedSimpleAnnouncementsWithPagenation(
+      final SortOrder sortOrder,
       final int page,
       final int size) {
+
     String sql =
         "SELECT HEX(a.id) AS announcementId, a.title AS title, a.content AS content, a.created_at AS createdAt "
             + "FROM announcement a "

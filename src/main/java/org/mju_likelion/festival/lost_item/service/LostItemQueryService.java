@@ -20,7 +20,9 @@ public class LostItemQueryService {
   private final LostItemQueryRepository lostItemQueryRepository;
 
 
-  public SimpleLostItemsResponse getLostItems(final SortOrder sort, final int page,
+  public SimpleLostItemsResponse getLostItems(
+      final SortOrder sort,
+      final int page,
       final int size) {
 
     int totalPage = lostItemQueryRepository.findTotalPage(size);
@@ -34,8 +36,11 @@ public class LostItemQueryService {
     return SimpleLostItemsResponse.of(simpleLostItems, totalPage);
   }
 
-  public SimpleLostItemsResponse searchLostItems(final SortOrder sort, final String keyword,
-      final int page, final int size) {
+  public SimpleLostItemsResponse searchLostItems(
+      final SortOrder sort,
+      final String keyword,
+      final int page,
+      final int size) {
 
     int totalPage = lostItemQueryRepository.findTotalPageByKeyword(keyword, size);
 
@@ -47,7 +52,7 @@ public class LostItemQueryService {
     return SimpleLostItemsResponse.of(simpleLostItems, totalPage);
   }
 
-  private void validatePage(int page, int totalPage) {
+  private void validatePage(final int page, final int totalPage) {
     if (page != 0 && page >= totalPage) {
       throw new NotFoundException(PAGE_OUT_OF_BOUND_ERROR);
     }

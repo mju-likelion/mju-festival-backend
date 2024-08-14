@@ -5,11 +5,11 @@ import org.springframework.http.HttpStatus;
 
 public class UnauthorizedException extends CustomException {
 
-  public UnauthorizedException(ErrorType errorType) {
+  public UnauthorizedException(final ErrorType errorType) {
     super(errorType, HttpStatus.UNAUTHORIZED);
   }
 
-  public UnauthorizedException(ErrorType errorType, String detail) {
+  public UnauthorizedException(final ErrorType errorType, final String detail) {
     super(errorType, detail, HttpStatus.UNAUTHORIZED);
   }
 }

@@ -16,7 +16,7 @@ public class ImageService {
   private final S3ImageService s3ImageService;
   private final ImageJpaRepository imageJpaRepository;
 
-  public ImageResponse saveImage(MultipartFile image, ImageType type) {
+  public ImageResponse saveImage(final MultipartFile image, final ImageType type) {
     String url = s3ImageService.saveImage(image, type);
 
     Image newImage = new Image(url);

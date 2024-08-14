@@ -11,7 +11,7 @@ public enum BoothQrStrategy {
   REDIS,
   TOKEN;
 
-  public static BoothQrStrategy fromString(String value) {
+  public static BoothQrStrategy fromString(final String value) {
     try {
       return valueOf(value.toUpperCase());
     } catch (Exception e) {

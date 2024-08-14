@@ -18,5 +18,5 @@ public interface BoothUserJpaRepository extends JpaRepository<BoothUser, UUID> {
    * @param booth 부스
    * @return 부스 사용자
    */
-  Optional<BoothUser> findByUserAndBooth(User user, Booth booth);
+  Optional<BoothUser> findByUserAndBooth(final User user, final Booth booth);
 }

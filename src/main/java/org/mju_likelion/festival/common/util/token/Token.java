@@ -14,7 +14,7 @@ public class Token {
   protected final String value;
   protected final LocalDateTime expirationTime;
 
-  public static Token fromTokenString(String tokenString) {
+  public static Token fromTokenString(final String tokenString) {
     String value = tokenString.split(",")[0];
     LocalDateTime expirationTime = LocalDateTime.parse(tokenString.split(",")[1]);
     return new Token(value, expirationTime) {

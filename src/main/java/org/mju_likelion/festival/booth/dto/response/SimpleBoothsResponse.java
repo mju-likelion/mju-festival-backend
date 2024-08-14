@@ -15,7 +15,10 @@ public class SimpleBoothsResponse {
   private final List<SimpleBooth> simpleBooths;
   private final int totalPage;
 
-  public static SimpleBoothsResponse from(final List<SimpleBooth> simpleBooths, int totalPage) {
+  public static SimpleBoothsResponse from(
+      final List<SimpleBooth> simpleBooths,
+      final int totalPage) {
+
     return new SimpleBoothsResponse(simpleBooths, totalPage);
   }
 }

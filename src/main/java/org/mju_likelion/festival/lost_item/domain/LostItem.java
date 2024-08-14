@@ -91,6 +91,7 @@ public class LostItem extends BaseEntity {
       final String content,
       final Image image,
       final Admin writer) {
+
     validateTitle(title);
     validateContent(content);
     validateImage(image);

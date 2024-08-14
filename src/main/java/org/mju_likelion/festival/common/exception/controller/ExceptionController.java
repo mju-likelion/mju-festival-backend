@@ -35,6 +35,7 @@ public class ExceptionController {
   @ExceptionHandler(MethodArgumentNotValidException.class)
   public ResponseEntity<ErrorResponse> springValidationExceptionHandler(
       final MethodArgumentNotValidException e) {
+
     String message = e.getBindingResult().getAllErrors().get(0).getDefaultMessage();
 
     BadRequestException badRequestException = new BadRequestException(
@@ -64,6 +65,7 @@ public class ExceptionController {
   @ExceptionHandler(MethodArgumentTypeMismatchException.class)
   public ResponseEntity<ErrorResponse> methodArgumentTypeMismatchExceptionHandler(
       final MethodArgumentTypeMismatchException e) {
+
     BadRequestException badRequestException = new BadRequestException(
         ErrorType.INVALID_REQUEST_PARAMETER_ERROR, e.getName());
 
@@ -75,6 +77,7 @@ public class ExceptionController {
   @ExceptionHandler(MissingServletRequestParameterException.class)
   public ResponseEntity<ErrorResponse> missingServletRequestParameterExceptionHandler(
       final MissingServletRequestParameterException e) {
+
     BadRequestException badRequestException = new BadRequestException(
         ErrorType.MISSING_REQUEST_PARAMETER_ERROR, e.getParameterName());
 
@@ -85,7 +88,8 @@ public class ExceptionController {
   // HttpMessageNotReadableException 예외를 처리하는 핸들러(Body가 잘못된 경우(json 형식이 잘못된 경우))
   @ExceptionHandler(HttpMessageNotReadableException.class)
   public ResponseEntity<ErrorResponse> handleHttpMessageNotReadableException(
-      HttpMessageNotReadableException httpMessageNotReadableException) {
+      final HttpMessageNotReadableException httpMessageNotReadableException) {
+
     BadRequestException badRequestException = new BadRequestException(
         ErrorType.INVALID_REQUEST_FORMAT_ERROR, httpMessageNotReadableException.getMessage());
 
@@ -96,7 +100,8 @@ public class ExceptionController {
   // HttpRequestMethodNotSupportedException 예외를 처리하는 핸들러(요청의 메소드가 잘못된 경우)
   @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
   public ResponseEntity<ErrorResponse> handleHttpRequestMethodNotSupportedException(
-      HttpRequestMethodNotSupportedException httpRequestMethodNotSupportedException) {
+      final HttpRequestMethodNotSupportedException httpRequestMethodNotSupportedException) {
+
     BadRequestException badRequestException = new BadRequestException(
         ErrorType.METHOD_NOT_ALLOWED_ERROR, httpRequestMethodNotSupportedException.getMessage());
 
@@ -108,7 +113,8 @@ public class ExceptionController {
   // NoResourceFoundException 예외를 처리하는 핸들러(리소스를 찾을 수 없는 경우(URI가 잘못된 경우))
   @ExceptionHandler(NoResourceFoundException.class)
   public ResponseEntity<ErrorResponse> handleNoResourceFoundException(
-      NoResourceFoundException noResourceFoundException) {
+      final NoResourceFoundException noResourceFoundException) {
+
     BadRequestException badRequestException = new BadRequestException(
         ErrorType.NO_RESOURCE_ERROR, noResourceFoundException.getMessage());
 
@@ -119,7 +125,8 @@ public class ExceptionController {
   // HttpMediaTypeNotAcceptableException 예외를 처리하는 핸들러(요청의 Accept 헤더가 잘못된 경우)
   @ExceptionHandler(HttpMediaTypeNotAcceptableException.class)
   public ResponseEntity<ErrorResponse> handleHttpMediaTypeNotAcceptableException(
-      HttpMediaTypeNotAcceptableException httpMediaTypeNotAcceptableException) {
+      final HttpMediaTypeNotAcceptableException httpMediaTypeNotAcceptableException) {
+
     BadRequestException badRequestException = new BadRequestException(
         ErrorType.HTTP_MEDIA_TYPE_NOT_ACCEPTABLE_ERROR,
         httpMediaTypeNotAcceptableException.getMessage());
@@ -133,7 +140,8 @@ public class ExceptionController {
   // HttpMediaTypeNotSupportedException 예외를 처리하는 핸들러(요청의 Content-Type 헤더가 잘못된 경우)
   @ExceptionHandler(HttpMediaTypeNotSupportedException.class)
   public ResponseEntity<ErrorResponse> handleHttpMediaTypeNotSupportedException(
-      HttpMediaTypeNotSupportedException httpMediaTypeNotSupportedException) {
+      final HttpMediaTypeNotSupportedException httpMediaTypeNotSupportedException) {
+
     BadRequestException badRequestException = new BadRequestException(
         HTTP_MEDIA_TYPE_NOT_SUPPORTED_ERROR, httpMediaTypeNotSupportedException.getMessage());
 
@@ -148,7 +156,7 @@ public class ExceptionController {
     return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ErrorResponse.res(e));
   }
 
-  private void writeLog(CustomException customException) {
+  private void writeLog(final CustomException customException) {
     ErrorType errorType = customException.getErrorType();
 
     String exceptionName = customException.getClass().getSimpleName();
@@ -158,7 +166,7 @@ public class ExceptionController {
     log.error("[{}]{}:{}", exceptionName, message, detail);
   }
 
-  private void writeLog(Exception exception) {
+  private void writeLog(final Exception exception) {
     String exceptionName = exception.getClass().getSimpleName();
     String message = exception.getMessage();
     log.error("[{}]:{}", exceptionName, message);

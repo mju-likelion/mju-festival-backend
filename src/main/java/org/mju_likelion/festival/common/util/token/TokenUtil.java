@@ -27,7 +27,7 @@ public class TokenUtil {
    * @param tokenExpirationSeconds 토큰 만료 시간
    * @return 암호화된 Token
    */
-  public String getEncryptedToken(String value, long tokenExpirationSeconds) {
+  public String getEncryptedToken(final String value, final long tokenExpirationSeconds) {
     try {
       Token token = generateToken(value, tokenExpirationSeconds);
       return encryptionUtil.encrypt(token.toTokenString());
@@ -43,7 +43,7 @@ public class TokenUtil {
    * @param tokenExpirationSeconds 토큰 만료 시간
    * @return Token
    */
-  private Token generateToken(String value, long tokenExpirationSeconds) {
+  private Token generateToken(final String value, final long tokenExpirationSeconds) {
     return new Token(value,
         LocalDateTime.now().plusSeconds(tokenExpirationSeconds));
   }
@@ -54,7 +54,7 @@ public class TokenUtil {
    * @param encryptedToken 암호화된 토큰
    * @return value
    */
-  public String parseValue(String encryptedToken) {
+  public String parseValue(final String encryptedToken) {
     try {
       String decryptedToken = encryptionUtil.decrypt(encryptedToken);
       Token token = Token.fromTokenString(decryptedToken);
@@ -71,7 +71,7 @@ public class TokenUtil {
    *
    * @param token Token
    */
-  private void validateToken(Token token) {
+  private void validateToken(final Token token) {
     if (token.getExpirationTime().isBefore(LocalDateTime.now())) {
       throw new BadRequestException(TOKEN_EXPIRED_ERROR);
     }

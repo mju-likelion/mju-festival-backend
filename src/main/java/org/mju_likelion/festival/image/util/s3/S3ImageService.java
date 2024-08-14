@@ -36,7 +36,7 @@ public class S3ImageService {
    * @param imageType 이미지 타입
    * @return 이미지 URL
    */
-  public String saveImage(MultipartFile image, ImageType imageType) {
+  public String saveImage(final MultipartFile image, final ImageType imageType) {
     try {
       validate(image);
 
@@ -56,7 +56,7 @@ public class S3ImageService {
    *
    * @param imageUrl 이미지 URL
    */
-  public void deleteImage(String imageUrl) {
+  public void deleteImage(final String imageUrl) {
     amazonS3.deleteObject(bucket, extractFilename(imageUrl));
   }
 
@@ -66,7 +66,7 @@ public class S3ImageService {
    * @param imageType 이미지 타입
    * @return 이미지 파일 이름
    */
-  private String makeFileName(ImageType imageType) {
+  private String makeFileName(final ImageType imageType) {
     return imageType.getLocation() + UUID.randomUUID();
   }
 
@@ -76,7 +76,7 @@ public class S3ImageService {
    * @param imageUrl 이미지 URL
    * @return 파일 이름
    */
-  private String extractFilename(String imageUrl) {
+  private String extractFilename(final String imageUrl) {
     return imageUrl.substring(cloudfrontUrl.length());
   }
 
@@ -86,7 +86,7 @@ public class S3ImageService {
    * @param image 이미지 파일
    * @return 이미지 파일의 메타데이터
    */
-  private ObjectMetadata createObjectMetadata(MultipartFile image) {
+  private ObjectMetadata createObjectMetadata(final MultipartFile image) {
     ObjectMetadata metadata = new ObjectMetadata();
     metadata.setContentLength(image.getSize());
     metadata.setContentType(image.getContentType());
@@ -99,7 +99,7 @@ public class S3ImageService {
    * @param filename 파일 이름
    * @return Cloudfront URL
    */
-  private String getCloudfrontUrl(String filename) {
+  private String getCloudfrontUrl(final String filename) {
     return cloudfrontUrl.concat(filename);
   }
 
@@ -108,7 +108,7 @@ public class S3ImageService {
    *
    * @param image 이미지 파일
    */
-  private void validate(MultipartFile image) {
+  private void validate(final MultipartFile image) {
     validateEmptyFile(image);
     validateImageExtension(image);
     validateImageSize(image);
@@ -119,7 +119,7 @@ public class S3ImageService {
    *
    * @param multipartFile 이미지 파일
    */
-  private void validateEmptyFile(MultipartFile multipartFile) {
+  private void validateEmptyFile(final MultipartFile multipartFile) {
     if (multipartFile == null
         || multipartFile.isEmpty()
         || multipartFile.getSize() == 0
@@ -134,7 +134,7 @@ public class S3ImageService {
    *
    * @param image 이미지 파일
    */
-  private void validateImageExtension(MultipartFile image) {
+  private void validateImageExtension(final MultipartFile image) {
     String contentType = image.getContentType();
     if (!contentType.startsWith("image/")) {
       throw new BadRequestException(FILE_NOT_IMAGE_ERROR);
@@ -146,7 +146,7 @@ public class S3ImageService {
    *
    * @param image 이미지 파일
    */
-  private void validateImageSize(MultipartFile image) {
+  private void validateImageSize(final MultipartFile image) {
     if (image.getSize() > MAX_FILE_SIZE) {
       throw new BadRequestException(FILE_SIZE_EXCEED_ERROR);
     }
