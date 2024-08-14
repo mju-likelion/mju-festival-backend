@@ -91,7 +91,7 @@ public class ExceptionController {
       final HttpMessageNotReadableException httpMessageNotReadableException) {
 
     BadRequestException badRequestException = new BadRequestException(
-        ErrorType.INVALID_REQUEST_FORMAT_ERROR, httpMessageNotReadableException.getMessage());
+        ErrorType.INVALID_REQUEST_FORMAT_ERROR);
 
     writeLog(badRequestException);
     return ResponseEntity.badRequest().body(ErrorResponse.res(badRequestException));
