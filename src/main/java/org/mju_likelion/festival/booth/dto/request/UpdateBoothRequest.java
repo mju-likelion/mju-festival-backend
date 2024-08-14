@@ -15,4 +15,15 @@ public class UpdateBoothRequest {
   private String location;
   private String locationImageUrl;
   private String imageUrl;
+
+  @Override
+  public String toString() {
+    return "UpdateBoothRequest{" +
+        "name='" + name + '\'' +
+        ", description='" + description + '\'' +
+        ", location='" + location + '\'' +
+        ", locationImageUrl='" + locationImageUrl + '\'' +
+        ", imageUrl='" + imageUrl + '\'' +
+        '}';
+  }
 }

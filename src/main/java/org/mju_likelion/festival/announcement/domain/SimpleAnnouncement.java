@@ -13,4 +13,14 @@ public class SimpleAnnouncement {
   private final String title;
   private final String content;
   private final LocalDateTime createdAt;
+
+  @Override
+  public String toString() {
+    return "SimpleAnnouncement{" +
+        "id=" + id +
+        ", title='" + title + '\'' +
+        ", content='" + content + '\'' +
+        ", createdAt=" + createdAt +
+        '}';
+  }
 }

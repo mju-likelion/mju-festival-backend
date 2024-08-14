@@ -28,4 +28,17 @@ public class BoothDetail extends SimpleBooth {
     this.locationImageUrl = locationImageUrl;
     this.createdAt = createdAt;
   }
+
+  @Override
+  public String toString() {
+    return "BoothDetail{" +
+        "id=" + id +
+        ", name='" + name + '\'' +
+        ", description='" + description + '\'' +
+        ", location='" + location + '\'' +
+        ", imageUrl='" + imageUrl + '\'' +
+        ", locationImageUrl='" + locationImageUrl + '\'' +
+        ", createdAt=" + createdAt +
+        '}';
+  }
 }

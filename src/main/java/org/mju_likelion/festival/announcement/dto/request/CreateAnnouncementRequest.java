@@ -18,4 +18,13 @@ public class CreateAnnouncementRequest {
   private String content;
 
   private String imageUrl;
+
+  @Override
+  public String toString() {
+    return "CreateAnnouncementRequest{" +
+        "title='" + title + '\'' +
+        ", content='" + content + '\'' +
+        ", imageUrl='" + imageUrl + '\'' +
+        '}';
+  }
 }

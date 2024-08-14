@@ -14,4 +14,11 @@ public class ImageResponse {
   public static ImageResponse from(final Image image) {
     return new ImageResponse(image.getUrl());
   }
+
+  @Override
+  public String toString() {
+    return "ImageResponse{" +
+        "url='" + url + '\'' +
+        '}';
+  }
 }

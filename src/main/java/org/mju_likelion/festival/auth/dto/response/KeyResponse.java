@@ -14,4 +14,13 @@ public class KeyResponse {
   private final String rsaPublicKey;
   private final String credentialKey;
   private final RsaKeyStrategy rsaKeyStrategy;
+
+  @Override
+  public String toString() {
+    return "KeyResponse{" +
+        "rsaPublicKey='" + rsaPublicKey + '\'' +
+        ", credentialKey='" + credentialKey + '\'' +
+        ", rsaKeyStrategy=" + rsaKeyStrategy +
+        '}';
+  }
 }

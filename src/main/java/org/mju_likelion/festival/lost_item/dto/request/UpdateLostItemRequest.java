@@ -13,4 +13,13 @@ public class UpdateLostItemRequest {
   private String title;
   private String content;
   private String imageUrl;
+
+  @Override
+  public String toString() {
+    return "UpdateLostItemRequest{" +
+        "title='" + title + '\'' +
+        ", content='" + content + '\'' +
+        ", imageUrl='" + imageUrl + '\'' +
+        '}';
+  }
 }

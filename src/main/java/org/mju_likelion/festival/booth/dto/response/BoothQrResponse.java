@@ -11,4 +11,11 @@ import lombok.Getter;
 public class BoothQrResponse {
 
   private final String qrCode;
+
+  @Override
+  public String toString() {
+    return "BoothQrResponse{" +
+        "qrCode='" + qrCode + '\'' +
+        '}';
+  }
 }

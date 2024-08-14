@@ -19,4 +19,13 @@ public class UpdateAnnouncementRequest {
   private String title;
   private String content;
   private FieldWrapper<String> imageUrl;
+
+  @Override
+  public String toString() {
+    return "UpdateAnnouncementRequest{" +
+        "title='" + title + '\'' +
+        ", content='" + content + '\'' +
+        ", imageUrl=" + imageUrl +
+        '}';
+  }
 }

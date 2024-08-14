@@ -22,4 +22,12 @@ public class SimpleLostItemsResponse {
 
     return new SimpleLostItemsResponse(simpleLostItem, totalPage);
   }
+
+  @Override
+  public String toString() {
+    return "SimpleLostItemsResponse{" +
+        "simpleLostItems=" + simpleLostItems +
+        ", totalPage=" + totalPage +
+        '}';
+  }
 }
