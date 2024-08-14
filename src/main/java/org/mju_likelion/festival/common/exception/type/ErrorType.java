@@ -70,7 +70,6 @@ public enum ErrorType {
   DECRYPT_ERROR(50006, "복호화에 실패했습니다."),
   RSA_KEY_ERROR(50007, "RSA 키 처리 중 오류가 발생했습니다."),
 
-
   REDIS_ERROR(60000, "Redis 에러가 발생했습니다."),
 
   UNEXPECTED_ERROR(99999, "예기치 않은 오류가 발생했습니다.");
