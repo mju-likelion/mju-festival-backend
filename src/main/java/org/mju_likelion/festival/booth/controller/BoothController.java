@@ -34,32 +34,41 @@ public class BoothController {
   public ResponseEntity<SimpleBoothsResponse> getBooths(
       @RequestParam @PageNumber final int page,
       @RequestParam @PageSize final int size) {
+
     return ResponseEntity.ok(boothQueryService.getBooths(page, size));
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<BoothDetailResponse> getBooth(@PathVariable final UUID id) {
+  public ResponseEntity<BoothDetailResponse> getBooth(
+      @PathVariable final UUID id) {
+
     return ResponseEntity.ok(boothQueryService.getBooth(id));
   }
 
   @GetMapping("/{id}/qr")
-  public ResponseEntity<BoothQrResponse> getBoothQr(@PathVariable final UUID id,
+  public ResponseEntity<BoothQrResponse> getBoothQr(
+      @PathVariable final UUID id,
       @AuthenticationPrincipal final UUID boothAdminId) {
+
     return ResponseEntity.ok(boothQueryService.getBoothQr(id, boothAdminId));
   }
 
   @PostMapping("/{qrId}/visit")
-  public ResponseEntity<Void> visitBooth(@PathVariable final String qrId,
+  public ResponseEntity<Void> visitBooth(
+      @PathVariable final String qrId,
       @RequestParam final String strategy,
       @AuthenticationPrincipal final UUID userId) {
+
     boothService.visitBooth(qrId, BoothQrStrategy.fromString(strategy), userId);
     return ResponseEntity.ok().build();
   }
 
   @PatchMapping("/{id}")
-  public ResponseEntity<Void> updateBooth(@PathVariable final UUID id,
+  public ResponseEntity<Void> updateBooth(
+      @PathVariable final UUID id,
       @RequestBody final UpdateBoothRequest updateBoothRequest,
       @AuthenticationPrincipal final UUID boothAdminId) {
+
     boothService.updateBooth(id, updateBoothRequest, boothAdminId);
     return ResponseEntity.noContent().build();
   }

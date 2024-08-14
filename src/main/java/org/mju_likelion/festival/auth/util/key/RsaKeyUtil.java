@@ -65,7 +65,7 @@ public class RsaKeyUtil {
    * @return 암호화된 문자열
    * @deprecated Test 에서만 사용한다.
    */
-  public String rsaEncode(String plainText, String publicKey) {
+  public String rsaEncode(final String plainText, final String publicKey) {
     try {
       Cipher cipher = Cipher.getInstance(instanceType);
       cipher.init(Cipher.ENCRYPT_MODE, convertPublicKey(publicKey));
@@ -85,7 +85,7 @@ public class RsaKeyUtil {
    * @param privateKey         RSA Private Key
    * @return 복호화된 문자열
    */
-  public String rsaDecode(String encryptedPlainText, String privateKey) {
+  public String rsaDecode(final String encryptedPlainText, final String privateKey) {
     try {
       byte[] encryptedPlainTextByte = Base64.getDecoder().decode(encryptedPlainText.getBytes());
 
@@ -105,7 +105,7 @@ public class RsaKeyUtil {
    * @return PublicKey 객체
    * @deprecated Test 에서만 사용한다.
    */
-  public PublicKey convertPublicKey(String publicKey) {
+  public PublicKey convertPublicKey(final String publicKey) {
     try {
       KeyFactory keyFactory = KeyFactory.getInstance(instanceType);
       byte[] publicKeyByte = Base64.getDecoder().decode(publicKey.getBytes());
@@ -122,7 +122,7 @@ public class RsaKeyUtil {
    * @param privateKey String 형태의 PrivateKey
    * @return PrivateKey 객체
    */
-  public PrivateKey convertPrivateKey(String privateKey) {
+  public PrivateKey convertPrivateKey(final String privateKey) {
     try {
       KeyFactory keyFactory = KeyFactory.getInstance(instanceType);
       byte[] privateKeyByte = Base64.getDecoder().decode(privateKey.getBytes());
@@ -133,7 +133,7 @@ public class RsaKeyUtil {
     }
   }
 
-  private String base64EncodeToString(byte[] byteData) {
+  private String base64EncodeToString(final byte[] byteData) {
     return Base64.getEncoder().encodeToString(byteData);
   }
 }

@@ -25,7 +25,10 @@ public class FieldWrapper<T> {
    * @param fieldName 필드 이름
    * @return 필드 래퍼
    */
-  public static FieldWrapper<String> getStringFieldWrapper(JsonNode node, String fieldName) {
+  public static FieldWrapper<String> getStringFieldWrapper(
+      final JsonNode node,
+      final String fieldName) {
+
     if (node.has(fieldName)) {
       JsonNode fieldNode = node.get(fieldName);
       return new FieldWrapper<>(true, fieldNode.isNull() ? null : fieldNode.asText());
@@ -47,7 +50,7 @@ public class FieldWrapper<T> {
    *
    * @param consumer 실행할 consumer
    */
-  public void doIfPresentAndNotNull(Consumer<T> consumer) {
+  public void doIfPresentAndNotNull(final Consumer<T> consumer) {
     if (isPresent() && value != null) {
       consumer.accept(value);
     }
@@ -58,7 +61,7 @@ public class FieldWrapper<T> {
    *
    * @param consumer 실행할 consumer
    */
-  public void doIfPresent(Consumer<T> consumer) {
+  public void doIfPresent(final Consumer<T> consumer) {
     if (isPresent()) {
       consumer.accept(value);
     }

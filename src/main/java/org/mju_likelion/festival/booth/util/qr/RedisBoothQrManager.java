@@ -43,12 +43,12 @@ public class RedisBoothQrManager implements BoothQrManager {
     return BoothQrStrategy.REDIS;
   }
 
-  private String getBoothId(UUID qrId) {
+  private String getBoothId(final UUID qrId) {
     return redisUtil.select(qrId)
         .orElseThrow(() -> new NotFoundException(BOOTH_QR_NOT_FOUND_ERROR));
   }
 
-  private void deleteBoothId(UUID qrId) {
+  private void deleteBoothId(final UUID qrId) {
     redisUtil.delete(qrId);
   }
 }

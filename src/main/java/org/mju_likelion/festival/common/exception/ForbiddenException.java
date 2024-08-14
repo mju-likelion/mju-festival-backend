@@ -5,11 +5,11 @@ import org.springframework.http.HttpStatus;
 
 public class ForbiddenException extends CustomException {
 
-  public ForbiddenException(ErrorType errorType) {
+  public ForbiddenException(final ErrorType errorType) {
     super(errorType, HttpStatus.FORBIDDEN);
   }
 
-  public ForbiddenException(ErrorType errorType, String detail) {
+  public ForbiddenException(final ErrorType errorType, final String detail) {
     super(errorType, detail, HttpStatus.FORBIDDEN);
   }
 }

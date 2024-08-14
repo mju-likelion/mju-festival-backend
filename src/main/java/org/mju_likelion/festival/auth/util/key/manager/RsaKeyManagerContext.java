@@ -21,8 +21,10 @@ public class RsaKeyManagerContext {
   private final Map<RsaKeyStrategy, RsaKeyManager> rsaKeyManagers;
 
   @Autowired
-  public RsaKeyManagerContext(RedisAvailabilityChecker redisAvailabilityChecker,
-      List<RsaKeyManager> rsaKeyManagerList) {
+  public RsaKeyManagerContext(
+      final RedisAvailabilityChecker redisAvailabilityChecker,
+      final List<RsaKeyManager> rsaKeyManagerList) {
+
     this.redisAvailabilityChecker = redisAvailabilityChecker;
     this.rsaKeyManagers = rsaKeyManagerList.stream()
         .collect(Collectors.toMap(RsaKeyManager::rsaKeyStrategy, Function.identity()));
@@ -64,7 +66,7 @@ public class RsaKeyManagerContext {
    * @param rsaKeyStrategy RsaKey 전략
    * @return RsaKeyManager
    */
-  public RsaKeyManager rsaKeyManager(RsaKeyStrategy rsaKeyStrategy) {
+  public RsaKeyManager rsaKeyManager(final RsaKeyStrategy rsaKeyStrategy) {
     return rsaKeyManagers.get(rsaKeyStrategy);
   }
 }

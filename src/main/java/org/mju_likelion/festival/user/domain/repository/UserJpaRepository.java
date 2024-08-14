@@ -18,5 +18,5 @@ public interface UserJpaRepository extends JpaRepository<User, UUID> {
    * @return 사용자 ID
    */
   @Query("SELECT u.id FROM user u WHERE u.studentId = :studentId")
-  Optional<UUID> findIdByStudentId(@Param("studentId") String studentId);
+  Optional<UUID> findIdByStudentId(@Param("studentId") final String studentId);
 }

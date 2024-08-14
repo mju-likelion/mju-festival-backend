@@ -14,5 +14,5 @@ public interface AnnouncementJpaRepository extends JpaRepository<Announcement, U
    * <p>
    * 테스트에서만 사용한다.
    */
-  List<Announcement> findByWriterId(UUID writerId);
+  List<Announcement> findByWriterId(final UUID writerId);
 }

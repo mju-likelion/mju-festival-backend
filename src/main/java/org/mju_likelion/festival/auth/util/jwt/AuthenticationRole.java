@@ -14,7 +14,7 @@ public enum AuthenticationRole {
    * @param adminRole AdminRole
    * @return AuthenticationRole
    */
-  public static AuthenticationRole from(AdminRole adminRole) {
+  public static AuthenticationRole from(final AdminRole adminRole) {
     return switch (adminRole) {
       case STUDENT_COUNCIL -> STUDENT_COUNCIL;
       case BOOTH_MANAGER -> BOOTH_MANAGER;

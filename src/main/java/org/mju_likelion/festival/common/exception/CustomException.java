@@ -11,14 +11,18 @@ public abstract class CustomException extends RuntimeException {
   private final String detail;
   private final HttpStatus httpStatus;
 
-  protected CustomException(final ErrorType errorType, HttpStatus httpStatus) {
+  protected CustomException(final ErrorType errorType, final HttpStatus httpStatus) {
     super(errorType.getMessage());
     this.errorType = errorType;
     this.detail = null;
     this.httpStatus = httpStatus;
   }
 
-  protected CustomException(final ErrorType errorType, final String detail, HttpStatus httpStatus) {
+  protected CustomException(
+      final ErrorType errorType,
+      final String detail,
+      final HttpStatus httpStatus) {
+
     super(errorType.getMessage());
     this.errorType = errorType;
     this.detail = detail;

@@ -14,7 +14,7 @@ public enum SortOrder {
   ASC,
   DESC;
 
-  public static SortOrder fromString(String value) {
+  public static SortOrder fromString(final String value) {
     try {
       return SortOrder.valueOf(value.toUpperCase());
     } catch (Exception e) {

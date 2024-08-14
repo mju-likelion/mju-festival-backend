@@ -31,17 +31,17 @@ public class User extends BaseEntity {
   @Embedded
   private BoothUsers boothUsers;
 
-  public User(String studentId) {
+  public User(final String studentId) {
     this.studentId = studentId;
     this.termUsers = new TermUsers();
     this.boothUsers = new BoothUsers();
   }
 
-  public void agreeToTerm(Term term) {
+  public void agreeToTerm(final Term term) {
     this.termUsers.agree(term, this);
   }
 
-  public void visitBooth(Booth booth) {
+  public void visitBooth(final Booth booth) {
     this.boothUsers.visit(this, booth);
   }
 

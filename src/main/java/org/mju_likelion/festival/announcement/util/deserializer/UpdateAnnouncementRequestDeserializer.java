@@ -30,7 +30,6 @@ public class UpdateAnnouncementRequestDeserializer extends
 
   @Override
   public UpdateAnnouncementRequest deserialize(JsonParser jp, DeserializationContext ctxt) {
-
     try {
       JsonNode node = jp.getCodec().readTree(jp);
       UpdateAnnouncementRequest request = new UpdateAnnouncementRequest();

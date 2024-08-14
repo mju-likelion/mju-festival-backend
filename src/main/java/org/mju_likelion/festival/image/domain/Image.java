@@ -23,12 +23,12 @@ public class Image extends BaseEntity {
   @Column(nullable = false, length = URL_LENGTH)
   private String url;
 
-  public Image(String url) {
+  public Image(final String url) {
     validateUrl(url);
     this.url = url;
   }
 
-  public void validateUrl(String url) {
+  public void validateUrl(final String url) {
     if (StringUtil.isBlankOrLargerThan(url, URL_LENGTH)) {
       throw new BadRequestException(INVALID_IMAGE_URL_LENGTH_ERROR);
     }

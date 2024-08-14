@@ -37,7 +37,10 @@ public class AuthService {
   private final JwtUtil jwtUtil;
 
   @Transactional
-  public LoginResponse userLogin(UserLoginRequest userLoginRequest, RsaKeyStrategy rsaKeyStrategy) {
+  public LoginResponse userLogin(
+      final UserLoginRequest userLoginRequest,
+      final RsaKeyStrategy rsaKeyStrategy) {
+
     RsaKeyManager rsaKeyManager = rsaKeyManagerContext.rsaKeyManager(rsaKeyStrategy);
 
     String key = userLoginRequest.getKey();
@@ -61,7 +64,7 @@ public class AuthService {
    * @param terms     사용자가 동의한 약관
    * @return 사용자의 ID
    */
-  private UUID saveOrGetUserId(String studentId, Map<UUID, Boolean> terms) {
+  private UUID saveOrGetUserId(final String studentId, final Map<UUID, Boolean> terms) {
     List<Term> validTerms = getValidTerms(terms);
 
     Optional<UUID> userId = userJpaRepository.findIdByStudentId(studentId);
@@ -76,7 +79,7 @@ public class AuthService {
    * @param terms     사용자가 동의한 약관
    * @return 사용자의 ID
    */
-  private UUID saveUser(String studentId, List<Term> terms) {
+  private UUID saveUser(final String studentId, final List<Term> terms) {
     User user = new User(studentId);
 
     terms.forEach(user::agreeToTerm);
@@ -92,7 +95,7 @@ public class AuthService {
    * @param terms 사용자가 동의한 약관
    * @return 유효한 약관 목록
    */
-  private List<Term> getValidTerms(Map<UUID, Boolean> terms) {
+  private List<Term> getValidTerms(final Map<UUID, Boolean> terms) {
     List<Term> termsInDb = termJpaRepository.findAll();
     validateTermIds(termsInDb, terms.keySet());
     return termsInDb;
@@ -104,7 +107,7 @@ public class AuthService {
    * @param termsInDb DB 의 약관 목록
    * @param termIds   약관 ID 목록
    */
-  private void validateTermIds(List<Term> termsInDb, Set<UUID> termIds) {
+  private void validateTermIds(final List<Term> termsInDb, final Set<UUID> termIds) {
     Set<UUID> validTermIds = termsInDb.stream().map(Term::getId).collect(Collectors.toSet());
     if (!termIds.containsAll(validTermIds)) {
       throw new BadRequestException(ErrorType.MISSING_TERM_ERROR);
@@ -117,7 +120,7 @@ public class AuthService {
    * @param studentId 학번
    * @param password  비밀번호
    */
-  private void validateUser(String studentId, String password) {
+  private void validateUser(final String studentId, final String password) {
     if (!mjuApiUtil.doUserCheck(studentId, password)) {
       throw new UnauthorizedException(ErrorType.INVALID_CREDENTIALS_ERROR);
     }

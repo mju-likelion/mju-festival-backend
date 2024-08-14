@@ -22,7 +22,6 @@ public class AnnouncementDetailResponse {
   private final String imageUrl;
 
   public static AnnouncementDetailResponse from(final AnnouncementDetail announcementDetail) {
-
     return new AnnouncementDetailResponse(
         announcementDetail.getId(),
         announcementDetail.getTitle(),

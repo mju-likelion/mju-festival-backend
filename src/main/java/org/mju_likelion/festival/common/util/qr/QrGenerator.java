@@ -22,8 +22,11 @@ public class QrGenerator {
    * @param query 쿼리 맵
    * @return QR 코드 URL
    */
-  public String generateQrCode(final String path, final String value,
+  public String generateQrCode(
+      final String path,
+      final String value,
       final Map<String, String> query) {
+
     String queryString = generateQueryString(query);
     return clientHost + path + value + queryString;
   }
@@ -34,7 +37,7 @@ public class QrGenerator {
    * @param query 쿼리 맵
    * @return 쿼리 문자열
    */
-  private String generateQueryString(Map<String, String> query) {
+  private String generateQueryString(final Map<String, String> query) {
     if (query == null || query.isEmpty()) {
       return "";
     }

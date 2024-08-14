@@ -13,7 +13,7 @@ public class NullHandler {
    * @param value          값
    * @param updateFunction 실행할 함수
    */
-  public static <T> void doIfNotNull(T value, Consumer<T> updateFunction) {
+  public static <T> void doIfNotNull(final T value, final Consumer<T> updateFunction) {
     if (value != null) {
       updateFunction.accept(value);
     }

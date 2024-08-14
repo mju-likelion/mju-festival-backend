@@ -5,11 +5,11 @@ import org.springframework.http.HttpStatus;
 
 public class ConflictException extends CustomException {
 
-  public ConflictException(ErrorType errorType) {
+  public ConflictException(final ErrorType errorType) {
     super(errorType, HttpStatus.CONFLICT);
   }
 
-  public ConflictException(ErrorType errorType, String detail) {
+  public ConflictException(final ErrorType errorType, final String detail) {
     super(errorType, detail, HttpStatus.CONFLICT);
   }
 }

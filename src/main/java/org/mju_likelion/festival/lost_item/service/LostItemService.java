@@ -26,7 +26,9 @@ public class LostItemService {
   private final LostItemJpaRepository lostItemJpaRepository;
   private final AdminJpaRepository adminJpaRepository;
 
-  public void createLostItem(CreateLostItemRequest createLostItemRequest, UUID studentCouncilId) {
+  public void createLostItem(
+      final CreateLostItemRequest createLostItemRequest,
+      final UUID studentCouncilId) {
 
     Admin admin = getExistAdmin(studentCouncilId);
     Image image = new Image(createLostItemRequest.getImageUrl());
@@ -40,8 +42,11 @@ public class LostItemService {
     lostItemJpaRepository.save(lostItem);
   }
 
-  public void updateLostItem(UUID lostItemId, UpdateLostItemRequest updateLostItemRequest,
-      UUID studentCouncilId) {
+  public void updateLostItem(
+      final UUID lostItemId,
+      final UpdateLostItemRequest updateLostItemRequest,
+      final UUID studentCouncilId) {
+
     LostItem lostItem = getExistLostItem(lostItemId);
 
     validateAdminExistence(studentCouncilId);
@@ -53,8 +58,11 @@ public class LostItemService {
     lostItemJpaRepository.save(lostItem);
   }
 
-  public void foundLostItem(UUID lostItemId, LostItemFoundRequest lostItemFoundRequest,
-      UUID studentCouncilId) {
+  public void foundLostItem(
+      final UUID lostItemId,
+      final LostItemFoundRequest lostItemFoundRequest,
+      final UUID studentCouncilId) {
+
     LostItem lostItem = getExistLostItem(lostItemId);
     validateAdminExistence(studentCouncilId);
 
@@ -63,25 +71,25 @@ public class LostItemService {
     lostItemJpaRepository.save(lostItem);
   }
 
-  public void deleteLostItem(UUID lostItemId, UUID studentCouncilId) {
+  public void deleteLostItem(final UUID lostItemId, final UUID studentCouncilId) {
     LostItem lostItem = getExistLostItem(lostItemId);
     validateAdminExistence(studentCouncilId);
 
     lostItemJpaRepository.delete(lostItem);
   }
 
-  private void validateAdminExistence(UUID adminId) {
+  private void validateAdminExistence(final UUID adminId) {
     if (!adminJpaRepository.existsById(adminId)) {
       throw new NotFoundException(ADMIN_NOT_FOUND_ERROR);
     }
   }
 
-  private LostItem getExistLostItem(UUID lostItemId) {
+  private LostItem getExistLostItem(final UUID lostItemId) {
     return lostItemJpaRepository.findById(lostItemId)
         .orElseThrow(() -> new NotFoundException(LOST_ITEM_NOT_FOUND_ERROR));
   }
 
-  private Admin getExistAdmin(UUID studentCouncilId) {
+  private Admin getExistAdmin(final UUID studentCouncilId) {
     return adminJpaRepository.findById(studentCouncilId)
         .orElseThrow(() -> new NotFoundException(ADMIN_NOT_FOUND_ERROR));
   }

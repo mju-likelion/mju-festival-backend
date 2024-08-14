@@ -14,7 +14,7 @@ public class TermUsers {
   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
   private Set<TermUser> termUsers = new HashSet<>();
 
-  public void agree(Term term, User user) {
+  public void agree(final Term term, final User user) {
     TermUser termUser = TermUser.builder()
         .term(term)
         .user(user)

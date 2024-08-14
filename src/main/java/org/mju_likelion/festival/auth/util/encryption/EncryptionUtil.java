@@ -38,7 +38,7 @@ public class EncryptionUtil {
    * @param plainText 암호화할 문자열
    * @return 암호화된 문자열
    */
-  public String encrypt(String plainText) {
+  public String encrypt(final String plainText) {
     try {
       Cipher cipher = Cipher.getInstance(TRANSFORMATION);
       cipher.init(Cipher.ENCRYPT_MODE, secretKey, ivParameterSpec);
@@ -55,7 +55,7 @@ public class EncryptionUtil {
    * @param encryptedText 복호화할 문자열
    * @return 복호화된 문자열
    */
-  public String decrypt(String encryptedText) {
+  public String decrypt(final String encryptedText) {
     try {
       Cipher cipher = Cipher.getInstance(TRANSFORMATION);
       cipher.init(Cipher.DECRYPT_MODE, secretKey, ivParameterSpec);

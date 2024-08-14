@@ -23,7 +23,7 @@ public class MjuApiUtil {
   @Value("${mju-user-check-api-uri}")
   private String mjuUserCheckApiUri;
 
-  public boolean doUserCheck(String studentId, String password) {
+  public boolean doUserCheck(final String studentId, final String password) {
     try {
       HttpHeaders headers = new HttpHeaders();
       headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);

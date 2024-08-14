@@ -19,8 +19,10 @@ public class BoothQrManagerContext {
   private final Map<BoothQrStrategy, BoothQrManager> boothQrManagers;
 
   @Autowired
-  public BoothQrManagerContext(RedisAvailabilityChecker redisAvailabilityChecker,
-      List<BoothQrManager> boothQrManagerList) {
+  public BoothQrManagerContext(
+      final RedisAvailabilityChecker redisAvailabilityChecker,
+      final List<BoothQrManager> boothQrManagerList) {
+
     this.redisAvailabilityChecker = redisAvailabilityChecker;
     this.boothQrManagers = boothQrManagerList.stream()
         .collect(Collectors.toMap(BoothQrManager::boothQrStrategy, Function.identity()));
@@ -52,7 +54,7 @@ public class BoothQrManagerContext {
    * @param boothQrStrategy 부스 QR 전략
    * @return 부스 QR 코드 관리자
    */
-  public BoothQrManager boothQrManager(BoothQrStrategy boothQrStrategy) {
+  public BoothQrManager boothQrManager(final BoothQrStrategy boothQrStrategy) {
     return boothQrManagers.get(boothQrStrategy);
   }
 }

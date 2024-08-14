@@ -42,9 +42,11 @@ public class LostItemQueryRepository {
    * @param size      크기
    * @return 분실물 간단 정보 List
    */
-  public List<SimpleLostItem> findOrderedSimpleLostItemsWithPagenation(final SortOrder sortOrder,
+  public List<SimpleLostItem> findOrderedSimpleLostItemsWithPagenation(
+      final SortOrder sortOrder,
       final int page,
       final int size) {
+
     String sql =
         "SELECT HEX(li.id) AS lostItemId, li.title AS title, li.content AS content, "
             + "CASE WHEN li.retriever_info IS NULL THEN FALSE ELSE TRUE END AS isFounded, "

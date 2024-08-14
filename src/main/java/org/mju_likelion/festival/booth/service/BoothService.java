@@ -27,8 +27,11 @@ public class BoothService {
   private final UserJpaRepository userJpaRepository;
   private final BoothServiceUtils boothServiceUtils;
 
-  public void visitBooth(final String qrId, final BoothQrStrategy boothQrStrategy,
+  public void visitBooth(
+      final String qrId,
+      final BoothQrStrategy boothQrStrategy,
       final UUID userId) {
+
     BoothQrManager boothQrManager = boothQrManagerContext.boothQrManager(boothQrStrategy);
 
     UUID boothId = boothQrManager.getBoothIdFromQrId(qrId);
@@ -40,8 +43,11 @@ public class BoothService {
     userJpaRepository.save(user);
   }
 
-  public void updateBooth(final UUID boothId, final UpdateBoothRequest updateBoothRequest,
+  public void updateBooth(
+      final UUID boothId,
+      final UpdateBoothRequest updateBoothRequest,
       final UUID boothAdminId) {
+
     Booth booth = boothServiceUtils.getExistingBooth(boothId);
     Admin admin = boothServiceUtils.getExistingAdmin(boothAdminId);
 

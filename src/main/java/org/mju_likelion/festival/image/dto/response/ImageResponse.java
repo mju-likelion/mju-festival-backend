@@ -11,7 +11,7 @@ public class ImageResponse {
 
   private final String url;
 
-  public static ImageResponse from(Image image) {
+  public static ImageResponse from(final Image image) {
     return new ImageResponse(image.getUrl());
   }
 }

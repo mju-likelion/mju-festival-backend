@@ -22,15 +22,17 @@ public abstract class AbstractAuthenticationInterceptor implements HandlerInterc
   private final AuthenticationContext authenticationContext;
   private final JwtUtil userJwtUtil;
 
-  protected AbstractAuthenticationInterceptor(AuthenticationContext authenticationContext,
-      JwtUtil userJwtUtil) {
+  protected AbstractAuthenticationInterceptor(final AuthenticationContext authenticationContext,
+      final JwtUtil userJwtUtil) {
     this.authenticationContext = authenticationContext;
     this.userJwtUtil = userJwtUtil;
   }
 
   @Override
-  public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
-      Object handler) {
+  public boolean preHandle(
+      final HttpServletRequest request,
+      final HttpServletResponse response,
+      final Object handler) {
 
     if (isPassableRequest(request)) {
       return true;
@@ -48,11 +50,11 @@ public abstract class AbstractAuthenticationInterceptor implements HandlerInterc
     return true;
   }
 
-  private boolean isPassableRequest(HttpServletRequest request) {
+  private boolean isPassableRequest(final HttpServletRequest request) {
     return isOptionsRequest(request) || isRequestPermitted(request);
   }
 
-  private boolean isOptionsRequest(HttpServletRequest request) {
+  private boolean isOptionsRequest(final HttpServletRequest request) {
     return Objects.equals(request.getMethod(), "OPTIONS");
   }
 
@@ -62,7 +64,7 @@ public abstract class AbstractAuthenticationInterceptor implements HandlerInterc
    * @param request 요청
    * @return 허용 여부
    */
-  private boolean isRequestPermitted(HttpServletRequest request) {
+  private boolean isRequestPermitted(final HttpServletRequest request) {
     return getAllowedRequestMatchers().stream()
         .anyMatch(matcher -> matcher.matches(request));
   }
@@ -76,7 +78,7 @@ public abstract class AbstractAuthenticationInterceptor implements HandlerInterc
     return new ArrayList<>();
   }
 
-  protected abstract boolean isAuthorized(Payload payload);
+  protected abstract boolean isAuthorized(final Payload payload);
 
   protected abstract ErrorType getErrorType();
 }

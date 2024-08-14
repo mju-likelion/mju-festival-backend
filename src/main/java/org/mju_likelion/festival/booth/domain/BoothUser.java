@@ -33,7 +33,7 @@ public class BoothUser extends BaseEntity {
    * @param booth 부스
    * @return 사용자와 부스가 자신의 사용자와 부스와 같은지 여부
    */
-  public boolean isSameUserAndBooth(User user, Booth booth) {
+  public boolean isSameUserAndBooth(final User user, final Booth booth) {
     return this.user.equals(user) && this.booth.equals(booth);
   }
 }

@@ -14,8 +14,8 @@ public class SimpleAnnouncementsResponse {
   private final int totalPage;
 
   public static SimpleAnnouncementsResponse of(
-      List<SimpleAnnouncement> simpleAnnouncements,
-      int totalPage) {
+      final List<SimpleAnnouncement> simpleAnnouncements,
+      final int totalPage) {
 
     return new SimpleAnnouncementsResponse(simpleAnnouncements, totalPage);
   }

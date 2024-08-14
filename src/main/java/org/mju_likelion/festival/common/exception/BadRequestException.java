@@ -5,11 +5,11 @@ import org.springframework.http.HttpStatus;
 
 public class BadRequestException extends CustomException {
 
-  public BadRequestException(ErrorType errorType) {
+  public BadRequestException(final ErrorType errorType) {
     super(errorType, HttpStatus.BAD_REQUEST);
   }
 
-  public BadRequestException(ErrorType errorType, String detail) {
+  public BadRequestException(final ErrorType errorType, final String detail) {
     super(errorType, detail, HttpStatus.BAD_REQUEST);
   }
 }

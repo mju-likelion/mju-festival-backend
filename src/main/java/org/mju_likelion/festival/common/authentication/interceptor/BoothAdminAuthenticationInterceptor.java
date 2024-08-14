@@ -17,8 +17,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class BoothAdminAuthenticationInterceptor extends AbstractAuthenticationInterceptor {
 
-  public BoothAdminAuthenticationInterceptor(AuthenticationContext authenticationContext,
-      JwtUtil userJwtUtil) {
+  public BoothAdminAuthenticationInterceptor(
+      final AuthenticationContext authenticationContext,
+      final JwtUtil userJwtUtil) {
+
     super(authenticationContext, userJwtUtil);
   }
 

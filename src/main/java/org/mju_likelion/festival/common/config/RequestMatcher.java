@@ -20,7 +20,7 @@ public class RequestMatcher {
    * @param request 요청
    * @return 매칭 여부
    */
-  public boolean matches(HttpServletRequest request) {
+  public boolean matches(final HttpServletRequest request) {
     UriTemplate template = new UriTemplate(path);
     return method.matches(request.getMethod()) && template.matches(request.getRequestURI());
   }

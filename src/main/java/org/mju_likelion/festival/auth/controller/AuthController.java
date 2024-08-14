@@ -27,21 +27,24 @@ public class AuthController {
 
   @GetMapping("/key")
   public ResponseEntity<KeyResponse> getKey() {
+
     return ResponseEntity.ok(authQueryService.getKey());
   }
 
   @PostMapping("/user/login")
   public ResponseEntity<LoginResponse> userLogin(
-      @RequestBody @Valid UserLoginRequest userLoginRequest,
-      @RequestParam String rsaKeyStrategy) {
+      @RequestBody @Valid final UserLoginRequest userLoginRequest,
+      @RequestParam final String rsaKeyStrategy) {
+
     return ResponseEntity.ok(
         authService.userLogin(userLoginRequest, RsaKeyStrategy.fromString(rsaKeyStrategy)));
   }
 
   @PostMapping("/admin/login")
   public ResponseEntity<LoginResponse> adminLogin(
-      @RequestBody @Valid AdminLoginRequest adminLoginRequest,
-      @RequestParam String rsaKeyStrategy) {
+      @RequestBody @Valid final AdminLoginRequest adminLoginRequest,
+      @RequestParam final String rsaKeyStrategy) {
+
     return ResponseEntity.ok(
         authQueryService.adminLogin(adminLoginRequest, RsaKeyStrategy.fromString(rsaKeyStrategy)));
   }

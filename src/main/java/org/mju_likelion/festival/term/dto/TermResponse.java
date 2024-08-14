@@ -16,7 +16,7 @@ public class TermResponse {
   private final String title;
   private final String content;
 
-  public static TermResponse of(SimpleTerm simpleTerm) {
+  public static TermResponse of(final SimpleTerm simpleTerm) {
     return new TermResponse(simpleTerm.getId(), simpleTerm.getTitle(), simpleTerm.getContent());
   }
 }

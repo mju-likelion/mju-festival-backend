@@ -17,8 +17,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class StudentCouncilAuthenticationInterceptor extends AbstractAuthenticationInterceptor {
 
-  public StudentCouncilAuthenticationInterceptor(AuthenticationContext authenticationContext,
-      JwtUtil userJwtUtil) {
+  public StudentCouncilAuthenticationInterceptor(
+      final AuthenticationContext authenticationContext,
+      final JwtUtil userJwtUtil) {
+
     super(authenticationContext, userJwtUtil);
   }
 
@@ -33,7 +35,7 @@ public class StudentCouncilAuthenticationInterceptor extends AbstractAuthenticat
   }
 
   @Override
-  protected boolean isAuthorized(Payload payload) {
+  protected boolean isAuthorized(final Payload payload) {
     return Objects.equals(payload.getRole(), AuthenticationRole.STUDENT_COUNCIL);
   }
 

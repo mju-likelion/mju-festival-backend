@@ -30,14 +30,14 @@ public class RedisRsaKeyManager implements RsaKeyManager {
   }
 
   @Override
-  public String savePrivateKey(String privateKey) {
+  public String savePrivateKey(final String privateKey) {
     String redisKey = UUID.randomUUID().toString();
     redisUtil.insert(formatRedisKey(redisKey), privateKey, this.rsaKeyExpireSecond);
     return redisKey;
   }
 
   @Override
-  public String decryptByKey(String encryptedText, String key) {
+  public String decryptByKey(final String encryptedText, final String key) {
     String redisKey = formatRedisKey(key);
 
     String privateKey = getPrivateKey(redisKey);
@@ -50,16 +50,16 @@ public class RedisRsaKeyManager implements RsaKeyManager {
     return RsaKeyStrategy.REDIS;
   }
 
-  private void deletePrivateKey(String key) {
+  private void deletePrivateKey(final String key) {
     redisUtil.delete(formatRedisKey(key));
   }
 
-  private String getPrivateKey(String key) {
+  private String getPrivateKey(final String key) {
     return redisUtil.select(key).orElseThrow(
         () -> new NotFoundException(CREDENTIAL_KEY_NOT_FOUND_ERROR));
   }
 
-  private String formatRedisKey(String key) {
+  private String formatRedisKey(final String key) {
     return keyPrefix + key;
   }
 }
