@@ -13,4 +13,11 @@ public class LostItemFoundRequest {
 
   @NotBlank(message = "수령인 정보는 필수값입니다.")
   private String retrieverInfo;
+
+  @Override
+  public String toString() {
+    return "LostItemFoundRequest{" +
+        "retrieverInfo='" + retrieverInfo + '\'' +
+        '}';
+  }
 }

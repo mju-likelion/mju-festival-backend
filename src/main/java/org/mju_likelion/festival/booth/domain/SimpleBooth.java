@@ -15,4 +15,14 @@ public class SimpleBooth {
   protected final String name;
   protected final String description;
   protected final String imageUrl;
+
+  @Override
+  public String toString() {
+    return "SimpleBooth{" +
+        "id=" + id +
+        ", name='" + name + '\'' +
+        ", description='" + description + '\'' +
+        ", imageUrl='" + imageUrl + '\'' +
+        '}';
+  }
 }

@@ -19,4 +19,12 @@ public class SimpleAnnouncementsResponse {
 
     return new SimpleAnnouncementsResponse(simpleAnnouncements, totalPage);
   }
+
+  @Override
+  public String toString() {
+    return "SimpleAnnouncementsResponse{" +
+        "simpleAnnouncements=" + simpleAnnouncements +
+        ", totalPage=" + totalPage +
+        '}';
+  }
 }

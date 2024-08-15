@@ -27,4 +27,17 @@ public class BoothDetailResponse {
         boothDetail.getDescription(), boothDetail.getLocation(), boothDetail.getImageUrl(),
         boothDetail.getLocationImageUrl(), boothDetail.getCreatedAt());
   }
+
+  @Override
+  public String toString() {
+    return "BoothDetailResponse{" +
+        "id=" + id +
+        ", name='" + name + '\'' +
+        ", description='" + description + '\'' +
+        ", location='" + location + '\'' +
+        ", imageUrl='" + imageUrl + '\'' +
+        ", locationImageUrl='" + locationImageUrl + '\'' +
+        ", createdAt=" + createdAt +
+        '}';
+  }
 }

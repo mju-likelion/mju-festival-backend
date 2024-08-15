@@ -1,4 +1,4 @@
-package org.mju_likelion.festival.term.dto;
+package org.mju_likelion.festival.term.dto.response;
 
 import java.util.UUID;
 import lombok.AllArgsConstructor;
@@ -18,5 +18,14 @@ public class TermResponse {
 
   public static TermResponse of(final SimpleTerm simpleTerm) {
     return new TermResponse(simpleTerm.getId(), simpleTerm.getTitle(), simpleTerm.getContent());
+  }
+
+  @Override
+  public String toString() {
+    return "TermResponse{" +
+        "id=" + id +
+        ", title='" + title + '\'' +
+        ", content='" + content + '\'' +
+        '}';
   }
 }

@@ -19,4 +19,13 @@ public class CreateLostItemRequest {
 
   @NotBlank(message = "분실물 이미지는 필수 입력값입니다.")
   private String imageUrl;
+
+  @Override
+  public String toString() {
+    return "CreateLostItemRequest{" +
+        "title='" + title + '\'' +
+        ", content='" + content + '\'' +
+        ", imageUrl='" + imageUrl + '\'' +
+        '}';
+  }
 }

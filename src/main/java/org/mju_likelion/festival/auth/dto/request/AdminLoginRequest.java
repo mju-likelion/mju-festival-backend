@@ -19,4 +19,13 @@ public class AdminLoginRequest {
 
   @NotBlank(message = "키가 누락되었습니다.")
   private String key;
+
+  @Override
+  public String toString() {
+    return "AdminLoginRequest{" +
+        "encryptedLoginId='" + encryptedLoginId + '\'' +
+        ", encryptedPassword='" + encryptedPassword + '\'' +
+        ", key='" + key + '\'' +
+        '}';
+  }
 }

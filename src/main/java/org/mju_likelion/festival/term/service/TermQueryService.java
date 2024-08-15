@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import org.mju_likelion.festival.term.domain.repository.TermQueryRepository;
-import org.mju_likelion.festival.term.dto.TermResponse;
+import org.mju_likelion.festival.term.dto.response.TermResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

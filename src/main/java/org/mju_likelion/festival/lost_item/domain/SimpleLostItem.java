@@ -15,4 +15,16 @@ public class SimpleLostItem {
   private final String imageUrl;
   private final LocalDateTime createdAt;
   private final Boolean isFounded;
+
+  @Override
+  public String toString() {
+    return "SimpleLostItem{" +
+        "id=" + id +
+        ", title='" + title + '\'' +
+        ", content='" + content + '\'' +
+        ", imageUrl='" + imageUrl + '\'' +
+        ", createdAt=" + createdAt +
+        ", isFounded=" + isFounded +
+        '}';
+  }
 }

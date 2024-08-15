@@ -21,4 +21,12 @@ public class SimpleBoothsResponse {
 
     return new SimpleBoothsResponse(simpleBooths, totalPage);
   }
+
+  @Override
+  public String toString() {
+    return "SimpleBoothsResponse{" +
+        "simpleBooths=" + simpleBooths +
+        ", totalPage=" + totalPage +
+        '}';
+  }
 }

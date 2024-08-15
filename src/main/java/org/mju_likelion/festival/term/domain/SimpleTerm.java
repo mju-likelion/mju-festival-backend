@@ -14,4 +14,13 @@ public class SimpleTerm {
   private final UUID id;
   private final String title;
   private final String content;
+
+  @Override
+  public String toString() {
+    return "SimpleTerm{" +
+        "id=" + id +
+        ", title='" + title + '\'' +
+        ", content='" + content + '\'' +
+        '}';
+  }
 }

@@ -30,4 +30,15 @@ public class AnnouncementDetailResponse {
         announcementDetail.getImageUrl()
     );
   }
+
+  @Override
+  public String toString() {
+    return "AnnouncementDetailResponse{" +
+        "id=" + id +
+        ", title='" + title + '\'' +
+        ", content='" + content + '\'' +
+        ", createdAt=" + createdAt +
+        ", imageUrl='" + imageUrl + '\'' +
+        '}';
+  }
 }

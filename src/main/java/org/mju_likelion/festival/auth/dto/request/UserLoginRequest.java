@@ -28,4 +28,14 @@ public class UserLoginRequest {
   @NotNull(message = "동의 항목이 누락되었습니다.")
   @Size(min = 1, message = "적어도 하나의 동의 항목이 필요합니다.")
   private Map<UUID, @AssertTrue(message = "동의 항목에 동의해야 합니다.") Boolean> terms;
+
+  @Override
+  public String toString() {
+    return "UserLoginRequest{" +
+        "encryptedStudentId='" + encryptedStudentId + '\'' +
+        ", encryptedPassword='" + encryptedPassword + '\'' +
+        ", key='" + key + '\'' +
+        ", terms=" + terms +
+        '}';
+  }
 }
