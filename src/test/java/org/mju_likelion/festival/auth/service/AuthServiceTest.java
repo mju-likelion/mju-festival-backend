@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.mju_likelion.festival.auth.domain.RsaKeyStrategy;
 import org.mju_likelion.festival.auth.dto.request.UserLoginRequest;
 import org.mju_likelion.festival.auth.dto.response.KeyResponse;
-import org.mju_likelion.festival.auth.dto.response.LoginResponse;
+import org.mju_likelion.festival.auth.dto.response.UserLoginResponse;
 import org.mju_likelion.festival.auth.util.key.RsaKeyUtil;
 import org.mju_likelion.festival.auth.util.key.manager.RedisRsaKeyManager;
 import org.mju_likelion.festival.auth.util.key.manager.RsaKeyManagerContext;
@@ -59,11 +59,11 @@ public class AuthServiceTest {
     UserLoginRequest userLoginRequest = createUserLoginRequest(keyResponse);
 
     // when
-    LoginResponse loginResponse = authService.userLogin(userLoginRequest,
+    UserLoginResponse userLoginResponse = authService.userLogin(userLoginRequest,
         RsaKeyStrategy.REDIS);
 
     // then
-    assertNotNull(loginResponse.getAccessToken());
+    assertNotNull(userLoginResponse.getAccessToken());
   }
 
   @DisplayName("TokenRsaKeyManager 를 사용하여 암호화된 studentId, password, key를 받아 로그인한다.")
@@ -76,11 +76,11 @@ public class AuthServiceTest {
     UserLoginRequest userLoginRequest = createUserLoginRequest(keyResponse);
 
     // when
-    LoginResponse loginResponse = authService.userLogin(userLoginRequest,
+    UserLoginResponse userLoginResponse = authService.userLogin(userLoginRequest,
         RsaKeyStrategy.TOKEN);
 
     // then
-    assertNotNull(loginResponse.getAccessToken());
+    assertNotNull(userLoginResponse.getAccessToken());
   }
 
   /**

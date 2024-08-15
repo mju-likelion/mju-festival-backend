@@ -1,14 +1,15 @@
 package org.mju_likelion.festival.auth.service;
 
 import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.mockito.BDDMockito.willReturn;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mju_likelion.festival.auth.domain.RsaKeyStrategy;
 import org.mju_likelion.festival.auth.dto.request.AdminLoginRequest;
+import org.mju_likelion.festival.auth.dto.response.AdminLoginResponse;
 import org.mju_likelion.festival.auth.dto.response.KeyResponse;
-import org.mju_likelion.festival.auth.dto.response.LoginResponse;
 import org.mju_likelion.festival.auth.util.key.RsaKeyUtil;
 import org.mju_likelion.festival.auth.util.key.manager.RedisRsaKeyManager;
 import org.mju_likelion.festival.auth.util.key.manager.RsaKeyManagerContext;
@@ -47,11 +48,14 @@ public class AuthQueryServiceTest {
     AdminLoginRequest adminLoginRequest = createAdminLoginRequest(keyResponse);
 
     // when
-    LoginResponse loginResponse = authQueryService.adminLogin(adminLoginRequest,
+    AdminLoginResponse adminLoginResponse = authQueryService.adminLogin(adminLoginRequest,
         RsaKeyStrategy.REDIS);
 
     // then
-    assertNotNull(loginResponse.getAccessToken());
+    assertAll(
+        () -> assertNotNull(adminLoginResponse.getAccessToken()),
+        () -> assertNotNull(adminLoginResponse.getRole())
+    );
   }
 
   @DisplayName("TokenRsaKeyManager 를 사용하여 암호화된 loginId, password, key를 받아 로그인한다.")
@@ -64,11 +68,14 @@ public class AuthQueryServiceTest {
     AdminLoginRequest adminLoginRequest = createAdminLoginRequest(keyResponse);
 
     // when
-    LoginResponse loginResponse = authQueryService.adminLogin(adminLoginRequest,
+    AdminLoginResponse adminLoginResponse = authQueryService.adminLogin(adminLoginRequest,
         RsaKeyStrategy.TOKEN);
 
     // then
-    assertNotNull(loginResponse.getAccessToken());
+    assertAll(
+        () -> assertNotNull(adminLoginResponse.getAccessToken()),
+        () -> assertNotNull(adminLoginResponse.getRole())
+    );
   }
 
   /**
