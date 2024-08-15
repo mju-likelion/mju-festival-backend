@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -58,26 +57,34 @@ public class LoggingAspect {
 
   @Before("allMapping()")
   public void requestLog(final JoinPoint joinPoint) {
-    Signature signature = joinPoint.getSignature();
     String requestId = (String) request.getAttribute("requestId");
+    String userId = (String) request.getAttribute("userId");
     String methodArguments = Arrays.stream(joinPoint.getArgs())
         .map(arg -> arg == null ? "null" : arg.toString())
         .collect(Collectors.joining(", "));
 
-    log.info(">> REQUEST >> [ID: {}] Controller: {} || Method: {}() || Arguments: [{}]",
+    log.info(
+        ">> REQUEST >> [ID: {}, USERID: {}] Controller: {} || Method: {}() || Arguments: [{}]",
         requestId,
+        userId,
         joinPoint.getTarget().getClass().getSimpleName(),
-        signature.getName(),
-        methodArguments);
+        joinPoint.getSignature().getName(),
+        methodArguments
+    );
   }
 
   @AfterReturning(value = "controllerPointCut() || exceptionHandlerCut()", returning = "response")
   public void responseLog(final JoinPoint joinPoint, final ResponseEntity<?> response) {
-    Signature signature = joinPoint.getSignature();
-    log.info("<< RESPONSE << [ID: {}] Controller: {} || Method: {}() || ResponseBody: {}",
-        request.getAttribute("requestId"),
+    String requestId = (String) request.getAttribute("requestId");
+    String userId = (String) request.getAttribute("userId");
+
+    log.info(
+        "<< RESPONSE << [ID: {}, USERID: {}] Controller: {} || Method: {}() || ResponseBody: {}",
+        requestId,
+        userId,
         joinPoint.getTarget().getClass().getSimpleName(),
-        signature.getName(),
-        response.getBody());
+        joinPoint.getSignature().getName(),
+        response.getBody()
+    );
   }
 }
