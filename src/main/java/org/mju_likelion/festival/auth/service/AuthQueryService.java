@@ -6,8 +6,8 @@ import org.mju_likelion.festival.admin.domain.repository.AdminJpaRepository;
 import org.mju_likelion.festival.auth.domain.RsaKey;
 import org.mju_likelion.festival.auth.domain.RsaKeyStrategy;
 import org.mju_likelion.festival.auth.dto.request.AdminLoginRequest;
+import org.mju_likelion.festival.auth.dto.response.AdminLoginResponse;
 import org.mju_likelion.festival.auth.dto.response.KeyResponse;
-import org.mju_likelion.festival.auth.dto.response.LoginResponse;
 import org.mju_likelion.festival.auth.util.jwt.AuthenticationRole;
 import org.mju_likelion.festival.auth.util.jwt.JwtUtil;
 import org.mju_likelion.festival.auth.util.jwt.Payload;
@@ -39,7 +39,7 @@ public class AuthQueryService {
     return new KeyResponse(rsaKey.publicKey(), credentialKey, rsaKeyStrategy);
   }
 
-  public LoginResponse adminLogin(
+  public AdminLoginResponse adminLogin(
       final AdminLoginRequest adminLoginRequest,
       final RsaKeyStrategy rsaKeyStrategy) {
 
@@ -55,7 +55,7 @@ public class AuthQueryService {
         new Payload(admin.getId(), AuthenticationRole.from(admin.getRole()))
     );
 
-    return new LoginResponse(accessToken);
+    return AdminLoginResponse.of(accessToken, admin.getRole());
   }
 
   /**

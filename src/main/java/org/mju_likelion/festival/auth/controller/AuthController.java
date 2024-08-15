@@ -5,8 +5,9 @@ import lombok.AllArgsConstructor;
 import org.mju_likelion.festival.auth.domain.RsaKeyStrategy;
 import org.mju_likelion.festival.auth.dto.request.AdminLoginRequest;
 import org.mju_likelion.festival.auth.dto.request.UserLoginRequest;
+import org.mju_likelion.festival.auth.dto.response.AdminLoginResponse;
 import org.mju_likelion.festival.auth.dto.response.KeyResponse;
-import org.mju_likelion.festival.auth.dto.response.LoginResponse;
+import org.mju_likelion.festival.auth.dto.response.UserLoginResponse;
 import org.mju_likelion.festival.auth.service.AuthQueryService;
 import org.mju_likelion.festival.auth.service.AuthService;
 import org.springframework.http.ResponseEntity;
@@ -32,7 +33,7 @@ public class AuthController {
   }
 
   @PostMapping("/user/login")
-  public ResponseEntity<LoginResponse> userLogin(
+  public ResponseEntity<UserLoginResponse> userLogin(
       @RequestBody @Valid final UserLoginRequest userLoginRequest,
       @RequestParam final String rsaKeyStrategy) {
 
@@ -41,7 +42,7 @@ public class AuthController {
   }
 
   @PostMapping("/admin/login")
-  public ResponseEntity<LoginResponse> adminLogin(
+  public ResponseEntity<AdminLoginResponse> adminLogin(
       @RequestBody @Valid final AdminLoginRequest adminLoginRequest,
       @RequestParam final String rsaKeyStrategy) {
 
