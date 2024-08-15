@@ -42,6 +42,8 @@ public abstract class AbstractAuthenticationInterceptor implements HandlerInterc
         .orElseThrow(() -> new UnauthorizedException(JWT_NOT_FOUND_ERROR));
     Payload payload = userJwtUtil.getPayload(accessToken);
 
+    request.setAttribute("userId", payload.getId().toString());
+
     if (!isAuthorized(payload)) {
       throw new ForbiddenException(getErrorType());
     }
