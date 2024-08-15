@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import org.mju_likelion.festival.auth.domain.RsaKeyStrategy;
 import org.mju_likelion.festival.auth.dto.request.UserLoginRequest;
-import org.mju_likelion.festival.auth.dto.response.LoginResponse;
+import org.mju_likelion.festival.auth.dto.response.UserLoginResponse;
 import org.mju_likelion.festival.auth.util.jwt.AuthenticationRole;
 import org.mju_likelion.festival.auth.util.jwt.JwtUtil;
 import org.mju_likelion.festival.auth.util.jwt.Payload;
@@ -37,7 +37,7 @@ public class AuthService {
   private final JwtUtil jwtUtil;
 
   @Transactional
-  public LoginResponse userLogin(
+  public UserLoginResponse userLogin(
       final UserLoginRequest userLoginRequest,
       final RsaKeyStrategy rsaKeyStrategy) {
 
@@ -52,7 +52,7 @@ public class AuthService {
     UUID userId = saveOrGetUserId(studentId, userLoginRequest.getTerms());
 
     String accessToken = jwtUtil.create(new Payload(userId, AuthenticationRole.USER));
-    return new LoginResponse(accessToken);
+    return UserLoginResponse.of(accessToken);
   }
 
   /**
