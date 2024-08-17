@@ -52,7 +52,8 @@ public class AuthenticationConfig implements WebMvcConfigurer {
         .addPathPatterns("/announcements/{id}")
         .addPathPatterns("/lost-items")
         .addPathPatterns("/lost-items/{id}")
-        .addPathPatterns("/lost-items/{id}/found");
+        .addPathPatterns("/lost-items/{id}/found")
+        .excludePathPatterns("/lost-items/search");
   }
 
   /**
