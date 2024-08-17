@@ -103,8 +103,7 @@ public class LostItemQueryRepositoryTest {
     String keyword = "지갑";
     int pageSize = 1;
     int totalPages = 1;
-    Admin admin = new Admin("lost_item_admin", "1234", "분실물 관리자", AdminRole.STUDENT_COUNCIL, null,
-        null);
+    Admin admin = new Admin("lost_item_admin", "1234", "분실물 관리자", AdminRole.STUDENT_COUNCIL);
     adminJpaRepository.saveAndFlush(admin);
     LostItem lostItem = new LostItem("지갑 발견", "발견했습니다.", new Image("asdf"), admin);
     lostItemJpaRepository.saveAndFlush(lostItem);
@@ -136,8 +135,7 @@ public class LostItemQueryRepositoryTest {
     String keyword = "지갑";
     int pageSize = 1;
     int totalPages = 1;
-    Admin admin = new Admin("lost_item_admin", "1234", "분실물 관리자", AdminRole.STUDENT_COUNCIL, null,
-        null);
+    Admin admin = new Admin("lost_item_admin", "1234", "분실물 관리자", AdminRole.STUDENT_COUNCIL);
     adminJpaRepository.saveAndFlush(admin);
     LostItem lostItem = new LostItem("발견", "지갑 발견했습니다.", new Image("asdf"), admin);
     lostItemJpaRepository.saveAndFlush(lostItem);
