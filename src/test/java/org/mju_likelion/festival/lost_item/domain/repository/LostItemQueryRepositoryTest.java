@@ -3,10 +3,12 @@ package org.mju_likelion.festival.lost_item.domain.repository;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.IntStream;
 import javax.sql.DataSource;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -46,6 +48,18 @@ public class LostItemQueryRepositoryTest {
     lostItemQueryRepository = new LostItemQueryRepository(
         new NamedParameterJdbcTemplate(dataSource));
     totalLostItemNum = (int) lostItemJpaRepository.count();
+    Admin admin = adminJpaRepository.findByRole(AdminRole.STUDENT_COUNCIL).orElseThrow();
+    List<LostItem> lostItems = new ArrayList<>();
+    for (int i = 0; i < 40; i++) {
+      LostItem lostItem = new LostItem("분실물 제목" + i, "분실물 내용" + i, new Image("asdf"), admin);
+      lostItems.add(lostItem);
+    }
+    lostItemJpaRepository.saveAll(lostItems);
+  }
+
+  @AfterEach
+  void tearDown() {
+    lostItemJpaRepository.deleteAll();
   }
 
   @DisplayName("분실물 간단 정보 List 조회 - 페이지네이션 ( 생성 시간 오름차순 )")
@@ -103,7 +117,7 @@ public class LostItemQueryRepositoryTest {
     String keyword = "지갑";
     int pageSize = 1;
     int totalPages = 1;
-    Admin admin = new Admin("lost_item_admin", "1234", "분실물 관리자", AdminRole.STUDENT_COUNCIL);
+    Admin admin = adminJpaRepository.findByRole(AdminRole.STUDENT_COUNCIL).orElseThrow();
     adminJpaRepository.saveAndFlush(admin);
     LostItem lostItem = new LostItem("지갑 발견", "발견했습니다.", new Image("asdf"), admin);
     lostItemJpaRepository.saveAndFlush(lostItem);
@@ -135,7 +149,7 @@ public class LostItemQueryRepositoryTest {
     String keyword = "지갑";
     int pageSize = 1;
     int totalPages = 1;
-    Admin admin = new Admin("lost_item_admin", "1234", "분실물 관리자", AdminRole.STUDENT_COUNCIL);
+    Admin admin = adminJpaRepository.findByRole(AdminRole.STUDENT_COUNCIL).orElseThrow();
     adminJpaRepository.saveAndFlush(admin);
     LostItem lostItem = new LostItem("발견", "지갑 발견했습니다.", new Image("asdf"), admin);
     lostItemJpaRepository.saveAndFlush(lostItem);
