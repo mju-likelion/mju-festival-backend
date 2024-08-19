@@ -8,5 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface AdminJpaRepository extends JpaRepository<Admin, UUID> {
 
+  Optional<Admin> findByLoginIdAndPassword(final String loginId, final String password);
+
   Optional<Admin> findByRole(final AdminRole role);
 }
