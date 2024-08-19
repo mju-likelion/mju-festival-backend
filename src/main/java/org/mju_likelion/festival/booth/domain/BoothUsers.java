@@ -28,12 +28,9 @@ public class BoothUsers {
   public void visit(final User user, final Booth booth) {
     validateVisitBooth(user, booth);
 
-    BoothUser boothUser = BoothUser.builder()
-        .user(user)
-        .booth(booth)
-        .build();
+    BoothUser boothUser = new BoothUser(booth, user);
 
-    this.boothUsers.add(boothUser);
+    boothUsers.add(boothUser);
   }
 
   /**
@@ -56,7 +53,7 @@ public class BoothUsers {
    * @return 사용자가 부스를 방문했는지 여부
    */
   private boolean isVisitedBooth(final User user, final Booth booth) {
-    return this.boothUsers.stream()
+    return boothUsers.stream()
         .anyMatch(boothUser -> boothUser.isSameUserAndBooth(user, booth));
   }
 }
