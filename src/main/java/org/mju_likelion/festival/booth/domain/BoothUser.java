@@ -25,6 +25,11 @@ public class BoothUser extends BaseEntity {
   @JoinColumn(name = "user_id", nullable = false)
   private User user;
 
+  public BoothUser(final Booth booth, final User user) {
+    this.booth = booth;
+    this.user = user;
+  }
+
   /**
    * 사용자와 부스가 자신의 사용자와 부스와 같은지 확인한다.
    *
