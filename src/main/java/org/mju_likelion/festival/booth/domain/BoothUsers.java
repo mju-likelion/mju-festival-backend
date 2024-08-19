@@ -8,10 +8,12 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
 import java.util.HashSet;
 import java.util.Set;
+import lombok.ToString;
 import org.mju_likelion.festival.common.exception.ConflictException;
 import org.mju_likelion.festival.user.domain.User;
 
 @Embeddable
+@ToString(callSuper = true, of = {"boothUsers"})
 public class BoothUsers {
 
   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

@@ -4,17 +4,16 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.mju_likelion.festival.common.domain.BaseEntity;
 import org.mju_likelion.festival.user.domain.User;
 
 @Getter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@ToString(callSuper = true, of = {"booth", "user"})
 @Entity(name = "booth_user")
 public class BoothUser extends BaseEntity {
 

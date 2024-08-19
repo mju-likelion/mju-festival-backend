@@ -14,6 +14,7 @@ import jakarta.persistence.Transient;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.mju_likelion.festival.admin.domain.Admin;
 import org.mju_likelion.festival.common.domain.BaseEntity;
 import org.mju_likelion.festival.common.exception.BadRequestException;
@@ -22,6 +23,8 @@ import org.mju_likelion.festival.image.domain.Image;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@ToString(callSuper = true,
+    of = {"name", "description", "location", "sequence", "locationImage", "image"})
 @Entity(name = "booth")
 public class Booth extends BaseEntity {
 
