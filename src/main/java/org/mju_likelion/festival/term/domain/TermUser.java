@@ -25,12 +25,9 @@ public class TermUser extends BaseEntity {
   @JoinColumn(name = "term_id", nullable = false)
   private Term term;
 
-  @Override
-  public String toString() {
-    return "TermUser{" +
-        "user=" + user +
-        ", term=" + term +
-        '}';
+  public TermUser(final User user, final Term term) {
+    this.user = user;
+    this.term = term;
   }
 
   @Override
