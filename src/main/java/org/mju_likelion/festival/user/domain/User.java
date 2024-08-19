@@ -8,6 +8,7 @@ import java.util.Objects;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.mju_likelion.festival.booth.domain.Booth;
 import org.mju_likelion.festival.booth.domain.BoothUsers;
 import org.mju_likelion.festival.common.domain.BaseEntity;
@@ -16,6 +17,7 @@ import org.mju_likelion.festival.term.domain.TermUsers;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@ToString(callSuper = true, of = {"studentId"})
 @Entity(name = "user")
 public class User extends BaseEntity {
 
@@ -43,13 +45,6 @@ public class User extends BaseEntity {
 
   public void visitBooth(final Booth booth) {
     this.boothUsers.visit(this, booth);
-  }
-
-  @Override
-  public String toString() {
-    return "User{" +
-        "studentId='" + studentId + '\'' +
-        '}';
   }
 
   @Override
