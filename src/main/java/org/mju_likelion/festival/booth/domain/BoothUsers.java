@@ -8,10 +8,12 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
 import java.util.HashSet;
 import java.util.Set;
+import lombok.ToString;
 import org.mju_likelion.festival.common.exception.ConflictException;
 import org.mju_likelion.festival.user.domain.User;
 
 @Embeddable
+@ToString(callSuper = true, of = {"boothUsers"})
 public class BoothUsers {
 
   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -26,12 +28,9 @@ public class BoothUsers {
   public void visit(final User user, final Booth booth) {
     validateVisitBooth(user, booth);
 
-    BoothUser boothUser = BoothUser.builder()
-        .user(user)
-        .booth(booth)
-        .build();
+    BoothUser boothUser = new BoothUser(booth, user);
 
-    this.boothUsers.add(boothUser);
+    boothUsers.add(boothUser);
   }
 
   /**
@@ -54,7 +53,7 @@ public class BoothUsers {
    * @return 사용자가 부스를 방문했는지 여부
    */
   private boolean isVisitedBooth(final User user, final Booth booth) {
-    return this.boothUsers.stream()
+    return boothUsers.stream()
         .anyMatch(boothUser -> boothUser.isSameUserAndBooth(user, booth));
   }
 }

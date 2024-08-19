@@ -8,12 +8,14 @@ import jakarta.persistence.Transient;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.mju_likelion.festival.common.domain.BaseEntity;
 import org.mju_likelion.festival.common.exception.BadRequestException;
 import org.mju_likelion.festival.common.util.string.StringUtil;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@ToString(callSuper = true, of = {"url"})
 @Entity(name = "image")
 public class Image extends BaseEntity {
 

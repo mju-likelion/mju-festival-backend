@@ -5,17 +5,15 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.mju_likelion.festival.common.domain.BaseEntity;
 import org.mju_likelion.festival.user.domain.User;
 
 @Getter
-@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
+@ToString(callSuper = true, of = {"user", "term"})
 @Entity(name = "term_user")
 public class TermUser extends BaseEntity {
 
@@ -27,12 +25,9 @@ public class TermUser extends BaseEntity {
   @JoinColumn(name = "term_id", nullable = false)
   private Term term;
 
-  @Override
-  public String toString() {
-    return "TermUser{" +
-        "user=" + user +
-        ", term=" + term +
-        '}';
+  public TermUser(final User user, final Term term) {
+    this.user = user;
+    this.term = term;
   }
 
   @Override

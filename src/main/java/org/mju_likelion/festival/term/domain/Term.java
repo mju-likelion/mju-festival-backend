@@ -4,10 +4,15 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Transient;
 import java.util.Objects;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.mju_likelion.festival.common.domain.BaseEntity;
 
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@ToString(callSuper = true, of = {"title", "content", "sequence"})
 @Entity(name = "term")
 public class Term extends BaseEntity {
 
@@ -24,14 +29,6 @@ public class Term extends BaseEntity {
 
   @Column(nullable = false)
   private Short sequence;
-
-  @Override
-  public String toString() {
-    return "Term{" +
-        "title='" + title + '\'' +
-        ", content='" + content + '\'' +
-        '}';
-  }
 
   @Override
   public boolean equals(Object o) {

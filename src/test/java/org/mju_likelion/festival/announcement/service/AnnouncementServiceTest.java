@@ -35,20 +35,14 @@ public class AnnouncementServiceTest {
 
   @BeforeEach
   void setUp() {
-    studentCouncilAdmin = Admin.builder()
-        .loginId("student_council")
-        .password("student_council_password")
-        .name("학생회")
-        .role(AdminRole.STUDENT_COUNCIL)
-        .build();
-    adminJpaRepository.save(studentCouncilAdmin);
+    studentCouncilAdmin = adminJpaRepository.findByRole(AdminRole.STUDENT_COUNCIL)
+        .orElseThrow();
   }
 
   @AfterEach
   void tearDown() {
     announcementJpaRepository.deleteAll(
         announcementJpaRepository.findByWriterId(studentCouncilAdmin.getId()));
-    adminJpaRepository.delete(studentCouncilAdmin);
   }
 
   @Test
