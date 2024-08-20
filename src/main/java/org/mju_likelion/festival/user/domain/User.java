@@ -48,18 +48,18 @@ public class User extends BaseEntity {
   }
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(final Object o) {
     if (this == o) {
       return true;
     }
-    if (!(o instanceof User user)) {
+    if (!(o instanceof User that)) {
       return false;
     }
-    return this.id.equals(user.id);
+    return Objects.equals(studentId, that.getStudentId());
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(this.id);
+    return Objects.hash(studentId);
   }
 }

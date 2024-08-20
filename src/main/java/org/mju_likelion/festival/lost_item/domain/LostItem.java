@@ -11,6 +11,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Transient;
+import java.util.Objects;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -123,5 +124,22 @@ public class LostItem extends BaseEntity {
     if (writer == null) {
       throw new BadRequestException(ErrorType.LOST_ITEM_WRITER_MISSING_ERROR);
     }
+  }
+
+  @Override
+  public boolean equals(final Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof LostItem that)) {
+      return false;
+    }
+    return Objects.equals(title, that.getTitle()) &&
+        Objects.equals(content, that.getContent());
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(title, content);
   }
 }

@@ -11,6 +11,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Transient;
+import java.util.Objects;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -88,5 +89,22 @@ public class Announcement extends BaseEntity {
     if (StringUtil.isBlankOrLargerThan(content, CONTENT_LENGTH)) {
       throw new BadRequestException(INVALID_ANNOUNCEMENT_CONTENT_LENGTH_ERROR);
     }
+  }
+
+  @Override
+  public boolean equals(final Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof Announcement that)) {
+      return false;
+    }
+    return Objects.equals(title, that.getTitle()) &&
+        Objects.equals(content, that.getContent());
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(title, content);
   }
 }

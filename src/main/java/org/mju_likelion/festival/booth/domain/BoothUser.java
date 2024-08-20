@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import java.util.Objects;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -39,5 +40,21 @@ public class BoothUser extends BaseEntity {
    */
   public boolean isSameUserAndBooth(final User user, final Booth booth) {
     return this.user.equals(user) && this.booth.equals(booth);
+  }
+
+  @Override
+  public boolean equals(final Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof BoothUser that)) {
+      return false;
+    }
+    return Objects.equals(booth, that.getBooth()) && Objects.equals(user, that.getUser());
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(booth, user);
   }
 }
