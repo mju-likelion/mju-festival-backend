@@ -5,6 +5,7 @@ import static org.mju_likelion.festival.common.exception.type.ErrorType.INVALID_
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Transient;
+import java.util.Objects;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,5 +35,21 @@ public class Image extends BaseEntity {
     if (StringUtil.isBlankOrLargerThan(url, URL_LENGTH)) {
       throw new BadRequestException(INVALID_IMAGE_URL_LENGTH_ERROR);
     }
+  }
+
+  @Override
+  public boolean equals(final Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof Image that)) {
+      return false;
+    }
+    return Objects.equals(url, that.url);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(url);
   }
 }

@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Transient;
+import java.util.Objects;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,4 +37,20 @@ public class Admin extends BaseEntity {
   @Column(nullable = false)
   @Enumerated(EnumType.STRING)
   private AdminRole role;
+
+  @Override
+  public boolean equals(final Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof Admin that)) {
+      return false;
+    }
+    return Objects.equals(loginId, that.loginId);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(loginId);
+  }
 }

@@ -27,22 +27,22 @@ public class Term extends BaseEntity {
   @Column(nullable = false, length = CONTENT_LENGTH)
   private String content;
 
-  @Column(nullable = false)
+  @Column(unique = true, nullable = false)
   private Short sequence;
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(final Object o) {
     if (this == o) {
       return true;
     }
-    if (!(o instanceof Term term)) {
+    if (!(o instanceof Term that)) {
       return false;
     }
-    return this.id.equals(term.id);
+    return Objects.equals(sequence, that.sequence);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id);
+    return Objects.hash(sequence);
   }
 }

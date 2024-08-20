@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import java.util.Objects;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,18 +32,18 @@ public class TermUser extends BaseEntity {
   }
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(final Object o) {
     if (this == o) {
       return true;
     }
-    if (!(o instanceof TermUser termUser)) {
+    if (!(o instanceof TermUser that)) {
       return false;
     }
-    return user.equals(termUser.user) && term.equals(termUser.term);
+    return Objects.equals(user, that.user) && Objects.equals(term, that.term);
   }
 
   @Override
   public int hashCode() {
-    return user.hashCode() + term.hashCode();
+    return Objects.hash(user, term);
   }
 }

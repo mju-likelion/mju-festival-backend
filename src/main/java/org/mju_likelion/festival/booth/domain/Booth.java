@@ -11,6 +11,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Transient;
+import java.util.Objects;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -131,5 +132,21 @@ public class Booth extends BaseEntity {
     if (StringUtil.isBlankOrLargerThan(location, LOCATION_LENGTH)) {
       throw new BadRequestException(INVALID_BOOTH_LOCATION_LENGTH_ERROR);
     }
+  }
+
+  @Override
+  public boolean equals(final Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof Booth that)) {
+      return false;
+    }
+    return Objects.equals(name, that.name);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(name);
   }
 }
