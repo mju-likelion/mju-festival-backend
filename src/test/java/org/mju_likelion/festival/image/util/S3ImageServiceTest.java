@@ -7,7 +7,7 @@ import static org.mju_likelion.festival.image.util.s3.Constants.MAX_FILE_SIZE;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mju_likelion.festival.common.annotation.ApplicationTest;
-import org.mju_likelion.festival.common.exception.InternalServerException;
+import org.mju_likelion.festival.common.exception.BadRequestException;
 import org.mju_likelion.festival.image.util.s3.ImageType;
 import org.mju_likelion.festival.image.util.s3.S3ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +46,7 @@ public class S3ImageServiceTest {
     MultipartFile image = createImage(".jpg", "image/jpeg", MAX_FILE_SIZE + 1);
 
     // when & then
-    assertThrows(InternalServerException.class, () -> s3ImageService.saveImage(image, imageType));
+    assertThrows(BadRequestException.class, () -> s3ImageService.saveImage(image, imageType));
   }
 
   @DisplayName("이미지가 아닌 파일을 저장하려고 할 때 BadRequestException 을 던진다.")
@@ -56,7 +56,7 @@ public class S3ImageServiceTest {
     MultipartFile image = createImage(".txt", "text/plain", 1);
 
     // when & then
-    assertThrows(InternalServerException.class, () -> s3ImageService.saveImage(image, imageType));
+    assertThrows(BadRequestException.class, () -> s3ImageService.saveImage(image, imageType));
   }
 
   @DisplayName("비어 있는 이미지를 저장하려고 할 때 BadRequestException 을 던진다.")
@@ -66,7 +66,7 @@ public class S3ImageServiceTest {
     MultipartFile image = createImage(".jpg", "image/jpeg", 0);
 
     // when & then
-    assertThrows(InternalServerException.class, () -> s3ImageService.saveImage(image, imageType));
+    assertThrows(BadRequestException.class, () -> s3ImageService.saveImage(image, imageType));
   }
 
   private MultipartFile createImage(String extension, String contentType, int size) {
