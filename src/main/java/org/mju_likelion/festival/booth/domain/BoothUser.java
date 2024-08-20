@@ -50,7 +50,7 @@ public class BoothUser extends BaseEntity {
     if (!(o instanceof BoothUser that)) {
       return false;
     }
-    return Objects.equals(booth, that.booth) && Objects.equals(user, that.user);
+    return Objects.equals(booth, that.getBooth()) && Objects.equals(user, that.getUser());
   }
 
   @Override

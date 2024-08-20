@@ -39,7 +39,7 @@ public class TermUser extends BaseEntity {
     if (!(o instanceof TermUser that)) {
       return false;
     }
-    return Objects.equals(user, that.user) && Objects.equals(term, that.term);
+    return Objects.equals(user, that.getUser()) && Objects.equals(term, that.getTerm());
   }
 
   @Override

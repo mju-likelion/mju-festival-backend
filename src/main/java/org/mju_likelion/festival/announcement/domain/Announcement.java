@@ -99,8 +99,8 @@ public class Announcement extends BaseEntity {
     if (!(o instanceof Announcement that)) {
       return false;
     }
-    return Objects.equals(title, that.title) &&
-        Objects.equals(content, that.content);
+    return Objects.equals(title, that.getTitle()) &&
+        Objects.equals(content, that.getContent());
   }
 
   @Override

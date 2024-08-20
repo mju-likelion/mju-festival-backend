@@ -45,7 +45,7 @@ public class Image extends BaseEntity {
     if (!(o instanceof Image that)) {
       return false;
     }
-    return Objects.equals(url, that.url);
+    return Objects.equals(url, that.getUrl());
   }
 
   @Override

@@ -55,7 +55,7 @@ public class User extends BaseEntity {
     if (!(o instanceof User that)) {
       return false;
     }
-    return Objects.equals(studentId, that.studentId);
+    return Objects.equals(studentId, that.getStudentId());
   }
 
   @Override

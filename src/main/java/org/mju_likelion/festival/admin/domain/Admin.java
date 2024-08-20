@@ -46,7 +46,7 @@ public class Admin extends BaseEntity {
     if (!(o instanceof Admin that)) {
       return false;
     }
-    return Objects.equals(loginId, that.loginId);
+    return Objects.equals(loginId, that.getLoginId());
   }
 
   @Override

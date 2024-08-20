@@ -142,7 +142,7 @@ public class Booth extends BaseEntity {
     if (!(o instanceof Booth that)) {
       return false;
     }
-    return Objects.equals(name, that.name);
+    return Objects.equals(name, that.getName());
   }
 
   @Override

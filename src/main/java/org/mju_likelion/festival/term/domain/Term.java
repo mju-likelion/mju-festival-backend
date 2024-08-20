@@ -38,7 +38,7 @@ public class Term extends BaseEntity {
     if (!(o instanceof Term that)) {
       return false;
     }
-    return Objects.equals(sequence, that.sequence);
+    return Objects.equals(sequence, that.getSequence());
   }
 
   @Override
