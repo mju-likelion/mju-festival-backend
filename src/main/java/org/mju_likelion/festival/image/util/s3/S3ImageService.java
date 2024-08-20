@@ -37,13 +37,11 @@ public class S3ImageService {
    * @return 이미지 URL
    */
   public String saveImage(final MultipartFile image, final ImageType imageType) {
+    validate(image);
+    String filename = makeFileName(imageType);
+
     try {
-      validate(image);
-
-      String filename = makeFileName(imageType);
-
       ObjectMetadata metadata = createObjectMetadata(image);
-
       amazonS3.putObject(bucket, filename, image.getInputStream(), metadata);
       return getCloudfrontUrl(filename);
     } catch (Exception e) {
