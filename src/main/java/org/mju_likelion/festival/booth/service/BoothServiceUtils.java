@@ -50,4 +50,10 @@ public class BoothServiceUtils {
         () -> new NotFoundException(USER_NOT_FOUND_ERROR)
     );
   }
+
+  public void validateAdminExists(final UUID adminId) {
+    if (!adminJpaRepository.existsById(adminId)) {
+      throw new NotFoundException(ADMIN_NOT_FOUND_ERROR);
+    }
+  }
 }
