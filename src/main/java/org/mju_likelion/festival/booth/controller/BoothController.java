@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import org.mju_likelion.festival.booth.domain.BoothQrStrategy;
 import org.mju_likelion.festival.booth.dto.request.UpdateBoothRequest;
 import org.mju_likelion.festival.booth.dto.response.BoothDetailResponse;
+import org.mju_likelion.festival.booth.dto.response.BoothOwnershipResponse;
 import org.mju_likelion.festival.booth.dto.response.BoothQrResponse;
 import org.mju_likelion.festival.booth.dto.response.SimpleBoothsResponse;
 import org.mju_likelion.festival.booth.service.BoothQueryService;
@@ -43,6 +44,14 @@ public class BoothController {
       @PathVariable final UUID id) {
 
     return ResponseEntity.ok(boothQueryService.getBooth(id));
+  }
+
+  @GetMapping("/{id}/ownership")
+  public ResponseEntity<BoothOwnershipResponse> isBoothOwner(
+      @PathVariable final UUID id,
+      @AuthenticationPrincipal final UUID boothAdminId) {
+
+    return ResponseEntity.ok(boothQueryService.isBoothOwner(id, boothAdminId));
   }
 
   @GetMapping("/{id}/qr")
