@@ -94,6 +94,27 @@ public class BoothQueryRepository {
   }
 
   /**
+   * 부스 ID 와 관리자 ID 로 부스 소유 여부 확인.
+   *
+   * @param boothId 부스 ID
+   * @param adminId 관리자 ID
+   * @return 부스 소유 여부
+   */
+  public boolean isBoothOwner(final UUID boothId, final UUID adminId) {
+    String sql =
+        "SELECT COUNT(*) "
+            + "FROM booth b "
+            + "JOIN admin a ON b.owner_id = a.id "
+            + "WHERE b.id = UNHEX(:boothId) AND a.id = UNHEX(:adminId)";
+
+    MapSqlParameterSource params = new MapSqlParameterSource()
+        .addValue("boothId", uuidToHex(boothId))
+        .addValue("adminId", uuidToHex(adminId));
+
+    return jdbcTemplate.queryForObject(sql, params, Integer.class) > 0;
+  }
+
+  /**
    * 부스 상세 정보 조회.
    *
    * @param id 부스 ID
