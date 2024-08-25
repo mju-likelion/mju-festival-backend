@@ -11,6 +11,7 @@ import org.mju_likelion.festival.booth.domain.Booth;
 import org.mju_likelion.festival.booth.domain.SimpleBooth;
 import org.mju_likelion.festival.booth.domain.repository.BoothQueryRepository;
 import org.mju_likelion.festival.booth.dto.response.BoothDetailResponse;
+import org.mju_likelion.festival.booth.dto.response.BoothOwnershipResponse;
 import org.mju_likelion.festival.booth.dto.response.BoothQrResponse;
 import org.mju_likelion.festival.booth.dto.response.SimpleBoothsResponse;
 import org.mju_likelion.festival.booth.util.qr.BoothQrManager;
@@ -45,6 +46,12 @@ public class BoothQueryService {
             () -> new NotFoundException(BOOTH_NOT_FOUND_ERROR)
         )
     );
+  }
+
+  public BoothOwnershipResponse isBoothOwner(final UUID boothId, final UUID boothAdminId) {
+    boothServiceUtils.validateAdminExists(boothAdminId);
+
+    return BoothOwnershipResponse.from(boothQueryRepository.isBoothOwner(boothId, boothAdminId));
   }
 
   public BoothQrResponse getBoothQr(final UUID boothId, final UUID boothAdminId) {
