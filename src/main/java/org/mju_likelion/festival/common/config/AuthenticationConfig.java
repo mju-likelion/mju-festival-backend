@@ -38,7 +38,8 @@ public class AuthenticationConfig implements WebMvcConfigurer {
   private void addBoothAdminAuthenticationInterceptor(final InterceptorRegistry registry) {
     registry.addInterceptor(boothAdminAuthenticationInterceptor)
         .addPathPatterns("/booths/{id}/qr")
-        .addPathPatterns("/booths/{id}");
+        .addPathPatterns("/booths/{id}")
+        .addPathPatterns("/booths/{id}/ownership");
   }
 
   /**

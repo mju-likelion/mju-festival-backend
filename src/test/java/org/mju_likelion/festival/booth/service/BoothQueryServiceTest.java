@@ -66,6 +66,37 @@ public class BoothQueryServiceTest {
     assertThat(boothDetailResponse.getId()).isEqualTo(boothIdToFind);
   }
 
+  @DisplayName("부스 소유 여부를 확인한다 - 소유")
+  @Test
+  public void testIsBoothOwner() {
+    // given
+    List<Booth> booths = boothJpaRepository.findAll();
+    Booth booth = booths.get(0);
+    Admin admin = booth.getOwner();
+
+    // when
+    boolean isOwner = boothQueryService.isBoothOwner(booth.getId(), admin.getId()).getIsOwner();
+
+    // then
+    assertThat(isOwner).isTrue();
+  }
+
+  @DisplayName("부스 소유 여부를 확인한다 - 비소유")
+  @Test
+  public void testIsNotBoothOwner() {
+    // given
+    List<Booth> booths = boothJpaRepository.findAll();
+    Booth boothA = booths.get(0);
+    Booth boothB = booths.get(1);
+    Admin adminB = boothB.getOwner();
+
+    // when
+    boolean isOwner = boothQueryService.isBoothOwner(boothA.getId(), adminB.getId()).getIsOwner();
+
+    // then
+    assertThat(isOwner).isFalse();
+  }
+
   @DisplayName("RedisBoothQrManager 를 사용하여 부스 QR 코드를 생성한다.")
   @Test
   public void testCreateBoothQrRedisBoothQrManager() {

@@ -74,6 +74,32 @@ public class BoothQueryRepositoryTest {
         );
   }
 
+  @DisplayName("부스 소유 여부 확인 - 소유")
+  @Test
+  void testIsBoothOwner() {
+    // given
+    Booth booth = boothJpaRepository.findAll().get(0);
+    // when
+    boolean isBoothOwner = boothQueryRepository.isBoothOwner(booth.getId(),
+        booth.getOwner().getId());
+    // then
+    assertThat(isBoothOwner).isTrue();
+  }
+
+  @DisplayName("부스 소유 여부 확인 - 비소유")
+  @Test
+  void testIsNotBoothOwner() {
+    // given
+    List<Booth> booths = boothJpaRepository.findAll();
+    Booth booth1 = booths.get(0);
+    Booth booth2 = booths.get(1);
+    // when
+    boolean isBoothOwner = boothQueryRepository.isBoothOwner(booth1.getId(),
+        booth2.getOwner().getId());
+    // then
+    assertThat(isBoothOwner).isFalse();
+  }
+
   private int calculateTotalPages(int totalItems, int pageSize) {
     return (totalItems + pageSize - 1) / pageSize;
   }
