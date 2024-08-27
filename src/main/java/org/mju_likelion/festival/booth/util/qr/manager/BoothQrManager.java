@@ -12,6 +12,7 @@ import org.mju_likelion.festival.booth.util.qr.BoothQrStrategy;
 public interface BoothQrManager {
 
   int qrExpireTime = 30; // qr 만로 시간 (30 초)
+  String path = "/booths/"; // qr 코드 경로
 
   /**
    * 부스 QR 코드를 생성한다.

@@ -26,7 +26,7 @@ public class RedisBoothQrManager implements BoothQrManager {
   public String generateBoothQr(final UUID boothId) {
     UUID qrId = UUID.randomUUID();
     redisUtil.insert(qrId, boothId.toString(), qrExpireTime);
-    return qrGenerator.generateQrCode("/booths/", qrId.toString(), getQuery());
+    return qrGenerator.generateQrCode(path, qrId.toString(), getQuery());
   }
 
   @Override

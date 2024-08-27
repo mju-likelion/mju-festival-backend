@@ -23,7 +23,7 @@ public class TokenBoothQrManager implements BoothQrManager {
   @Override
   public String generateBoothQr(final UUID boothId) {
     String encryptedToken = tokenUtil.getEncryptedToken(boothId.toString(), this.qrExpireTime);
-    return qrGenerator.generateQrCode("/booths/",
+    return qrGenerator.generateQrCode(path,
         Base64.getEncoder().encodeToString(encryptedToken.getBytes()),
         getQuery());
   }
