@@ -13,9 +13,4 @@ public class Payload {
 
   private UUID id;
   private AuthenticationRole role;
-
-  @Override
-  public String toString() {
-    return id.toString() + ":" + role.toString();
-  }
 }
