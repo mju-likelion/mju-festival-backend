@@ -1,4 +1,4 @@
-package org.mju_likelion.festival.auth.domain;
+package org.mju_likelion.festival.auth.util.key;
 
 /**
  * RSA Key 정보 클래스

@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import org.mju_likelion.festival.auth.domain.RsaKeyStrategy;
+import org.mju_likelion.festival.auth.util.key.RsaKeyStrategy;
 import org.mju_likelion.festival.common.util.redis.RedisAvailabilityChecker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,8 +1,8 @@
 package org.mju_likelion.festival.auth.util.key.manager;
 
 import lombok.AllArgsConstructor;
-import org.mju_likelion.festival.auth.domain.RsaKey;
-import org.mju_likelion.festival.auth.domain.RsaKeyStrategy;
+import org.mju_likelion.festival.auth.util.key.RsaKey;
+import org.mju_likelion.festival.auth.util.key.RsaKeyStrategy;
 import org.mju_likelion.festival.auth.util.key.RsaKeyUtil;
 import org.mju_likelion.festival.common.util.token.TokenUtil;
 import org.springframework.stereotype.Service;
