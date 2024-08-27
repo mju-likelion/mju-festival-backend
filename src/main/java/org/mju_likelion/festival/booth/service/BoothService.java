@@ -53,15 +53,17 @@ public class BoothService {
 
     boothServiceUtil.validateBoothAdminOwner(admin, booth);
 
-    boothServiceUtils.validateBoothAdminOwner(admin, booth);
+    updateBoothFields(updateBoothRequest, booth);
 
+    boothJpaRepository.save(booth);
+  }
+
+  private void updateBoothFields(final UpdateBoothRequest updateBoothRequest, final Booth booth) {
     doIfNotNull(updateBoothRequest.getName(), booth::updateName);
     doIfNotNull(updateBoothRequest.getDescription(), booth::updateDescription);
     doIfNotNull(updateBoothRequest.getLocation(), booth::updateLocation);
     doIfNotNull(updateBoothRequest.getLocationImageUrl(),
         url -> booth.updateLocationImage(new Image(url)));
     doIfNotNull(updateBoothRequest.getImageUrl(), url -> booth.updateImage(new Image(url)));
-
-    boothJpaRepository.save(booth);
   }
 }
