@@ -1,5 +1,6 @@
 package org.mju_likelion.festival.common.authentication.interceptor;
 
+import static org.mju_likelion.festival.common.api.ApiPaths.GET_BOOTH;
 import static org.mju_likelion.festival.common.exception.type.ErrorType.BOOTH_MANAGER_ONLY_ERROR;
 
 import java.util.LinkedList;
@@ -27,7 +28,7 @@ public class BoothAdminAuthenticationInterceptor extends AbstractAuthenticationI
   @Override
   protected List<RequestMatcher> getAllowedRequestMatchers() {
     List<RequestMatcher> allowedRequestMatchers = new LinkedList<>();
-    allowedRequestMatchers.add(new RequestMatcher(HttpMethod.GET, "/booths/{id}"));
+    allowedRequestMatchers.add(new RequestMatcher(HttpMethod.GET, GET_BOOTH));
 
     return allowedRequestMatchers;
   }

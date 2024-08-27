@@ -1,5 +1,12 @@
 package org.mju_likelion.festival.booth.controller;
 
+import static org.mju_likelion.festival.common.api.ApiPaths.GET_ALL_BOOTHS;
+import static org.mju_likelion.festival.common.api.ApiPaths.GET_BOOTH;
+import static org.mju_likelion.festival.common.api.ApiPaths.GET_BOOTH_OWNERSHIP;
+import static org.mju_likelion.festival.common.api.ApiPaths.ISSUE_BOOTH_QR;
+import static org.mju_likelion.festival.common.api.ApiPaths.PATCH_BOOTH;
+import static org.mju_likelion.festival.common.api.ApiPaths.VISIT_BOOTH;
+
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import org.mju_likelion.festival.booth.domain.BoothQrStrategy;
@@ -19,19 +26,17 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/booths")
 public class BoothController {
 
   private final BoothQueryService boothQueryService;
   private final BoothService boothService;
 
-  @GetMapping
+  @GetMapping(GET_ALL_BOOTHS)
   public ResponseEntity<SimpleBoothsResponse> getBooths(
       @RequestParam @PageNumber final int page,
       @RequestParam @PageSize final int size) {
@@ -39,14 +44,14 @@ public class BoothController {
     return ResponseEntity.ok(boothQueryService.getBooths(page, size));
   }
 
-  @GetMapping("/{id}")
+  @GetMapping(GET_BOOTH)
   public ResponseEntity<BoothDetailResponse> getBooth(
       @PathVariable final UUID id) {
 
     return ResponseEntity.ok(boothQueryService.getBooth(id));
   }
 
-  @GetMapping("/{id}/ownership")
+  @GetMapping(GET_BOOTH_OWNERSHIP)
   public ResponseEntity<BoothOwnershipResponse> isBoothOwner(
       @PathVariable final UUID id,
       @AuthenticationPrincipal final UUID boothAdminId) {
@@ -54,7 +59,7 @@ public class BoothController {
     return ResponseEntity.ok(boothQueryService.isBoothOwner(id, boothAdminId));
   }
 
-  @GetMapping("/{id}/qr")
+  @GetMapping(ISSUE_BOOTH_QR)
   public ResponseEntity<BoothQrResponse> getBoothQr(
       @PathVariable final UUID id,
       @AuthenticationPrincipal final UUID boothAdminId) {
@@ -62,7 +67,7 @@ public class BoothController {
     return ResponseEntity.ok(boothQueryService.getBoothQr(id, boothAdminId));
   }
 
-  @PostMapping("/{qrId}/visit")
+  @PostMapping(VISIT_BOOTH)
   public ResponseEntity<Void> visitBooth(
       @PathVariable final String qrId,
       @RequestParam final String strategy,
@@ -72,7 +77,7 @@ public class BoothController {
     return ResponseEntity.ok().build();
   }
 
-  @PatchMapping("/{id}")
+  @PatchMapping(PATCH_BOOTH)
   public ResponseEntity<Void> updateBooth(
       @PathVariable final UUID id,
       @RequestBody final UpdateBoothRequest updateBoothRequest,
