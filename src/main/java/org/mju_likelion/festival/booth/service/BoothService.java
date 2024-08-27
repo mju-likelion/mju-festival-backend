@@ -11,6 +11,8 @@ import org.mju_likelion.festival.booth.domain.repository.BoothJpaRepository;
 import org.mju_likelion.festival.booth.dto.request.UpdateBoothRequest;
 import org.mju_likelion.festival.booth.util.qr.BoothQrManager;
 import org.mju_likelion.festival.booth.util.qr.BoothQrManagerContext;
+import org.mju_likelion.festival.booth.util.qr.manager.BoothQrManager;
+import org.mju_likelion.festival.booth.util.qr.manager.BoothQrManagerContext;
 import org.mju_likelion.festival.image.domain.Image;
 import org.mju_likelion.festival.user.domain.User;
 import org.mju_likelion.festival.user.domain.repository.UserJpaRepository;
