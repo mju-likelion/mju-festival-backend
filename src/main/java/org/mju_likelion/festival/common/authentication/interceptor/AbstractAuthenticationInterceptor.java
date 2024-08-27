@@ -11,10 +11,10 @@ import org.mju_likelion.festival.auth.util.jwt.JwtUtil;
 import org.mju_likelion.festival.auth.util.jwt.Payload;
 import org.mju_likelion.festival.common.authentication.AuthenticationContext;
 import org.mju_likelion.festival.common.authentication.AuthorizationExtractor;
-import org.mju_likelion.festival.common.config.RequestMatcher;
 import org.mju_likelion.festival.common.exception.ForbiddenException;
 import org.mju_likelion.festival.common.exception.UnauthorizedException;
 import org.mju_likelion.festival.common.exception.type.ErrorType;
+import org.mju_likelion.festival.common.util.request_matcher.RequestMatcher;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 public abstract class AbstractAuthenticationInterceptor implements HandlerInterceptor {

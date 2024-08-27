@@ -9,8 +9,8 @@ import org.mju_likelion.festival.auth.util.jwt.AuthenticationRole;
 import org.mju_likelion.festival.auth.util.jwt.JwtUtil;
 import org.mju_likelion.festival.auth.util.jwt.Payload;
 import org.mju_likelion.festival.common.authentication.AuthenticationContext;
-import org.mju_likelion.festival.common.config.RequestMatcher;
 import org.mju_likelion.festival.common.exception.type.ErrorType;
+import org.mju_likelion.festival.common.util.request_matcher.RequestMatcher;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 

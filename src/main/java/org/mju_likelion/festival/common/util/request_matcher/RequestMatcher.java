@@ -1,4 +1,4 @@
-package org.mju_likelion.festival.common.config;
+package org.mju_likelion.festival.common.util.request_matcher;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
