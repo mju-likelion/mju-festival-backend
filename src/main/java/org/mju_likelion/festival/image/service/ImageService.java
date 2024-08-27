@@ -1,6 +1,6 @@
 package org.mju_likelion.festival.image.service;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.mju_likelion.festival.image.domain.Image;
 import org.mju_likelion.festival.image.domain.repository.ImageJpaRepository;
 import org.mju_likelion.festival.image.dto.response.ImageResponse;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ImageService {
 
   private final S3ImageService s3ImageService;
