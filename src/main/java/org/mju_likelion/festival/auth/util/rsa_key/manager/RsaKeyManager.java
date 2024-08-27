@@ -1,7 +1,7 @@
-package org.mju_likelion.festival.auth.util.key.manager;
+package org.mju_likelion.festival.auth.util.rsa_key.manager;
 
-import org.mju_likelion.festival.auth.util.key.RsaKey;
-import org.mju_likelion.festival.auth.util.key.RsaKeyStrategy;
+import org.mju_likelion.festival.auth.util.rsa_key.RsaKey;
+import org.mju_likelion.festival.auth.util.rsa_key.RsaKeyStrategy;
 
 /**
  * RSA Key 관리자 인터페이스

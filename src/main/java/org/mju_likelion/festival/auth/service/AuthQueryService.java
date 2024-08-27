@@ -6,9 +6,9 @@ import org.mju_likelion.festival.auth.dto.request.AdminLoginRequest;
 import org.mju_likelion.festival.auth.dto.response.AdminLoginResponse;
 import org.mju_likelion.festival.auth.dto.response.KeyResponse;
 import org.mju_likelion.festival.auth.util.jwt.AuthenticationRole;
-import org.mju_likelion.festival.auth.util.key.RsaKey;
-import org.mju_likelion.festival.auth.util.key.RsaKeyStrategy;
-import org.mju_likelion.festival.auth.util.key.manager.RsaKeyManager;
+import org.mju_likelion.festival.auth.util.rsa_key.RsaKey;
+import org.mju_likelion.festival.auth.util.rsa_key.RsaKeyStrategy;
+import org.mju_likelion.festival.auth.util.rsa_key.manager.RsaKeyManager;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

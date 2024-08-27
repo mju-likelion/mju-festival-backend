@@ -1,4 +1,4 @@
-package org.mju_likelion.festival.auth.util.key;
+package org.mju_likelion.festival.auth.util.rsa_key;
 
 import static org.mju_likelion.festival.common.exception.type.ErrorType.RSA_KEY_ERROR;
 

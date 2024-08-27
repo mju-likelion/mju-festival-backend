@@ -1,12 +1,12 @@
-package org.mju_likelion.festival.auth.util.key.manager;
+package org.mju_likelion.festival.auth.util.rsa_key.manager;
 
 import static org.mju_likelion.festival.common.exception.type.ErrorType.CREDENTIAL_KEY_NOT_FOUND_ERROR;
 
 import java.util.UUID;
 import lombok.AllArgsConstructor;
-import org.mju_likelion.festival.auth.util.key.RsaKey;
-import org.mju_likelion.festival.auth.util.key.RsaKeyStrategy;
-import org.mju_likelion.festival.auth.util.key.RsaKeyUtil;
+import org.mju_likelion.festival.auth.util.rsa_key.RsaKey;
+import org.mju_likelion.festival.auth.util.rsa_key.RsaKeyStrategy;
+import org.mju_likelion.festival.auth.util.rsa_key.RsaKeyUtil;
 import org.mju_likelion.festival.common.exception.NotFoundException;
 import org.mju_likelion.festival.common.util.redis.RedisUtil;
 import org.springframework.stereotype.Service;

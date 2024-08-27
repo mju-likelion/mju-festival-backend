@@ -2,7 +2,7 @@ package org.mju_likelion.festival.auth.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.mju_likelion.festival.auth.util.key.RsaKeyStrategy;
+import org.mju_likelion.festival.auth.util.rsa_key.RsaKeyStrategy;
 
 /**
  * Key 응답 DTO.
