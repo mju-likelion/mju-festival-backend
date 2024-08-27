@@ -3,7 +3,7 @@ package org.mju_likelion.festival.announcement.dto.request;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Getter;
 import lombok.Setter;
-import org.mju_likelion.festival.announcement.util.deserializer.UpdateAnnouncementRequestDeserializer;
+import org.mju_likelion.festival.announcement.dto.request.deserializer.UpdateAnnouncementRequestDeserializer;
 import org.mju_likelion.festival.common.util.field_wrapper.FieldWrapper;
 
 /**
