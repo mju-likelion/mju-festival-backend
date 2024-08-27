@@ -42,9 +42,9 @@ public class MjuApiUtil {
         return "0000".equals(response.getError());
       }
 
-      throw new InternalServerException(API_ERROR, "Response body is null");
+      throw new InternalServerException(MJU_API_ERROR, "Response body is null");
     } catch (Exception e) {
-      throw new InternalServerException(API_ERROR, e.getMessage());
+      throw new InternalServerException(MJU_API_ERROR, e.getMessage());
     }
   }
 }
