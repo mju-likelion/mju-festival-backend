@@ -1,4 +1,4 @@
-package org.mju_likelion.festival.common.config;
+package org.mju_likelion.festival.common.authentication.config;
 
 import static org.mju_likelion.festival.common.api.ApiPaths.DELETE_LOST_ITEM;
 import static org.mju_likelion.festival.common.api.ApiPaths.FOUND_LOST_ITEM;
@@ -20,14 +20,13 @@ import org.mju_likelion.festival.common.authentication.interceptor.AdminAuthenti
 import org.mju_likelion.festival.common.authentication.interceptor.BoothAdminAuthenticationInterceptor;
 import org.mju_likelion.festival.common.authentication.interceptor.StudentCouncilAuthenticationInterceptor;
 import org.mju_likelion.festival.common.authentication.interceptor.UserAuthenticationInterceptor;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-@Configuration
+@Component
 @RequiredArgsConstructor
-public class AuthenticationConfig implements WebMvcConfigurer {
+public class AuthenticationConfig {
 
   private final UserAuthenticationInterceptor userAuthenticationInterceptor;
   private final StudentCouncilAuthenticationInterceptor studentCouncilAuthenticationInterceptor;
@@ -35,7 +34,6 @@ public class AuthenticationConfig implements WebMvcConfigurer {
   private final AdminAuthenticationInterceptor adminAuthenticationInterceptor;
   private final AuthenticationArgumentResolver authenticationArgumentResolver;
 
-  @Override
   public void addInterceptors(final InterceptorRegistry registry) {
     addUserAuthenticationInterceptor(registry);
     addStudentCouncilAuthenticationInterceptor(registry);
@@ -92,7 +90,6 @@ public class AuthenticationConfig implements WebMvcConfigurer {
         .addPathPatterns(VISIT_BOOTH);
   }
 
-  @Override
   public void addArgumentResolvers(final List<HandlerMethodArgumentResolver> resolvers) {
     resolvers.add(authenticationArgumentResolver);
   }
