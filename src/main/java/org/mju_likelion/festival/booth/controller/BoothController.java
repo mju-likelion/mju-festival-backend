@@ -9,7 +9,6 @@ import static org.mju_likelion.festival.common.api.ApiPaths.VISIT_BOOTH;
 
 import java.util.UUID;
 import lombok.AllArgsConstructor;
-import org.mju_likelion.festival.booth.domain.BoothQrStrategy;
 import org.mju_likelion.festival.booth.dto.request.UpdateBoothRequest;
 import org.mju_likelion.festival.booth.dto.response.BoothDetailResponse;
 import org.mju_likelion.festival.booth.dto.response.BoothOwnershipResponse;
@@ -17,6 +16,7 @@ import org.mju_likelion.festival.booth.dto.response.BoothQrResponse;
 import org.mju_likelion.festival.booth.dto.response.SimpleBoothsResponse;
 import org.mju_likelion.festival.booth.service.BoothQueryService;
 import org.mju_likelion.festival.booth.service.BoothService;
+import org.mju_likelion.festival.booth.util.qr.BoothQrStrategy;
 import org.mju_likelion.festival.common.annotaion.page_number.PageNumber;
 import org.mju_likelion.festival.common.annotaion.page_size.PageSize;
 import org.mju_likelion.festival.common.authentication.AuthenticationPrincipal;
