@@ -1,9 +1,9 @@
-package org.mju_likelion.festival.booth.util.qr;
+package org.mju_likelion.festival.booth.util.qr.manager;
 
 import java.util.Base64;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
-import org.mju_likelion.festival.booth.domain.BoothQrStrategy;
+import org.mju_likelion.festival.booth.util.qr.BoothQrStrategy;
 import org.mju_likelion.festival.common.util.qr.QrGenerator;
 import org.mju_likelion.festival.common.util.token.TokenUtil;
 import org.springframework.stereotype.Component;

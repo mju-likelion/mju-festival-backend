@@ -1,8 +1,8 @@
-package org.mju_likelion.festival.booth.util.qr;
+package org.mju_likelion.festival.booth.util.qr.manager;
 
 import java.util.Map;
 import java.util.UUID;
-import org.mju_likelion.festival.booth.domain.BoothQrStrategy;
+import org.mju_likelion.festival.booth.util.qr.BoothQrStrategy;
 
 /**
  * 부스 QR 코드를 관리하는 인터페이스.

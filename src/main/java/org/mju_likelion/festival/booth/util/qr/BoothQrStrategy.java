@@ -1,4 +1,4 @@
-package org.mju_likelion.festival.booth.domain;
+package org.mju_likelion.festival.booth.util.qr;
 
 import static org.mju_likelion.festival.common.exception.type.ErrorType.INVALID_BOOTH_QR_STRATEGY_ERROR;
 
