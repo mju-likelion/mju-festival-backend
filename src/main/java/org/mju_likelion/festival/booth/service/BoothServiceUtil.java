@@ -3,10 +3,11 @@ package org.mju_likelion.festival.booth.service;
 import static org.mju_likelion.festival.common.exception.type.ErrorType.ADMIN_NOT_FOUND_ERROR;
 import static org.mju_likelion.festival.common.exception.type.ErrorType.BOOTH_NOT_FOUND_ERROR;
 import static org.mju_likelion.festival.common.exception.type.ErrorType.NOT_BOOTH_OWNER_ERROR;
+import static org.mju_likelion.festival.common.exception.type.ErrorType.PAGE_OUT_OF_BOUND_ERROR;
 import static org.mju_likelion.festival.common.exception.type.ErrorType.USER_NOT_FOUND_ERROR;
 
 import java.util.UUID;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.mju_likelion.festival.admin.domain.Admin;
 import org.mju_likelion.festival.admin.domain.repository.AdminJpaRepository;
 import org.mju_likelion.festival.booth.domain.Booth;
@@ -19,9 +20,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 @Component
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class BoothServiceUtils {
+public class BoothServiceUtil {
 
   private final AdminJpaRepository adminJpaRepository;
   private final BoothJpaRepository boothJpaRepository;
@@ -54,6 +55,12 @@ public class BoothServiceUtils {
   public void validateAdminExists(final UUID adminId) {
     if (!adminJpaRepository.existsById(adminId)) {
       throw new NotFoundException(ADMIN_NOT_FOUND_ERROR);
+    }
+  }
+
+  public void validatePage(final int page, final int totalPage) {
+    if (page != 0 && page >= totalPage) {
+      throw new NotFoundException(PAGE_OUT_OF_BOUND_ERROR);
     }
   }
 }
