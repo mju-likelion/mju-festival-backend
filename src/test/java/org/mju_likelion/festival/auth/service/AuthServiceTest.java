@@ -9,14 +9,14 @@ import java.util.List;
 import java.util.UUID;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mju_likelion.festival.auth.domain.RsaKeyStrategy;
 import org.mju_likelion.festival.auth.dto.request.UserLoginRequest;
 import org.mju_likelion.festival.auth.dto.response.KeyResponse;
 import org.mju_likelion.festival.auth.dto.response.UserLoginResponse;
-import org.mju_likelion.festival.auth.util.key.RsaKeyUtil;
-import org.mju_likelion.festival.auth.util.key.manager.RedisRsaKeyManager;
-import org.mju_likelion.festival.auth.util.key.manager.RsaKeyManagerContext;
-import org.mju_likelion.festival.auth.util.key.manager.TokenRsaKeyManager;
+import org.mju_likelion.festival.auth.util.rsa_key.RsaKeyStrategy;
+import org.mju_likelion.festival.auth.util.rsa_key.RsaKeyUtil;
+import org.mju_likelion.festival.auth.util.rsa_key.manager.RedisRsaKeyManager;
+import org.mju_likelion.festival.auth.util.rsa_key.manager.RsaKeyManagerContext;
+import org.mju_likelion.festival.auth.util.rsa_key.manager.TokenRsaKeyManager;
 import org.mju_likelion.festival.common.annotation.ApplicationTest;
 import org.mju_likelion.festival.common.exception.BadRequestException;
 import org.mju_likelion.festival.term.domain.Term;
@@ -76,6 +76,7 @@ public class AuthServiceTest {
     UserLoginRequest userLoginRequest = createUserLoginRequest(keyResponse);
 
     // when
+    System.out.println("-----------------");
     UserLoginResponse userLoginResponse = authService.userLogin(userLoginRequest,
         RsaKeyStrategy.TOKEN);
 
