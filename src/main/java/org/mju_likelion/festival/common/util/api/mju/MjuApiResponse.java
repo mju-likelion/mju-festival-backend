@@ -1,9 +1,9 @@
-package org.mju_likelion.festival.common.util.api;
+package org.mju_likelion.festival.common.util.api.mju;
 
 import lombok.Getter;
 
 @Getter
-public class ApiResponse {
+public class MjuApiResponse {
 
   private String error;
   private String errorMessage;
