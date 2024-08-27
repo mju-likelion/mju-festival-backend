@@ -1,5 +1,7 @@
 package org.mju_likelion.festival.term.controller;
 
+import static org.mju_likelion.festival.common.api.ApiPaths.GET_ALL_TERMS;
+
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.mju_likelion.festival.term.dto.response.TermResponse;
@@ -14,7 +16,7 @@ public class TermController {
 
   private final TermQueryService termQueryService;
 
-  @GetMapping("/terms")
+  @GetMapping(GET_ALL_TERMS)
   public ResponseEntity<List<TermResponse>> getTerms() {
     return ResponseEntity.ok(termQueryService.getTerms());
   }

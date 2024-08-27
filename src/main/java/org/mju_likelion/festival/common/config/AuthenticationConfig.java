@@ -1,5 +1,18 @@
 package org.mju_likelion.festival.common.config;
 
+import static org.mju_likelion.festival.common.api.ApiPaths.DELETE_LOST_ITEM;
+import static org.mju_likelion.festival.common.api.ApiPaths.FOUND_LOST_ITEM;
+import static org.mju_likelion.festival.common.api.ApiPaths.GET_BOOTH_OWNERSHIP;
+import static org.mju_likelion.festival.common.api.ApiPaths.ISSUE_BOOTH_QR;
+import static org.mju_likelion.festival.common.api.ApiPaths.PATCH_ANNOUNCEMENT;
+import static org.mju_likelion.festival.common.api.ApiPaths.PATCH_BOOTH;
+import static org.mju_likelion.festival.common.api.ApiPaths.PATCH_LOST_ITEM;
+import static org.mju_likelion.festival.common.api.ApiPaths.POST_ANNOUNCEMENT;
+import static org.mju_likelion.festival.common.api.ApiPaths.POST_LOST_ITEM;
+import static org.mju_likelion.festival.common.api.ApiPaths.SEARCH_LOST_ITEMS;
+import static org.mju_likelion.festival.common.api.ApiPaths.UPLOAD_IMAGE;
+import static org.mju_likelion.festival.common.api.ApiPaths.VISIT_BOOTH;
+
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.mju_likelion.festival.common.authentication.AuthenticationArgumentResolver;
@@ -37,9 +50,9 @@ public class AuthenticationConfig implements WebMvcConfigurer {
    */
   private void addBoothAdminAuthenticationInterceptor(final InterceptorRegistry registry) {
     registry.addInterceptor(boothAdminAuthenticationInterceptor)
-        .addPathPatterns("/booths/{id}/qr")
-        .addPathPatterns("/booths/{id}")
-        .addPathPatterns("/booths/{id}/ownership");
+        .addPathPatterns(ISSUE_BOOTH_QR)
+        .addPathPatterns(PATCH_BOOTH)
+        .addPathPatterns(GET_BOOTH_OWNERSHIP);
   }
 
   /**
@@ -49,12 +62,14 @@ public class AuthenticationConfig implements WebMvcConfigurer {
    */
   private void addStudentCouncilAuthenticationInterceptor(final InterceptorRegistry registry) {
     registry.addInterceptor(studentCouncilAuthenticationInterceptor)
-        .addPathPatterns("/announcements")
-        .addPathPatterns("/announcements/{id}")
-        .addPathPatterns("/lost-items")
-        .addPathPatterns("/lost-items/{id}")
-        .addPathPatterns("/lost-items/{id}/found")
-        .excludePathPatterns("/lost-items/search");
+        .addPathPatterns(POST_ANNOUNCEMENT)
+        .addPathPatterns(PATCH_ANNOUNCEMENT)
+        .addPathPatterns(DELETE_LOST_ITEM)
+        .addPathPatterns(POST_LOST_ITEM)
+        .addPathPatterns(PATCH_LOST_ITEM)
+        .addPathPatterns(DELETE_LOST_ITEM)
+        .addPathPatterns(FOUND_LOST_ITEM)
+        .excludePathPatterns(SEARCH_LOST_ITEMS);
   }
 
   /**
@@ -64,7 +79,7 @@ public class AuthenticationConfig implements WebMvcConfigurer {
    */
   private void addAdminAuthenticationInterceptor(final InterceptorRegistry registry) {
     registry.addInterceptor(adminAuthenticationInterceptor)
-        .addPathPatterns("/images");
+        .addPathPatterns(UPLOAD_IMAGE);
   }
 
   /**
@@ -74,7 +89,7 @@ public class AuthenticationConfig implements WebMvcConfigurer {
    */
   private void addUserAuthenticationInterceptor(final InterceptorRegistry registry) {
     registry.addInterceptor(userAuthenticationInterceptor)
-        .addPathPatterns("/booths/{qrId}/visit");
+        .addPathPatterns(VISIT_BOOTH);
   }
 
   @Override
