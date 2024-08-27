@@ -1,5 +1,7 @@
 package org.mju_likelion.festival.lost_item.service;
 
+import static org.mju_likelion.festival.common.util.null_handler.NullHandler.doIfNotNull;
+
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.mju_likelion.festival.admin.domain.Admin;
@@ -45,9 +47,7 @@ public class LostItemService {
 
     lostItemServiceUtil.validateAdminExistence(studentCouncilId);
 
-    doIfNotNull(updateLostItemRequest.getTitle(), lostItem::updateTitle);
-    doIfNotNull(updateLostItemRequest.getContent(), lostItem::updateContent);
-    doIfNotNull(updateLostItemRequest.getImageUrl(), url -> lostItem.updateImage(new Image(url)));
+    updateLostItemFields(lostItem, updateLostItemRequest);
 
     lostItemJpaRepository.save(lostItem);
   }
@@ -70,5 +70,12 @@ public class LostItemService {
     lostItemServiceUtil.validateAdminExistence(studentCouncilId);
 
     lostItemJpaRepository.delete(lostItem);
+  }
+
+  private void updateLostItemFields(final LostItem lostItem,
+      final UpdateLostItemRequest updateLostItemRequest) {
+    doIfNotNull(updateLostItemRequest.getTitle(), lostItem::updateTitle);
+    doIfNotNull(updateLostItemRequest.getContent(), lostItem::updateContent);
+    doIfNotNull(updateLostItemRequest.getImageUrl(), url -> lostItem.updateImage(new Image(url)));
   }
 }
