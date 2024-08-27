@@ -3,10 +3,9 @@ package org.mju_likelion.festival.booth.service;
 import static org.mju_likelion.festival.common.util.null_handler.NullHandler.doIfNotNull;
 
 import java.util.UUID;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.mju_likelion.festival.admin.domain.Admin;
 import org.mju_likelion.festival.booth.domain.Booth;
-import org.mju_likelion.festival.booth.domain.BoothQrStrategy;
 import org.mju_likelion.festival.booth.domain.repository.BoothJpaRepository;
 import org.mju_likelion.festival.booth.dto.request.UpdateBoothRequest;
 import org.mju_likelion.festival.booth.util.qr.BoothQrStrategy;
@@ -19,14 +18,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Transactional
 public class BoothService {
 
   private final BoothQrManagerContext boothQrManagerContext;
   private final BoothJpaRepository boothJpaRepository;
   private final UserJpaRepository userJpaRepository;
-  private final BoothServiceUtils boothServiceUtils;
+  private final BoothServiceUtil boothServiceUtil;
 
   public void visitBooth(
       final String qrId,
@@ -37,8 +36,8 @@ public class BoothService {
 
     UUID boothId = boothQrManager.getBoothIdFromQrId(qrId);
 
-    User user = boothServiceUtils.getExistingUser(userId);
-    Booth booth = boothServiceUtils.getExistingBooth(boothId);
+    User user = boothServiceUtil.getExistingUser(userId);
+    Booth booth = boothServiceUtil.getExistingBooth(boothId);
 
     user.visitBooth(booth);
     userJpaRepository.save(user);
@@ -49,8 +48,10 @@ public class BoothService {
       final UpdateBoothRequest updateBoothRequest,
       final UUID boothAdminId) {
 
-    Booth booth = boothServiceUtils.getExistingBooth(boothId);
-    Admin admin = boothServiceUtils.getExistingAdmin(boothAdminId);
+    Booth booth = boothServiceUtil.getExistingBooth(boothId);
+    Admin admin = boothServiceUtil.getExistingAdmin(boothAdminId);
+
+    boothServiceUtil.validateBoothAdminOwner(admin, booth);
 
     boothServiceUtils.validateBoothAdminOwner(admin, booth);
 
