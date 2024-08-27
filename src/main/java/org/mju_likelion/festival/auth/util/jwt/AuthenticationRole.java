@@ -20,9 +20,4 @@ public enum AuthenticationRole {
       case BOOTH_MANAGER -> BOOTH_MANAGER;
     };
   }
-
-  @Override
-  public String toString() {
-    return name().toLowerCase();
-  }
 }

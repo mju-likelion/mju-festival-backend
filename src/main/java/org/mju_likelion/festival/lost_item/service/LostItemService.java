@@ -1,14 +1,10 @@
 package org.mju_likelion.festival.lost_item.service;
 
-import static org.mju_likelion.festival.common.exception.type.ErrorType.ADMIN_NOT_FOUND_ERROR;
-import static org.mju_likelion.festival.common.exception.type.ErrorType.LOST_ITEM_NOT_FOUND_ERROR;
 import static org.mju_likelion.festival.common.util.null_handler.NullHandler.doIfNotNull;
 
 import java.util.UUID;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.mju_likelion.festival.admin.domain.Admin;
-import org.mju_likelion.festival.admin.domain.repository.AdminJpaRepository;
-import org.mju_likelion.festival.common.exception.NotFoundException;
 import org.mju_likelion.festival.image.domain.Image;
 import org.mju_likelion.festival.lost_item.domain.LostItem;
 import org.mju_likelion.festival.lost_item.domain.repository.LostItemJpaRepository;
@@ -19,18 +15,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Transactional
 public class LostItemService {
 
   private final LostItemJpaRepository lostItemJpaRepository;
-  private final AdminJpaRepository adminJpaRepository;
+  private final LostItemServiceUtil lostItemServiceUtil;
 
   public void createLostItem(
       final CreateLostItemRequest createLostItemRequest,
       final UUID studentCouncilId) {
 
-    Admin admin = getExistAdmin(studentCouncilId);
+    Admin admin = lostItemServiceUtil.getExistAdmin(studentCouncilId);
     Image image = new Image(createLostItemRequest.getImageUrl());
 
     LostItem lostItem = new LostItem(
@@ -47,13 +43,11 @@ public class LostItemService {
       final UpdateLostItemRequest updateLostItemRequest,
       final UUID studentCouncilId) {
 
-    LostItem lostItem = getExistLostItem(lostItemId);
+    LostItem lostItem = lostItemServiceUtil.getExistLostItem(lostItemId);
 
-    validateAdminExistence(studentCouncilId);
+    lostItemServiceUtil.validateAdminExistence(studentCouncilId);
 
-    doIfNotNull(updateLostItemRequest.getTitle(), lostItem::updateTitle);
-    doIfNotNull(updateLostItemRequest.getContent(), lostItem::updateContent);
-    doIfNotNull(updateLostItemRequest.getImageUrl(), url -> lostItem.updateImage(new Image(url)));
+    updateLostItemFields(lostItem, updateLostItemRequest);
 
     lostItemJpaRepository.save(lostItem);
   }
@@ -63,8 +57,8 @@ public class LostItemService {
       final LostItemFoundRequest lostItemFoundRequest,
       final UUID studentCouncilId) {
 
-    LostItem lostItem = getExistLostItem(lostItemId);
-    validateAdminExistence(studentCouncilId);
+    LostItem lostItem = lostItemServiceUtil.getExistLostItem(lostItemId);
+    lostItemServiceUtil.validateAdminExistence(studentCouncilId);
 
     lostItem.found(lostItemFoundRequest.getRetrieverInfo());
 
@@ -72,25 +66,16 @@ public class LostItemService {
   }
 
   public void deleteLostItem(final UUID lostItemId, final UUID studentCouncilId) {
-    LostItem lostItem = getExistLostItem(lostItemId);
-    validateAdminExistence(studentCouncilId);
+    LostItem lostItem = lostItemServiceUtil.getExistLostItem(lostItemId);
+    lostItemServiceUtil.validateAdminExistence(studentCouncilId);
 
     lostItemJpaRepository.delete(lostItem);
   }
 
-  private void validateAdminExistence(final UUID adminId) {
-    if (!adminJpaRepository.existsById(adminId)) {
-      throw new NotFoundException(ADMIN_NOT_FOUND_ERROR);
-    }
-  }
-
-  private LostItem getExistLostItem(final UUID lostItemId) {
-    return lostItemJpaRepository.findById(lostItemId)
-        .orElseThrow(() -> new NotFoundException(LOST_ITEM_NOT_FOUND_ERROR));
-  }
-
-  private Admin getExistAdmin(final UUID studentCouncilId) {
-    return adminJpaRepository.findById(studentCouncilId)
-        .orElseThrow(() -> new NotFoundException(ADMIN_NOT_FOUND_ERROR));
+  private void updateLostItemFields(final LostItem lostItem,
+      final UpdateLostItemRequest updateLostItemRequest) {
+    doIfNotNull(updateLostItemRequest.getTitle(), lostItem::updateTitle);
+    doIfNotNull(updateLostItemRequest.getContent(), lostItem::updateContent);
+    doIfNotNull(updateLostItemRequest.getImageUrl(), url -> lostItem.updateImage(new Image(url)));
   }
 }

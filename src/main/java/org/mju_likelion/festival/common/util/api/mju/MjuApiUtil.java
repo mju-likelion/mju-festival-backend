@@ -1,6 +1,6 @@
-package org.mju_likelion.festival.common.util.api;
+package org.mju_likelion.festival.common.util.api.mju;
 
-import static org.mju_likelion.festival.common.exception.type.ErrorType.API_ERROR;
+import static org.mju_likelion.festival.common.exception.type.ErrorType.MJU_API_ERROR;
 
 import lombok.RequiredArgsConstructor;
 import org.mju_likelion.festival.common.exception.InternalServerException;
@@ -34,17 +34,17 @@ public class MjuApiUtil {
 
       HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(body, headers);
 
-      ResponseEntity<ApiResponse> responseEntity = restTemplate.postForEntity(mjuUserCheckApiUri,
-          request, ApiResponse.class);
+      ResponseEntity<MjuApiResponse> responseEntity = restTemplate.postForEntity(mjuUserCheckApiUri,
+          request, MjuApiResponse.class);
 
-      ApiResponse response = responseEntity.getBody();
+      MjuApiResponse response = responseEntity.getBody();
       if (response != null) {
         return "0000".equals(response.getError());
       }
 
-      throw new InternalServerException(API_ERROR, "Response body is null");
+      throw new InternalServerException(MJU_API_ERROR, "Response body is null");
     } catch (Exception e) {
-      throw new InternalServerException(API_ERROR, e.getMessage());
+      throw new InternalServerException(MJU_API_ERROR, e.getMessage());
     }
   }
 }

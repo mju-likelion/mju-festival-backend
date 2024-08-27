@@ -6,7 +6,6 @@ import static org.mju_likelion.festival.common.api.ApiPaths.USER_LOGIN;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.mju_likelion.festival.auth.domain.RsaKeyStrategy;
 import org.mju_likelion.festival.auth.dto.request.AdminLoginRequest;
 import org.mju_likelion.festival.auth.dto.request.UserLoginRequest;
 import org.mju_likelion.festival.auth.dto.response.AdminLoginResponse;
@@ -14,6 +13,7 @@ import org.mju_likelion.festival.auth.dto.response.KeyResponse;
 import org.mju_likelion.festival.auth.dto.response.UserLoginResponse;
 import org.mju_likelion.festival.auth.service.AuthQueryService;
 import org.mju_likelion.festival.auth.service.AuthService;
+import org.mju_likelion.festival.auth.util.rsa_key.RsaKeyStrategy;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;

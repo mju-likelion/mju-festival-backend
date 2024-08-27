@@ -1,4 +1,4 @@
-package org.mju_likelion.festival.auth.util.key;
+package org.mju_likelion.festival.auth.util.rsa_key;
 
 import static org.mju_likelion.festival.common.exception.type.ErrorType.RSA_KEY_ERROR;
 
@@ -12,7 +12,6 @@ import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
 import javax.crypto.Cipher;
-import org.mju_likelion.festival.auth.domain.RsaKey;
 import org.mju_likelion.festival.common.exception.InternalServerException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

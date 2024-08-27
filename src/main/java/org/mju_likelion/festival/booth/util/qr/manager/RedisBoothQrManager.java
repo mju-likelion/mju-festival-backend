@@ -1,10 +1,10 @@
-package org.mju_likelion.festival.booth.util.qr;
+package org.mju_likelion.festival.booth.util.qr.manager;
 
 import static org.mju_likelion.festival.common.exception.type.ErrorType.BOOTH_QR_NOT_FOUND_ERROR;
 
 import java.util.UUID;
 import lombok.AllArgsConstructor;
-import org.mju_likelion.festival.booth.domain.BoothQrStrategy;
+import org.mju_likelion.festival.booth.util.qr.BoothQrStrategy;
 import org.mju_likelion.festival.common.exception.NotFoundException;
 import org.mju_likelion.festival.common.util.qr.QrGenerator;
 import org.mju_likelion.festival.common.util.redis.RedisUtil;
@@ -26,7 +26,7 @@ public class RedisBoothQrManager implements BoothQrManager {
   public String generateBoothQr(final UUID boothId) {
     UUID qrId = UUID.randomUUID();
     redisUtil.insert(qrId, boothId.toString(), qrExpireTime);
-    return qrGenerator.generateQrCode("/booths/", qrId.toString(), getQuery());
+    return qrGenerator.generateQrCode(path, qrId.toString(), getQuery());
   }
 
   @Override

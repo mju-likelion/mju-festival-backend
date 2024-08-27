@@ -1,8 +1,8 @@
-package org.mju_likelion.festival.booth.util.qr;
+package org.mju_likelion.festival.booth.util.qr.manager;
 
 import java.util.Map;
 import java.util.UUID;
-import org.mju_likelion.festival.booth.domain.BoothQrStrategy;
+import org.mju_likelion.festival.booth.util.qr.BoothQrStrategy;
 
 /**
  * 부스 QR 코드를 관리하는 인터페이스.
@@ -12,6 +12,7 @@ import org.mju_likelion.festival.booth.domain.BoothQrStrategy;
 public interface BoothQrManager {
 
   int qrExpireTime = 30; // qr 만로 시간 (30 초)
+  String path = "/booths/"; // qr 코드 경로
 
   /**
    * 부스 QR 코드를 생성한다.

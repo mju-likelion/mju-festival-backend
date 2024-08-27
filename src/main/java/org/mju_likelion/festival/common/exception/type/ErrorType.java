@@ -61,7 +61,7 @@ public enum ErrorType {
 
   HTTP_MEDIA_TYPE_NOT_SUPPORTED_ERROR(41500, "지원하지 않는 미디어 타입입니다."),
 
-  API_ERROR(50000, "MSI 연동 중 오류가 발생했습니다."),
+  MJU_API_ERROR(50000, "MSI 연동 중 오류가 발생했습니다."),
   UUID_FORMAT_ERROR(50001, "UUID 형식이 잘못되었습니다."),
   IMAGE_UPLOAD_ERROR(50002, "이미지 업로드 중 오류가 발생했습니다."),
   TOKEN_GENERATE_ERROR(50003, "토큰 생성 중 오류가 발생했습니다."),

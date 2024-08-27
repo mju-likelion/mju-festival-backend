@@ -1,9 +1,9 @@
-package org.mju_likelion.festival.booth.util.qr;
+package org.mju_likelion.festival.booth.util.qr.manager;
 
 import java.util.Base64;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
-import org.mju_likelion.festival.booth.domain.BoothQrStrategy;
+import org.mju_likelion.festival.booth.util.qr.BoothQrStrategy;
 import org.mju_likelion.festival.common.util.qr.QrGenerator;
 import org.mju_likelion.festival.common.util.token.TokenUtil;
 import org.springframework.stereotype.Component;
@@ -23,7 +23,7 @@ public class TokenBoothQrManager implements BoothQrManager {
   @Override
   public String generateBoothQr(final UUID boothId) {
     String encryptedToken = tokenUtil.getEncryptedToken(boothId.toString(), this.qrExpireTime);
-    return qrGenerator.generateQrCode("/booths/",
+    return qrGenerator.generateQrCode(path,
         Base64.getEncoder().encodeToString(encryptedToken.getBytes()),
         getQuery());
   }

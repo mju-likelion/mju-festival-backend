@@ -1,4 +1,4 @@
-package org.mju_likelion.festival.announcement.util.deserializer;
+package org.mju_likelion.festival.announcement.dto.request.deserializer;
 
 import static org.mju_likelion.festival.common.exception.type.ErrorType.INVALID_REQUEST_BODY_ERROR;
 import static org.mju_likelion.festival.common.util.field_wrapper.FieldWrapper.getStringFieldWrapper;
