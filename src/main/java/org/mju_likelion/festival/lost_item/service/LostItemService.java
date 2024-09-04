@@ -5,6 +5,7 @@ import static org.mju_likelion.festival.common.util.null_handler.NullHandler.doI
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.mju_likelion.festival.admin.domain.Admin;
+import org.mju_likelion.festival.admin.service.AdminQueryService;
 import org.mju_likelion.festival.image.domain.Image;
 import org.mju_likelion.festival.lost_item.domain.LostItem;
 import org.mju_likelion.festival.lost_item.domain.repository.LostItemJpaRepository;
@@ -19,14 +20,15 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class LostItemService {
 
+  private final AdminQueryService adminQueryService;
+  private final LostItemQueryService lostItemQueryService;
   private final LostItemJpaRepository lostItemJpaRepository;
-  private final LostItemServiceUtil lostItemServiceUtil;
 
   public void createLostItem(
       final CreateLostItemRequest createLostItemRequest,
       final UUID studentCouncilId) {
 
-    Admin admin = lostItemServiceUtil.getExistAdmin(studentCouncilId);
+    Admin admin = adminQueryService.getExistingAdmin(studentCouncilId);
     Image image = new Image(createLostItemRequest.getImageUrl());
 
     LostItem lostItem = new LostItem(
@@ -43,9 +45,8 @@ public class LostItemService {
       final UpdateLostItemRequest updateLostItemRequest,
       final UUID studentCouncilId) {
 
-    LostItem lostItem = lostItemServiceUtil.getExistLostItem(lostItemId);
-
-    lostItemServiceUtil.validateAdminExistence(studentCouncilId);
+    LostItem lostItem = lostItemQueryService.getExistLostItem(lostItemId);
+    adminQueryService.validateAdminExistence(studentCouncilId);
 
     updateLostItemFields(lostItem, updateLostItemRequest);
 
@@ -57,8 +58,8 @@ public class LostItemService {
       final LostItemFoundRequest lostItemFoundRequest,
       final UUID studentCouncilId) {
 
-    LostItem lostItem = lostItemServiceUtil.getExistLostItem(lostItemId);
-    lostItemServiceUtil.validateAdminExistence(studentCouncilId);
+    LostItem lostItem = lostItemQueryService.getExistLostItem(lostItemId);
+    adminQueryService.validateAdminExistence(studentCouncilId);
 
     lostItem.found(lostItemFoundRequest.getRetrieverInfo());
 
@@ -66,8 +67,8 @@ public class LostItemService {
   }
 
   public void deleteLostItem(final UUID lostItemId, final UUID studentCouncilId) {
-    LostItem lostItem = lostItemServiceUtil.getExistLostItem(lostItemId);
-    lostItemServiceUtil.validateAdminExistence(studentCouncilId);
+    LostItem lostItem = lostItemQueryService.getExistLostItem(lostItemId);
+    adminQueryService.validateAdminExistence(studentCouncilId);
 
     lostItemJpaRepository.delete(lostItem);
   }
