@@ -25,8 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class BoothQueryService {
 
   private final BoothQueryRepository boothQueryRepository;
-  private final BoothQrManagerContext boothQrManagerContext;
-  private final BoothServiceUtil boothServiceUtil;
+  private final BoothJpaRepository boothJpaRepository;
 
   public SimpleBoothsResponse getBooths(final int page, final int size) {
     int totalPage = boothQueryRepository.findTotalPage(size);
@@ -62,6 +61,24 @@ public class BoothQueryService {
     boothServiceUtil.validateBoothAdminOwner(admin, booth);
 
     return new BoothQrResponse(boothQrManager.generateBoothQr(boothId));
+  }
+
+  public void validateBoothAdminOwner(final Admin admin, final Booth booth) {
+    if (!booth.isManagedBy(admin)) {
+      throw new ForbiddenException(NOT_BOOTH_OWNER_ERROR);
+    }
+  }
+
+  public Booth getExistingBooth(final UUID boothId) {
+    return boothJpaRepository.findById(boothId).orElseThrow(
+        () -> new NotFoundException(BOOTH_NOT_FOUND_ERROR)
+    );
+  }
+
+  public void validatePage(final int page, final int totalPage) {
+    if (page != 0 && page >= totalPage) {
+      throw new NotFoundException(PAGE_OUT_OF_BOUND_ERROR);
+    }
   }
 }
 
