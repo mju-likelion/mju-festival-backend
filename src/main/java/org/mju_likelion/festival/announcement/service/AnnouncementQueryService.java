@@ -1,11 +1,14 @@
 package org.mju_likelion.festival.announcement.service;
 
 import static org.mju_likelion.festival.common.exception.type.ErrorType.ANNOUNCEMENT_NOT_FOUND_ERROR;
+import static org.mju_likelion.festival.common.exception.type.ErrorType.PAGE_OUT_OF_BOUND_ERROR;
 
 import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import org.mju_likelion.festival.announcement.domain.Announcement;
 import org.mju_likelion.festival.announcement.domain.SimpleAnnouncement;
+import org.mju_likelion.festival.announcement.domain.repository.AnnouncementJpaRepository;
 import org.mju_likelion.festival.announcement.domain.repository.AnnouncementQueryRepository;
 import org.mju_likelion.festival.announcement.dto.response.AnnouncementDetailResponse;
 import org.mju_likelion.festival.announcement.dto.response.SimpleAnnouncementsResponse;
@@ -20,7 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class AnnouncementQueryService {
 
   private final AnnouncementQueryRepository announcementQueryRepository;
-  private final AnnouncementServiceUtil announcementServiceUtil;
+  private final AnnouncementJpaRepository announcementJpaRepository;
 
   public SimpleAnnouncementsResponse getAnnouncements(
       final SortOrder sort,
@@ -29,7 +32,7 @@ public class AnnouncementQueryService {
 
     int totalPage = announcementQueryRepository.getTotalPage(size);
 
-    announcementServiceUtil.validatePage(page, totalPage);
+    validatePage(page, totalPage);
 
     List<SimpleAnnouncement> simpleAnnouncements = announcementQueryRepository
         .findOrderedSimpleAnnouncementsWithPagenation(sort, page, size);
@@ -43,5 +46,16 @@ public class AnnouncementQueryService {
             () -> new NotFoundException(ANNOUNCEMENT_NOT_FOUND_ERROR)
         )
     );
+  }
+
+  public Announcement getExistingAnnouncement(final UUID announcementId) {
+    return announcementJpaRepository.findById(announcementId)
+        .orElseThrow(() -> new NotFoundException(ANNOUNCEMENT_NOT_FOUND_ERROR));
+  }
+
+  private void validatePage(final int page, final int totalPage) {
+    if (page != 0 && page >= totalPage) {
+      throw new NotFoundException(PAGE_OUT_OF_BOUND_ERROR);
+    }
   }
 }
