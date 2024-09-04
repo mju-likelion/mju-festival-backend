@@ -1,9 +1,16 @@
 package org.mju_likelion.festival.lost_item.service;
 
+import static org.mju_likelion.festival.common.exception.type.ErrorType.LOST_ITEM_NOT_FOUND_ERROR;
+import static org.mju_likelion.festival.common.exception.type.ErrorType.PAGE_OUT_OF_BOUND_ERROR;
+
 import java.util.List;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.mju_likelion.festival.common.enums.SortOrder;
+import org.mju_likelion.festival.common.exception.NotFoundException;
+import org.mju_likelion.festival.lost_item.domain.LostItem;
 import org.mju_likelion.festival.lost_item.domain.SimpleLostItem;
+import org.mju_likelion.festival.lost_item.domain.repository.LostItemJpaRepository;
 import org.mju_likelion.festival.lost_item.domain.repository.LostItemQueryRepository;
 import org.mju_likelion.festival.lost_item.dto.response.SimpleLostItemsResponse;
 import org.springframework.stereotype.Service;
@@ -15,7 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class LostItemQueryService {
 
   private final LostItemQueryRepository lostItemQueryRepository;
-  private final LostItemServiceUtil lostItemServiceUtil;
+  private final LostItemJpaRepository lostItemJpaRepository;
 
   public SimpleLostItemsResponse getLostItems(
       final SortOrder sort,
@@ -24,7 +31,7 @@ public class LostItemQueryService {
 
     int totalPage = lostItemQueryRepository.findTotalPage(size);
 
-    lostItemServiceUtil.validatePage(page, totalPage);
+    validatePage(page, totalPage);
 
     List<SimpleLostItem> simpleLostItems = lostItemQueryRepository.findOrderedSimpleLostItemsWithPagenation(
         sort, page,
@@ -41,7 +48,7 @@ public class LostItemQueryService {
 
     int totalPage = lostItemQueryRepository.findTotalPageByKeyword(keyword, size);
 
-    lostItemServiceUtil.validatePage(page, totalPage);
+    validatePage(page, totalPage);
 
     List<SimpleLostItem> simpleLostItems = lostItemQueryRepository
         .findOrderedSimpleLostItemsWithPagenationByKeyword(sort, keyword, page, size);
@@ -49,5 +56,14 @@ public class LostItemQueryService {
     return SimpleLostItemsResponse.of(simpleLostItems, totalPage);
   }
 
+  public LostItem getExistLostItem(final UUID lostItemId) {
+    return lostItemJpaRepository.findById(lostItemId)
+        .orElseThrow(() -> new NotFoundException(LOST_ITEM_NOT_FOUND_ERROR));
+  }
 
+  public void validatePage(final int page, final int totalPage) {
+    if (page != 0 && page >= totalPage) {
+      throw new NotFoundException(PAGE_OUT_OF_BOUND_ERROR);
+    }
+  }
 }

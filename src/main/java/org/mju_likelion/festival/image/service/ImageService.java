@@ -7,10 +7,12 @@ import org.mju_likelion.festival.image.dto.response.ImageResponse;
 import org.mju_likelion.festival.image.util.s3.ImageType;
 import org.mju_likelion.festival.image.util.s3.S3ImageService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class ImageService {
 
   private final S3ImageService s3ImageService;

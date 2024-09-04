@@ -1,21 +1,9 @@
 package org.mju_likelion.festival.booth.service;
 
-import static org.mju_likelion.festival.common.exception.type.ErrorType.ADMIN_NOT_FOUND_ERROR;
-import static org.mju_likelion.festival.common.exception.type.ErrorType.BOOTH_NOT_FOUND_ERROR;
-import static org.mju_likelion.festival.common.exception.type.ErrorType.NOT_BOOTH_OWNER_ERROR;
-import static org.mju_likelion.festival.common.exception.type.ErrorType.PAGE_OUT_OF_BOUND_ERROR;
-import static org.mju_likelion.festival.common.exception.type.ErrorType.USER_NOT_FOUND_ERROR;
-
-import java.util.UUID;
 import lombok.RequiredArgsConstructor;
-import org.mju_likelion.festival.admin.domain.Admin;
-import org.mju_likelion.festival.admin.domain.repository.AdminJpaRepository;
-import org.mju_likelion.festival.booth.domain.Booth;
-import org.mju_likelion.festival.booth.domain.repository.BoothJpaRepository;
-import org.mju_likelion.festival.common.exception.ForbiddenException;
-import org.mju_likelion.festival.common.exception.NotFoundException;
-import org.mju_likelion.festival.user.domain.User;
-import org.mju_likelion.festival.user.domain.repository.UserJpaRepository;
+import org.mju_likelion.festival.booth.util.qr.BoothQrStrategy;
+import org.mju_likelion.festival.booth.util.qr.manager.BoothQrManager;
+import org.mju_likelion.festival.booth.util.qr.manager.BoothQrManagerContext;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,43 +12,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class BoothServiceUtil {
 
-  private final AdminJpaRepository adminJpaRepository;
-  private final BoothJpaRepository boothJpaRepository;
-  private final UserJpaRepository userJpaRepository;
+  private final BoothQrManagerContext boothQrManagerContext;
 
-  public void validateBoothAdminOwner(final Admin admin, final Booth booth) {
-    if (!booth.isManagedBy(admin)) {
-      throw new ForbiddenException(NOT_BOOTH_OWNER_ERROR);
-    }
+  public BoothQrManager boothQrManager(final BoothQrStrategy boothQrStrategy) {
+    return boothQrManagerContext.boothQrManager(boothQrStrategy);
   }
 
-  public Admin getExistingAdmin(final UUID adminId) {
-    return adminJpaRepository.findById(adminId).orElseThrow(
-        () -> new NotFoundException(ADMIN_NOT_FOUND_ERROR)
-    );
-  }
-
-  public Booth getExistingBooth(final UUID boothId) {
-    return boothJpaRepository.findById(boothId).orElseThrow(
-        () -> new NotFoundException(BOOTH_NOT_FOUND_ERROR)
-    );
-  }
-
-  public User getExistingUser(final UUID userId) {
-    return userJpaRepository.findById(userId).orElseThrow(
-        () -> new NotFoundException(USER_NOT_FOUND_ERROR)
-    );
-  }
-
-  public void validateAdminExists(final UUID adminId) {
-    if (!adminJpaRepository.existsById(adminId)) {
-      throw new NotFoundException(ADMIN_NOT_FOUND_ERROR);
-    }
-  }
-
-  public void validatePage(final int page, final int totalPage) {
-    if (page != 0 && page >= totalPage) {
-      throw new NotFoundException(PAGE_OUT_OF_BOUND_ERROR);
-    }
+  public BoothQrManager boothQrManager() {
+    return boothQrManagerContext.boothQrManager();
   }
 }

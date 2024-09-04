@@ -2,6 +2,7 @@ package org.mju_likelion.festival.auth.service;
 
 import lombok.RequiredArgsConstructor;
 import org.mju_likelion.festival.admin.domain.Admin;
+import org.mju_likelion.festival.admin.service.AdminQueryService;
 import org.mju_likelion.festival.auth.dto.request.AdminLoginRequest;
 import org.mju_likelion.festival.auth.dto.response.AdminLoginResponse;
 import org.mju_likelion.festival.auth.dto.response.KeyResponse;
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class AuthQueryService {
 
+  private final AdminQueryService adminQueryService;
   private final AuthServiceUtil authServiceUtil;
 
   public KeyResponse getKey() {
@@ -41,7 +43,7 @@ public class AuthQueryService {
     String loginId = rsaKeyManager.decryptByKey(adminLoginRequest.getEncryptedLoginId(), key);
     String password = rsaKeyManager.decryptByKey(adminLoginRequest.getEncryptedPassword(), key);
 
-    Admin admin = authServiceUtil.getExistingAdmin(loginId, password);
+    Admin admin = adminQueryService.getExistingAdmin(loginId, password);
 
     String accessToken = authServiceUtil.createAccessToken(admin.getId(),
         AuthenticationRole.from(admin.getRole()));

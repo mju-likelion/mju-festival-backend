@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.mju_likelion.festival.admin.domain.Admin;
+import org.mju_likelion.festival.admin.service.AdminQueryService;
 import org.mju_likelion.festival.announcement.domain.Announcement;
 import org.mju_likelion.festival.announcement.domain.repository.AnnouncementJpaRepository;
 import org.mju_likelion.festival.announcement.dto.request.CreateAnnouncementRequest;
@@ -19,14 +20,15 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class AnnouncementService {
 
+  private final AdminQueryService adminQueryService;
+  private final AnnouncementQueryService announcementQueryService;
   private final AnnouncementJpaRepository announcementJpaRepository;
-  private final AnnouncementServiceUtil announcementServiceUtil;
 
   public void createAnnouncement(
       final CreateAnnouncementRequest createAnnouncementRequest,
       final UUID adminId) {
 
-    Admin admin = announcementServiceUtil.getExistingAdmin(adminId);
+    Admin admin = adminQueryService.getExistingAdmin(adminId);
 
     Image image = Optional.ofNullable(createAnnouncementRequest.getImageUrl())
         .map(Image::new).orElse(null);
@@ -42,9 +44,9 @@ public class AnnouncementService {
       final UpdateAnnouncementRequest updateAnnouncementRequest,
       final UUID adminId) {
 
-    Announcement announcement = announcementServiceUtil.getExistingAnnouncement(announcementId);
+    Announcement announcement = announcementQueryService.getExistingAnnouncement(announcementId);
 
-    announcementServiceUtil.validateAdminExistence(adminId);
+    adminQueryService.validateAdminExistence(adminId);
 
     doIfNotNull(updateAnnouncementRequest.getTitle(), announcement::updateTitle);
     doIfNotNull(updateAnnouncementRequest.getContent(), announcement::updateContent);
@@ -58,8 +60,8 @@ public class AnnouncementService {
   }
 
   public void deleteAnnouncement(final UUID announcementId, final UUID adminId) {
-    Announcement announcement = announcementServiceUtil.getExistingAnnouncement(announcementId);
-    announcementServiceUtil.validateAdminExistence(adminId);
+    Announcement announcement = announcementQueryService.getExistingAnnouncement(announcementId);
+    adminQueryService.validateAdminExistence(adminId);
     announcementJpaRepository.delete(announcement);
   }
 }

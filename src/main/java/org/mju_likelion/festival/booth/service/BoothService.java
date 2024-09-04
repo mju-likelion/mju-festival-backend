@@ -5,15 +5,15 @@ import static org.mju_likelion.festival.common.util.null_handler.NullHandler.doI
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.mju_likelion.festival.admin.domain.Admin;
+import org.mju_likelion.festival.admin.service.AdminQueryService;
 import org.mju_likelion.festival.booth.domain.Booth;
 import org.mju_likelion.festival.booth.domain.repository.BoothJpaRepository;
 import org.mju_likelion.festival.booth.dto.request.UpdateBoothRequest;
 import org.mju_likelion.festival.booth.util.qr.BoothQrStrategy;
 import org.mju_likelion.festival.booth.util.qr.manager.BoothQrManager;
-import org.mju_likelion.festival.booth.util.qr.manager.BoothQrManagerContext;
 import org.mju_likelion.festival.image.domain.Image;
 import org.mju_likelion.festival.user.domain.User;
-import org.mju_likelion.festival.user.domain.repository.UserJpaRepository;
+import org.mju_likelion.festival.user.service.UserQueryService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,9 +22,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class BoothService {
 
-  private final BoothQrManagerContext boothQrManagerContext;
+  private final UserQueryService userQueryService;
+  private final AdminQueryService adminQueryService;
+  private final BoothQueryService boothQueryService;
   private final BoothJpaRepository boothJpaRepository;
-  private final UserJpaRepository userJpaRepository;
   private final BoothServiceUtil boothServiceUtil;
 
   public void visitBooth(
@@ -32,15 +33,15 @@ public class BoothService {
       final BoothQrStrategy boothQrStrategy,
       final UUID userId) {
 
-    BoothQrManager boothQrManager = boothQrManagerContext.boothQrManager(boothQrStrategy);
+    BoothQrManager boothQrManager = boothServiceUtil.boothQrManager(boothQrStrategy);
 
     UUID boothId = boothQrManager.getBoothIdFromQrId(qrId);
 
-    User user = boothServiceUtil.getExistingUser(userId);
-    Booth booth = boothServiceUtil.getExistingBooth(boothId);
+    User user = userQueryService.getExistingUser(userId);
+    Booth booth = boothQueryService.getExistingBooth(boothId);
 
     user.visitBooth(booth);
-    userJpaRepository.save(user);
+    userQueryService.saveUser(user);
   }
 
   public void updateBooth(
@@ -48,10 +49,10 @@ public class BoothService {
       final UpdateBoothRequest updateBoothRequest,
       final UUID boothAdminId) {
 
-    Booth booth = boothServiceUtil.getExistingBooth(boothId);
-    Admin admin = boothServiceUtil.getExistingAdmin(boothAdminId);
+    Admin admin = adminQueryService.getExistingAdmin(boothAdminId);
+    Booth booth = boothQueryService.getExistingBooth(boothId);
 
-    boothServiceUtil.validateBoothAdminOwner(admin, booth);
+    boothQueryService.validateBoothAdminOwner(admin, booth);
 
     updateBoothFields(updateBoothRequest, booth);
 
