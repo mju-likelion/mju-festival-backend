@@ -40,11 +40,15 @@ jobs:
           echo "${{ secrets.DEV_TEST_PROPERTIES }}" > ./application.properties
         shell: bash
 
+      # 2-1. Gradle Test 를 실행한다
+      - name: Test with Gradle
+        run: ./gradlew --info test
+
       # 3. Spring Boot 애플리케이션 빌드
       - name: Build with Gradle
         uses: gradle/gradle-build-action@bd5760595778326ba7f1441bcf7e88b49de61a25 # v2.6.0
         with:
-          arguments: clean bootJar
+          arguments: clean bootJar -x test
 
       # 4. Docker 이미지 빌드
       - name: docker image build
