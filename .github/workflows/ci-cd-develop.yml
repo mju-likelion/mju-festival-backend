@@ -31,16 +31,7 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      # 2. application.properties 파일 생성
-      - name: make application.properties
-        run: |
-          mkdir -p ./src/main/resources
-          cd ./src/main/resources
-          touch ./application.properties
-          echo "${{ secrets.DEV_PROPERTIES }}" > ./application.properties
-        shell: bash
-
-      # 2-1. test 용 application.properties 파일 생성
+      # 2. test 용 application.properties 파일 생성
       - name: make application.properties for test
         run: |
           mkdir -p ./src/test/resources
@@ -49,11 +40,15 @@ jobs:
           echo "${{ secrets.DEV_TEST_PROPERTIES }}" > ./application.properties
         shell: bash
 
+      # 2-1. Gradle Test 를 실행한다
+      - name: Test with Gradle
+        run: ./gradlew --info test
+
       # 3. Spring Boot 애플리케이션 빌드
       - name: Build with Gradle
         uses: gradle/gradle-build-action@bd5760595778326ba7f1441bcf7e88b49de61a25 # v2.6.0
         with:
-          arguments: clean bootJar
+          arguments: clean bootJar -x test
 
       # 4. Docker 이미지 빌드
       - name: docker image build
@@ -75,6 +70,14 @@ jobs:
     needs: build-docker-image
     runs-on: ubuntu-latest
     steps:
+      - name: set application-dev.properties
+        run: |
+          mkdir -p ~/properties/dev
+          cd ~/properties/dev
+          touch ./application-dev.properties
+          echo "${{ secrets.DEV_PROPERTIES }}" > ./application-dev.properties
+        shell: bash
+
       - name: ssh connect & production
         uses: appleboy/ssh-action@master
         with:
@@ -86,7 +89,7 @@ jobs:
             sudo docker pull ${{secrets.DOCKERHUB_USERNAME}}/${{secrets.DEV_DOCKERHUB_IMAGE}}
             sudo docker ps -q | xargs -r sudo docker stop
             sudo docker ps -aq | xargs -r sudo docker rm
-            sudo docker run --name ${{secrets.DEV_DOCKERHUB_IMAGE}} --rm -d -p 8080:8080 -v ~/logs:/logs ${{secrets.DOCKERHUB_USERNAME}}/${{secrets.DEV_DOCKERHUB_IMAGE}}
+            sudo docker run --name ${{secrets.DEV_DOCKERHUB_IMAGE}} --rm -d -p 8080:8080 -v ~/logs:/logs -v ~/properties:/properties -e SPRING_PROFILES_ACTIVE=dev -e SPRING_CONFIG_LOCATION=/properties/application-dev.properties ${{secrets.DOCKERHUB_USERNAME}}/${{secrets.DEV_DOCKERHUB_IMAGE}}
             sudo docker system prune -f
             
             
