@@ -31,16 +31,7 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      # 2. application.properties 파일 생성
-      - name: make application.properties
-        run: |
-          mkdir -p ./src/main/resources
-          cd ./src/main/resources
-          touch ./application.properties
-          echo "${{ secrets.DEV_PROPERTIES }}" > ./application.properties
-        shell: bash
-
-      # 2-1. test 용 application.properties 파일 생성
+      # 2. test 용 application.properties 파일 생성
       - name: make application.properties for test
         run: |
           mkdir -p ./src/test/resources
