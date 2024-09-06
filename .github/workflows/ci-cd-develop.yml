@@ -66,6 +66,14 @@ jobs:
     needs: build-docker-image
     runs-on: ubuntu-latest
     steps:
+      - name: set application-dev.properties
+        run: |
+          mkdir -p ~/properties/dev
+          cd ~/properties/dev
+          touch ./application-dev.properties
+          echo "${{ secrets.DEV_PROPERTIES }}" > ./application-dev.properties
+        shell: bash
+
       - name: ssh connect & production
         uses: appleboy/ssh-action@master
         with:
