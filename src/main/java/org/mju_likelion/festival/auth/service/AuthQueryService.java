@@ -10,6 +10,9 @@ import org.mju_likelion.festival.auth.util.jwt.AuthenticationRole;
 import org.mju_likelion.festival.auth.util.rsa_key.RsaKey;
 import org.mju_likelion.festival.auth.util.rsa_key.RsaKeyStrategy;
 import org.mju_likelion.festival.auth.util.rsa_key.manager.RsaKeyManager;
+import org.mju_likelion.festival.common.exception.UnauthorizedException;
+import org.mju_likelion.festival.common.exception.type.ErrorType;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +23,7 @@ public class AuthQueryService {
 
   private final AdminQueryService adminQueryService;
   private final AuthServiceUtil authServiceUtil;
+  private final PasswordEncoder passwordEncoder;
 
   public KeyResponse getKey() {
     RsaKeyManager rsaKeyManager = authServiceUtil.getRsaKeyManager();
@@ -41,9 +45,12 @@ public class AuthQueryService {
 
     String key = adminLoginRequest.getKey();
     String loginId = rsaKeyManager.decryptByKey(adminLoginRequest.getEncryptedLoginId(), key);
-    String password = rsaKeyManager.decryptByKey(adminLoginRequest.getEncryptedPassword(), key);
+    String plainPassword = rsaKeyManager.decryptByKey(adminLoginRequest.getEncryptedPassword(),
+        key);
 
-    Admin admin = adminQueryService.getExistingAdmin(loginId, password);
+    Admin admin = adminQueryService.getExistingAdmin(loginId);
+
+    validateAdminPassword(admin, plainPassword);
 
     String accessToken = authServiceUtil.createAccessToken(admin.getId(),
         AuthenticationRole.from(admin.getRole()));
@@ -51,5 +58,9 @@ public class AuthQueryService {
     return AdminLoginResponse.of(accessToken, admin.getRole());
   }
 
-
+  private void validateAdminPassword(final Admin admin, final String plainPassword) {
+    if (!passwordEncoder.matches(plainPassword, admin.getPassword())) {
+      throw new UnauthorizedException(ErrorType.INVALID_CREDENTIALS_ERROR);
+    }
+  }
 }
