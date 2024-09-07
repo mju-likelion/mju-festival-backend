@@ -29,7 +29,7 @@ jobs:
           mkdir -p ./src/test/resources
           cd ./src/test/resources
           touch ./application.properties
-          echo "${{ secrets.DEV_TEST_PROPERTIES }}" > ./application.properties
+          echo "${{ secrets.DEV_TEST_PROPERTIES }}" > ./application-test.properties
         shell: bash
 
         # Gradle Test를 실행한다

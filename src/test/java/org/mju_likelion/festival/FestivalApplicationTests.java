@@ -1,13 +1,13 @@
 package org.mju_likelion.festival;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.mju_likelion.festival.common.annotation.ApplicationTest;
 
-@SpringBootTest
+@ApplicationTest
 class FestivalApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
+  @Test
+  void contextLoads() {
+  }
 
 }

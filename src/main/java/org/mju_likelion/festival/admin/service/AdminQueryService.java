@@ -30,8 +30,8 @@ public class AdminQueryService {
         .orElseThrow(() -> new NotFoundException(ADMIN_NOT_FOUND_ERROR));
   }
 
-  public Admin getExistingAdmin(final String loginId, final String password) {
-    return adminJpaRepository.findByLoginIdAndPassword(loginId, password)
+  public Admin getExistingAdmin(final String loginId) {
+    return adminJpaRepository.findByLoginId(loginId)
         .orElseThrow(() -> new UnauthorizedException(ErrorType.INVALID_CREDENTIALS_ERROR));
   }
 }
