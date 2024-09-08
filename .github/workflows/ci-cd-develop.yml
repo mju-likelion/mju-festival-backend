@@ -89,7 +89,7 @@ jobs:
             sudo docker pull ${{secrets.DOCKERHUB_USERNAME}}/${{secrets.DEV_DOCKERHUB_IMAGE}}
             sudo docker ps -q | xargs -r sudo docker stop
             sudo docker ps -aq | xargs -r sudo docker rm
-            sudo docker run --name ${{secrets.DEV_DOCKERHUB_IMAGE}} --rm -d -p 8080:8080 -v ~/logs:/logs -v ~/properties:/properties -e SPRING_PROFILES_ACTIVE=dev -e SPRING_CONFIG_LOCATION=/properties/application-dev.properties ${{secrets.DOCKERHUB_USERNAME}}/${{secrets.DEV_DOCKERHUB_IMAGE}}
+            sudo docker run --name ${{secrets.DEV_DOCKERHUB_IMAGE}} -d -p 8080:8080 -v ~/logs:/logs -v ~/properties:/properties -e SPRING_PROFILES_ACTIVE=dev -e SPRING_CONFIG_LOCATION=/properties/application-dev.properties ${{secrets.DOCKERHUB_USERNAME}}/${{secrets.DEV_DOCKERHUB_IMAGE}}
             sudo docker system prune -f
             
             
