@@ -60,9 +60,9 @@ public class BoothService {
   }
 
   private void updateBoothFields(final UpdateBoothRequest updateBoothRequest, final Booth booth) {
-    doIfNotNull(updateBoothRequest.getName(), booth::updateName);
-    doIfNotNull(updateBoothRequest.getDescription(), booth::updateDescription);
-    doIfNotNull(updateBoothRequest.getLocation(), booth::updateLocation);
+    doIfNotNull(updateBoothRequest.getName(), booth.getBoothInfo()::updateName);
+    doIfNotNull(updateBoothRequest.getDescription(), booth.getBoothInfo()::updateDescription);
+    doIfNotNull(updateBoothRequest.getLocation(), booth.getBoothInfo()::updateLocation);
     doIfNotNull(updateBoothRequest.getLocationImageUrl(),
         url -> booth.updateLocationImage(new Image(url)));
     doIfNotNull(updateBoothRequest.getImageUrl(), url -> booth.updateImage(new Image(url)));

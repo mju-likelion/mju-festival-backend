@@ -155,7 +155,7 @@ public class BoothServiceTest {
 
     // then
     Booth updatedBooth = boothJpaRepository.findById(booth.getId()).get();
-    assertThat(updatedBooth.getName()).isEqualTo(updateBoothRequest.getName());
+    assertThat(updatedBooth.getBoothInfo().getName()).isEqualTo(updateBoothRequest.getName());
   }
 
   @DisplayName("부스 설명을 업데이트한다.")
@@ -170,7 +170,8 @@ public class BoothServiceTest {
 
     // then
     Booth updatedBooth = boothJpaRepository.findById(booth.getId()).get();
-    assertThat(updatedBooth.getDescription()).isEqualTo(updateBoothRequest.getDescription());
+    assertThat(updatedBooth.getBoothInfo().getDescription()).isEqualTo(
+        updateBoothRequest.getDescription());
   }
 
   @DisplayName("부스 위치를 업데이트한다.")
@@ -185,7 +186,8 @@ public class BoothServiceTest {
 
     // then
     Booth updatedBooth = boothJpaRepository.findById(booth.getId()).get();
-    assertThat(updatedBooth.getLocation()).isEqualTo(updateBoothRequest.getLocation());
+    assertThat(updatedBooth.getBoothInfo().getLocation()).isEqualTo(
+        updateBoothRequest.getLocation());
   }
 
   @DisplayName("부스 위치 이미지 URL을 업데이트한다.")
