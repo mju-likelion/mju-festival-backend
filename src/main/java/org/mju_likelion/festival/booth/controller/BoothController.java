@@ -1,15 +1,18 @@
 package org.mju_likelion.festival.booth.controller;
 
 import static org.mju_likelion.festival.common.api.ApiPaths.GET_ALL_BOOTHS;
+import static org.mju_likelion.festival.common.api.ApiPaths.GET_ALL_BOOTH_DEPARTMENTS;
 import static org.mju_likelion.festival.common.api.ApiPaths.GET_BOOTH;
 import static org.mju_likelion.festival.common.api.ApiPaths.GET_BOOTH_OWNERSHIP;
 import static org.mju_likelion.festival.common.api.ApiPaths.ISSUE_BOOTH_QR;
 import static org.mju_likelion.festival.common.api.ApiPaths.PATCH_BOOTH;
 import static org.mju_likelion.festival.common.api.ApiPaths.VISIT_BOOTH;
 
+import java.util.List;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import org.mju_likelion.festival.booth.dto.request.UpdateBoothRequest;
+import org.mju_likelion.festival.booth.dto.response.BoothDepartmentResponse;
 import org.mju_likelion.festival.booth.dto.response.BoothDetailResponse;
 import org.mju_likelion.festival.booth.dto.response.BoothOwnershipResponse;
 import org.mju_likelion.festival.booth.dto.response.BoothQrResponse;
@@ -35,6 +38,12 @@ public class BoothController {
 
   private final BoothQueryService boothQueryService;
   private final BoothService boothService;
+
+  @GetMapping(GET_ALL_BOOTH_DEPARTMENTS)
+  public ResponseEntity<List<BoothDepartmentResponse>> getBoothDepartments() {
+
+    return ResponseEntity.ok(boothQueryService.getBoothDepartments());
+  }
 
   @GetMapping(GET_ALL_BOOTHS)
   public ResponseEntity<SimpleBoothsResponse> getBooths(

@@ -11,8 +11,10 @@ import org.mju_likelion.festival.admin.domain.Admin;
 import org.mju_likelion.festival.admin.service.AdminQueryService;
 import org.mju_likelion.festival.booth.domain.Booth;
 import org.mju_likelion.festival.booth.domain.SimpleBooth;
+import org.mju_likelion.festival.booth.domain.repository.BoothDepartmentJpaRepository;
 import org.mju_likelion.festival.booth.domain.repository.BoothJpaRepository;
 import org.mju_likelion.festival.booth.domain.repository.BoothQueryRepository;
+import org.mju_likelion.festival.booth.dto.response.BoothDepartmentResponse;
 import org.mju_likelion.festival.booth.dto.response.BoothDetailResponse;
 import org.mju_likelion.festival.booth.dto.response.BoothOwnershipResponse;
 import org.mju_likelion.festival.booth.dto.response.BoothQrResponse;
@@ -32,6 +34,13 @@ public class BoothQueryService {
   private final BoothServiceUtil boothServiceUtil;
   private final BoothQueryRepository boothQueryRepository;
   private final BoothJpaRepository boothJpaRepository;
+  private final BoothDepartmentJpaRepository boothDepartmentJpaRepository;
+
+  public List<BoothDepartmentResponse> getBoothDepartments() {
+    return boothDepartmentJpaRepository.findAll().stream()
+        .map(BoothDepartmentResponse::from)
+        .toList();
+  }
 
   public SimpleBoothsResponse getBooths(final int page, final int size) {
     int totalPage = boothQueryRepository.findTotalPage(size);
