@@ -47,6 +47,7 @@ public class BoothQueryRepository {
           uuid,
           rs.getString("boothName"),
           rs.getString("boothDescription"),
+          rs.getString("department"),
           rs.getString("boothLocation"),
           rs.getString("imageUrl"),
           rs.getString("locationImageUrl"),
@@ -123,11 +124,12 @@ public class BoothQueryRepository {
   public Optional<BoothDetail> findBoothById(final UUID id) {
     String sql =
         "SELECT HEX(b.id) AS boothId, b.name AS boothName, b.description AS boothDescription, "
-            + "b.location AS boothLocation, i.url AS imageUrl, li.url AS locationImageUrl, "
+            + "bd.name AS department, b.location AS boothLocation, i.url AS imageUrl, li.url AS locationImageUrl, "
             + "b.created_at AS createdAt "
             + "FROM booth b "
-            + "LEFT JOIN image i ON b.image_id = i.id "
-            + "LEFT JOIN image li ON b.location_image_id = li.id "
+            + "INNER JOIN image i ON b.image_id = i.id "
+            + "INNER JOIN image li ON b.location_image_id = li.id "
+            + "INNER JOIN booth_department bd ON b.department_id = bd.id "
             + "WHERE b.id = UNHEX(:id)";
 
     MapSqlParameterSource params = new MapSqlParameterSource()
