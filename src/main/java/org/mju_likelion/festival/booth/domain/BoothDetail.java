@@ -10,6 +10,7 @@ import lombok.Getter;
 @Getter
 public class BoothDetail extends SimpleBooth {
 
+  private final String department;
   private final String location;
   private final String locationImageUrl;
   private final LocalDateTime createdAt;
@@ -18,12 +19,14 @@ public class BoothDetail extends SimpleBooth {
       final UUID id,
       final String name,
       final String description,
+      final String department,
       final String location,
       final String imageUrl,
       final String locationImageUrl,
       final LocalDateTime createdAt) {
 
     super(id, name, description, imageUrl);
+    this.department = department;
     this.location = location;
     this.locationImageUrl = locationImageUrl;
     this.createdAt = createdAt;
@@ -35,6 +38,7 @@ public class BoothDetail extends SimpleBooth {
         "id=" + id +
         ", name='" + name + '\'' +
         ", description='" + description + '\'' +
+        ", department='" + department + '\'' +
         ", location='" + location + '\'' +
         ", imageUrl='" + imageUrl + '\'' +
         ", locationImageUrl='" + locationImageUrl + '\'' +
