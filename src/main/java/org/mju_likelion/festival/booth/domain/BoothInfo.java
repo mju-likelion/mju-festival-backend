@@ -6,8 +6,9 @@ import static org.mju_likelion.festival.common.exception.type.ErrorType.INVALID_
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Transient;
 import java.util.Objects;
 import lombok.AccessLevel;
@@ -39,15 +40,15 @@ public class BoothInfo {
   @Column(nullable = false, length = LOCATION_LENGTH)
   private String location;
 
-  @Enumerated(value = EnumType.STRING)
-  @Column(nullable = false)
-  private Department department;
+  @OneToOne(optional = false, fetch = FetchType.LAZY)
+  @JoinColumn(name = "department_id")
+  private BoothDepartment department;
 
   public BoothInfo(
       final String name,
       final String description,
       final String location,
-      final Department department) {
+      final BoothDepartment department) {
 
     validate(name, description, location);
     this.name = name;
