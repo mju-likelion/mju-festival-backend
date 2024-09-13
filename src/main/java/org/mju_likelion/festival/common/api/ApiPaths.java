@@ -19,6 +19,7 @@ public class ApiPaths {
 
   // booth
   private static final String BOOTHS = "/booths";
+  public static final String GET_ALL_BOOTH_DEPARTMENTS = BOOTHS + "/departments";
   public static final String GET_ALL_BOOTHS = BOOTHS;
   public static final String GET_BOOTH = BOOTHS + "/{id}";
   public static final String ISSUE_BOOTH_QR = BOOTHS + "/{id}/qr";
