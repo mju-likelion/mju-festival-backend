@@ -10,6 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mju_likelion.festival.booth.domain.Booth;
+import org.mju_likelion.festival.booth.domain.BoothDepartment;
 import org.mju_likelion.festival.booth.domain.BoothDetail;
 import org.mju_likelion.festival.booth.domain.SimpleBooth;
 import org.mju_likelion.festival.common.annotation.ApplicationTest;
@@ -26,16 +27,21 @@ public class BoothQueryRepositoryTest {
   private BoothJpaRepository boothJpaRepository;
 
   @Autowired
+  private BoothDepartmentJpaRepository boothDepartmentJpaRepository;
+
+  @Autowired
   private DataSource dataSource;
 
   private BoothQueryRepository boothQueryRepository;
 
+  private BoothDepartment department;
   private int totalBoothNum;
 
   @BeforeEach
   void setUp() {
+    department = boothDepartmentJpaRepository.findAll().get(0);
     boothQueryRepository = new BoothQueryRepository(new NamedParameterJdbcTemplate(dataSource));
-    totalBoothNum = (int) boothJpaRepository.count();
+    totalBoothNum = (int) boothJpaRepository.countByBoothInfo_Department(department);
   }
 
   @DisplayName("부스 간단 정보 List 조회 - 페이지네이션")
@@ -47,8 +53,8 @@ public class BoothQueryRepositoryTest {
 
     // when & then
     IntStream.range(0, totalPages).forEach(page -> {
-      List<SimpleBooth> pageContent = boothQueryRepository.findOrderedSimpleBoothsWithPagination(
-          page, pageSize);
+      List<SimpleBooth> pageContent = boothQueryRepository.findOrderedSimpleBoothsByDepartmentWithPagination(
+          department.getId(), page, pageSize);
 
       int expectedSize = calculateExpectedSize(page, pageSize, totalBoothNum);
 

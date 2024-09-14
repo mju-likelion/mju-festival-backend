@@ -51,6 +51,7 @@ public enum ErrorType {
   PAGE_OUT_OF_BOUND_ERROR(40406, "페이지 범위를 벗어났습니다."),
   ANNOUNCEMENT_NOT_FOUND_ERROR(40407, "존재하지 않는 공지사항입니다."),
   LOST_ITEM_NOT_FOUND_ERROR(40408, "존재하지 않는 분실물입니다."),
+  BOOTH_DEPARTMENT_NOT_FOUND_ERROR(40409, "존재하지 않는 부스 소속입니다."),
 
   METHOD_NOT_ALLOWED_ERROR(40500, "허용되지 않은 HTTP 메소드입니다."),
 
