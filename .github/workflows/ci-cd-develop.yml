@@ -72,10 +72,10 @@ jobs:
     steps:
       - name: set application-dev.properties
         run: |
-          mkdir -p ~/properties/dev
-          cd ~/properties/dev
-          touch ./application-dev.properties
-          echo "${{ secrets.DEV_PROPERTIES }}" > ./application-dev.properties
+          sudo mkdir -p ~/properties/dev
+          sudo cd ~/properties/dev
+          sudo touch ./application-dev.properties
+          sudo echo "${{ secrets.DEV_PROPERTIES }}" > ./application-dev.properties
         shell: bash
 
       - name: ssh connect & production
@@ -89,7 +89,7 @@ jobs:
             sudo docker pull ${{secrets.DOCKERHUB_USERNAME}}/${{secrets.DEV_DOCKERHUB_IMAGE}}
             sudo docker ps -q | xargs -r sudo docker stop
             sudo docker ps -aq | xargs -r sudo docker rm
-            sudo docker run --name ${{secrets.DEV_DOCKERHUB_IMAGE}} -d -p 8080:8080 -v ~/logs:/logs -v ~/properties:/properties -e SPRING_PROFILES_ACTIVE=dev -e SPRING_CONFIG_LOCATION=/properties/application-dev.properties ${{secrets.DOCKERHUB_USERNAME}}/${{secrets.DEV_DOCKERHUB_IMAGE}}
+            sudo docker run --name ${{secrets.DEV_DOCKERHUB_IMAGE}} -d -p 8080:8080 -v ~/logs:/logs -v ~/properties:/properties -e SPRING_PROFILES_ACTIVE=dev -e SPRING_CONFIG_LOCATION=/properties/dev/application-dev.properties ${{secrets.DOCKERHUB_USERNAME}}/${{secrets.DEV_DOCKERHUB_IMAGE}}
             sudo docker system prune -f
             
             
