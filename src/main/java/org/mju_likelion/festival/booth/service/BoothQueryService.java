@@ -42,13 +42,13 @@ public class BoothQueryService {
         .toList();
   }
 
-  public SimpleBoothsResponse getBooths(final int page, final int size) {
-    int totalPage = boothQueryRepository.findTotalPage(size);
+  public SimpleBoothsResponse getBooths(final UUID departmentId, final int page, final int size) {
+    int totalPage = boothQueryRepository.findTotalPage(departmentId, size);
 
     validatePage(page, totalPage);
 
-    List<SimpleBooth> simpleBooths = boothQueryRepository.findOrderedSimpleBoothsWithPagination(
-        page, size);
+    List<SimpleBooth> simpleBooths = boothQueryRepository.findOrderedSimpleBoothsByDepartmentWithPagination(
+        departmentId, page, size);
 
     return SimpleBoothsResponse.from(simpleBooths, totalPage);
   }
