@@ -9,8 +9,9 @@ import java.util.UUID;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mju_likelion.festival.admin.domain.Admin;
-import org.mju_likelion.festival.admin.domain.repository.AdminJpaRepository;
 import org.mju_likelion.festival.booth.domain.Booth;
+import org.mju_likelion.festival.booth.domain.BoothDepartment;
+import org.mju_likelion.festival.booth.domain.repository.BoothDepartmentJpaRepository;
 import org.mju_likelion.festival.booth.domain.repository.BoothJpaRepository;
 import org.mju_likelion.festival.booth.dto.response.BoothDetailResponse;
 import org.mju_likelion.festival.booth.dto.response.SimpleBoothsResponse;
@@ -31,7 +32,7 @@ public class BoothQueryServiceTest {
   @Autowired
   private BoothJpaRepository boothJpaRepository;
   @Autowired
-  private AdminJpaRepository adminJpaRepository;
+  private BoothDepartmentJpaRepository boothDepartmentJpaRepository;
   @MockBean
   private BoothQrManagerContext boothQrManagerContext;
   @Autowired
@@ -43,11 +44,12 @@ public class BoothQueryServiceTest {
   @Test
   public void testGetBooths() {
     // given
+    BoothDepartment department = boothDepartmentJpaRepository.findAll().get(0);
     int page = 0;
     int size = 5;
 
     // when
-    SimpleBoothsResponse booths = boothQueryService.getBooths(page, size);
+    SimpleBoothsResponse booths = boothQueryService.getBooths(department.getId(), page, size);
 
     // then
     assertThat(booths).isNotNull();
