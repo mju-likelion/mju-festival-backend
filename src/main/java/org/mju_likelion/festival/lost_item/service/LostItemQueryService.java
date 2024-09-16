@@ -34,8 +34,7 @@ public class LostItemQueryService {
     validatePage(page, totalPage);
 
     List<SimpleLostItem> simpleLostItems = lostItemQueryRepository.findOrderedSimpleLostItemsWithPagenation(
-        sort, page,
-        size);
+        sort, page, size);
 
     return SimpleLostItemsResponse.of(simpleLostItems, totalPage);
   }
