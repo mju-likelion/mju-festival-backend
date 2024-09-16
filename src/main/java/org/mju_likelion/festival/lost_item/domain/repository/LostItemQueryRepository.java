@@ -52,7 +52,7 @@ public class LostItemQueryRepository {
             + "CASE WHEN li.retriever_info IS NULL THEN FALSE ELSE TRUE END AS isFounded, "
             + "i.url AS imageUrl, li.created_at AS createdAt "
             + "FROM lost_item li "
-            + "LEFT JOIN image i ON li.image_id = i.id "
+            + "INNER JOIN image i ON li.image_id = i.id "
             + "ORDER BY li.created_at " + sortOrder.toString() + " "
             + "LIMIT :limit OFFSET :offset";
 
@@ -97,7 +97,7 @@ public class LostItemQueryRepository {
         + "CASE WHEN li.retriever_info IS NULL THEN FALSE ELSE TRUE END AS isFounded, "
         + "i.url AS imageUrl, li.created_at AS createdAt "
         + "FROM lost_item li "
-        + "LEFT JOIN image i ON li.image_id = i.id "
+        + "INNER JOIN image i ON li.image_id = i.id "
         + "WHERE li.title LIKE :keyword OR li.content LIKE :keyword "
         + "ORDER BY li.created_at " + sortOrder.name() + " "
         + "LIMIT :limit OFFSET :offset";
