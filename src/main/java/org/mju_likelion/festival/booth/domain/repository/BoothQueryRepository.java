@@ -73,7 +73,7 @@ public class BoothQueryRepository {
         "SELECT HEX(b.id) AS boothId, b.name AS boothName, b.description AS boothDescription, "
             + "i.url AS imageUrl "
             + "FROM booth b "
-            + "LEFT JOIN image i ON b.image_id = i.id "
+            + "INNER JOIN image i ON b.image_id = i.id "
             + "WHERE b.department_id = UNHEX(:departmentId) "
             + "ORDER BY b.sequence ASC "
             + "LIMIT :limit OFFSET :offset";
@@ -112,10 +112,10 @@ public class BoothQueryRepository {
    */
   public boolean isBoothOwner(final UUID boothId, final UUID adminId) {
     String sql =
-        "SELECT COUNT(*) "
-            + "FROM booth b "
-            + "JOIN admin a ON b.owner_id = a.id "
-            + "WHERE b.id = UNHEX(:boothId) AND a.id = UNHEX(:adminId)";
+        "SELECT EXISTS("
+            + "SELECT 1 FROM booth b "
+            + "WHERE b.id = UNHEX(:boothId) AND b.owner_id = UNHEX(:adminId)"
+            + ") AS isOwner";
 
     MapSqlParameterSource params = new MapSqlParameterSource()
         .addValue("boothId", uuidToHex(boothId))
