@@ -8,6 +8,10 @@ public class ApiPaths {
   // term
   public static final String GET_ALL_TERMS = "/terms";
 
+  // user
+  private static final String USERS = "/users";
+  public static final String GET_MY_STAMP = USERS + "/my/stamp";
+
   // lost item
   private static final String LOST_ITEMS = "/lost-items";
   public static final String GET_ALL_LOST_ITEMS = LOST_ITEMS;

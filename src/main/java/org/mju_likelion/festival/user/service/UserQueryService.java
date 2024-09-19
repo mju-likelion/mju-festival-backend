@@ -10,6 +10,8 @@ import org.mju_likelion.festival.common.exception.type.ErrorType;
 import org.mju_likelion.festival.common.util.api.mju.MjuApiUtil;
 import org.mju_likelion.festival.user.domain.User;
 import org.mju_likelion.festival.user.domain.repository.UserJpaRepository;
+import org.mju_likelion.festival.user.domain.repository.UserQueryRepository;
+import org.mju_likelion.festival.user.dto.response.StampResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,7 +21,19 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserQueryService {
 
   private final UserJpaRepository userJpaRepository;
+  private final UserQueryRepository userQueryRepository;
   private final MjuApiUtil mjuApiUtil;
+
+  public StampResponse getUserStampById(final UUID userId) {
+    validateUserExists(userId);
+    return StampResponse.from(userQueryRepository.findUserStampByUserId(userId));
+  }
+
+  public void validateUserExists(final UUID userId) {
+    if (!userJpaRepository.existsById(userId)) {
+      throw new NotFoundException(USER_NOT_FOUND_ERROR);
+    }
+  }
 
   /**
    * 사용자의 학번과 비밀번호를 검증한다. 명지대학교 MSI API 를 이용하여 사용자의 존재 여부를 확인한다.
