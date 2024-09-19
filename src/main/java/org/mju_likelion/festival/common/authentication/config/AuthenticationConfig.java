@@ -3,6 +3,7 @@ package org.mju_likelion.festival.common.authentication.config;
 import static org.mju_likelion.festival.common.api.ApiPaths.DELETE_LOST_ITEM;
 import static org.mju_likelion.festival.common.api.ApiPaths.FOUND_LOST_ITEM;
 import static org.mju_likelion.festival.common.api.ApiPaths.GET_BOOTH_OWNERSHIP;
+import static org.mju_likelion.festival.common.api.ApiPaths.GET_MY_STAMP;
 import static org.mju_likelion.festival.common.api.ApiPaths.ISSUE_BOOTH_QR;
 import static org.mju_likelion.festival.common.api.ApiPaths.PATCH_ANNOUNCEMENT;
 import static org.mju_likelion.festival.common.api.ApiPaths.PATCH_BOOTH;
@@ -87,7 +88,8 @@ public class AuthenticationConfig {
    */
   private void addUserAuthenticationInterceptor(final InterceptorRegistry registry) {
     registry.addInterceptor(userAuthenticationInterceptor)
-        .addPathPatterns(VISIT_BOOTH);
+        .addPathPatterns(VISIT_BOOTH)
+        .addPathPatterns(GET_MY_STAMP);
   }
 
   public void addArgumentResolvers(final List<HandlerMethodArgumentResolver> resolvers) {
