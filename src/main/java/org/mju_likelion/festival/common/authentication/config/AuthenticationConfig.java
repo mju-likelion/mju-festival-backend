@@ -12,6 +12,7 @@ import static org.mju_likelion.festival.common.api.ApiPaths.POST_ANNOUNCEMENT;
 import static org.mju_likelion.festival.common.api.ApiPaths.POST_LOST_ITEM;
 import static org.mju_likelion.festival.common.api.ApiPaths.SEARCH_LOST_ITEMS;
 import static org.mju_likelion.festival.common.api.ApiPaths.UPLOAD_IMAGE;
+import static org.mju_likelion.festival.common.api.ApiPaths.USER_WITHDRAW;
 import static org.mju_likelion.festival.common.api.ApiPaths.VISIT_BOOTH;
 
 import java.util.List;
@@ -89,7 +90,8 @@ public class AuthenticationConfig {
   private void addUserAuthenticationInterceptor(final InterceptorRegistry registry) {
     registry.addInterceptor(userAuthenticationInterceptor)
         .addPathPatterns(VISIT_BOOTH)
-        .addPathPatterns(GET_MY_STAMP);
+        .addPathPatterns(GET_MY_STAMP)
+        .addPathPatterns(USER_WITHDRAW);
   }
 
   public void addArgumentResolvers(final List<HandlerMethodArgumentResolver> resolvers) {
