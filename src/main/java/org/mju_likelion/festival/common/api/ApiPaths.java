@@ -36,6 +36,7 @@ public class ApiPaths {
   public static final String ADMIN_LOGIN = AUTH + "/admin/login";
   public static final String USER_LOGIN = AUTH + "/user/login";
   public static final String AUTH_KEY = AUTH + "/key";
+  public static final String USER_WITHDRAW = AUTH + USERS + "/withdraw";
 
   // announcement
   private static final String ANNOUNCEMENTS = "/announcements";
