@@ -18,15 +18,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
 
   private final UserJpaRepository userJpaRepository;
-  private final UserQueryService userQueryService;
 
   private final TermUserService termUserService;
   private final BoothUserService boothUserService;
-
-  public void withdrawUser(final UUID userId) {
-    userQueryService.validateUserExists(userId);
-    deleteUserById(userId);
-  }
 
   /**
    * 사용자가 동의한 약관을 저장하고, 사용자의 ID를 반환한다.
@@ -43,7 +37,7 @@ public class UserService {
     return userId.orElseGet(() -> saveUser(studentId, terms));
   }
 
-  private void deleteUserById(final UUID userId) {
+  public void deleteById(final UUID userId) {
     termUserService.deleteAllByUserId(userId);
     boothUserService.deleteAllByUserId(userId);
     userJpaRepository.deleteById(userId);
