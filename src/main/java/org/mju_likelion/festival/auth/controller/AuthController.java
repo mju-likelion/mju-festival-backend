@@ -3,8 +3,10 @@ package org.mju_likelion.festival.auth.controller;
 import static org.mju_likelion.festival.common.api.ApiPaths.ADMIN_LOGIN;
 import static org.mju_likelion.festival.common.api.ApiPaths.AUTH_KEY;
 import static org.mju_likelion.festival.common.api.ApiPaths.USER_LOGIN;
+import static org.mju_likelion.festival.common.api.ApiPaths.USER_WITHDRAW;
 
 import jakarta.validation.Valid;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import org.mju_likelion.festival.auth.dto.request.AdminLoginRequest;
 import org.mju_likelion.festival.auth.dto.request.UserLoginRequest;
@@ -14,7 +16,9 @@ import org.mju_likelion.festival.auth.dto.response.UserLoginResponse;
 import org.mju_likelion.festival.auth.service.AuthQueryService;
 import org.mju_likelion.festival.auth.service.AuthService;
 import org.mju_likelion.festival.auth.util.rsa_key.RsaKeyStrategy;
+import org.mju_likelion.festival.common.authentication.AuthenticationPrincipal;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -50,5 +54,12 @@ public class AuthController {
 
     return ResponseEntity.ok(
         authQueryService.adminLogin(adminLoginRequest, RsaKeyStrategy.fromString(rsaKeyStrategy)));
+  }
+
+  @DeleteMapping(USER_WITHDRAW)
+  public ResponseEntity<Void> withdrawUser(@AuthenticationPrincipal final UUID userId) {
+
+    authService.withdrawUser(userId);
+    return ResponseEntity.noContent().build();
   }
 }

@@ -45,4 +45,9 @@ public class AuthService {
     String accessToken = authServiceUtil.createAccessToken(userId, AuthenticationRole.USER);
     return UserLoginResponse.of(accessToken);
   }
+
+  public void withdrawUser(final UUID userId) {
+    userQueryService.validateUserExists(userId);
+    userService.deleteById(userId);
+  }
 }
