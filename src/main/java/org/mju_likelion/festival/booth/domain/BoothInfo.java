@@ -25,7 +25,7 @@ import org.mju_likelion.festival.common.util.string.StringUtil;
 public class BoothInfo {
 
   @Transient
-  private final int NAME_LENGTH = 150;
+  private final int NAME_LENGTH = 30;
   @Transient
   private final int DESCRIPTION_LENGTH = 1000;
   @Transient

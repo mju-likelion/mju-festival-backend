@@ -29,9 +29,9 @@ import org.mju_likelion.festival.image.domain.Image;
 public class Announcement extends BaseEntity {
 
   @Transient
-  private final int TITLE_LENGTH = 50;
+  private final int TITLE_LENGTH = 30;
   @Transient
-  private final int CONTENT_LENGTH = 100;
+  private final int CONTENT_LENGTH = 1000;
 
   @Column(nullable = false, length = TITLE_LENGTH)
   private String title;

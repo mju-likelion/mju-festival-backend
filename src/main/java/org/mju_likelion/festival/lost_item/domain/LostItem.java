@@ -31,9 +31,9 @@ import org.mju_likelion.festival.image.domain.Image;
 public class LostItem extends BaseEntity {
 
   @Transient
-  private final int TITLE_LENGTH = 70;
+  private final int TITLE_LENGTH = 30;
   @Transient
-  private final int CONTENT_LENGTH = 100;
+  private final int CONTENT_LENGTH = 1000;
   @Transient
   private final int OWNER_INFO_LENGTH = 150;
 
