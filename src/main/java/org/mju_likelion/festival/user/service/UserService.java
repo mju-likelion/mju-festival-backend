@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import org.mju_likelion.festival.booth.service.BoothUserService;
 import org.mju_likelion.festival.term.domain.Term;
+import org.mju_likelion.festival.term.service.TermUserService;
 import org.mju_likelion.festival.user.domain.User;
 import org.mju_likelion.festival.user.domain.repository.UserJpaRepository;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,15 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
 
   private final UserJpaRepository userJpaRepository;
+  private final UserQueryService userQueryService;
+
+  private final TermUserService termUserService;
+  private final BoothUserService boothUserService;
+
+  public void withdrawUser(final UUID userId) {
+    userQueryService.validateUserExists(userId);
+    deleteUserById(userId);
+  }
 
   /**
    * 사용자가 동의한 약관을 저장하고, 사용자의 ID를 반환한다.
@@ -30,6 +41,12 @@ public class UserService {
     Optional<UUID> userId = userJpaRepository.findIdByStudentId(studentId);
 
     return userId.orElseGet(() -> saveUser(studentId, terms));
+  }
+
+  private void deleteUserById(final UUID userId) {
+    termUserService.deleteAllByUserId(userId);
+    boothUserService.deleteAllByUserId(userId);
+    userJpaRepository.deleteById(userId);
   }
 
   /**
