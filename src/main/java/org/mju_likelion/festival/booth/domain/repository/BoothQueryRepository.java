@@ -57,17 +57,12 @@ public class BoothQueryRepository {
   }
 
   /**
-   * 페이지네이션을 적용하여 부스 간단 정보 List 조회.
+   * 부스 소속 ID 에 해당하는 부스들 조회.
    *
    * @param departmentId 부스 소속 ID
-   * @param page         페이지
-   * @param size         크기
    * @return 부스 간단 정보 List
    */
-  public List<SimpleBooth> findOrderedSimpleBoothsByDepartmentWithPagination(
-      final UUID departmentId,
-      final int page,
-      final int size) {
+  public List<SimpleBooth> findAllSimpleBoothByDepartmentId(final UUID departmentId) {
 
     String sql =
         "SELECT HEX(b.id) AS boothId, b.name AS boothName, b.description AS boothDescription, "
@@ -75,32 +70,12 @@ public class BoothQueryRepository {
             + "FROM booth b "
             + "INNER JOIN image i ON b.image_id = i.id "
             + "WHERE b.department_id = UNHEX(:departmentId) "
-            + "ORDER BY b.sequence ASC "
-            + "LIMIT :limit OFFSET :offset";
+            + "ORDER BY b.sequence ASC ";
 
     MapSqlParameterSource params = new MapSqlParameterSource()
-        .addValue("departmentId", uuidToHex(departmentId))
-        .addValue("limit", size)
-        .addValue("offset", page * size);
+        .addValue("departmentId", uuidToHex(departmentId));
 
     return jdbcTemplate.query(sql, params, simpleBoothRowMapper);
-  }
-
-  /**
-   * 페이지네이션 시 부스 소속 ID 에 해당하는 부스들의 총 페이지 수 조회.
-   *
-   * @param departmentId 부스 소속 ID
-   * @param size         크기
-   * @return 총 페이지 수
-   */
-  public int findTotalPage(final UUID departmentId, final int size) {
-    String sql = "SELECT CEIL(COUNT(*) / :size) FROM booth b WHERE b.department_id = UNHEX(:departmentId)";
-
-    MapSqlParameterSource params = new MapSqlParameterSource()
-        .addValue("departmentId", uuidToHex(departmentId))
-        .addValue("size", size);
-
-    return jdbcTemplate.queryForObject(sql, params, Integer.class);
   }
 
   /**
