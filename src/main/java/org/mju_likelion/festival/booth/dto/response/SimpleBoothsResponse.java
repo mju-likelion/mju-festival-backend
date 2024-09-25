@@ -1,6 +1,6 @@
 package org.mju_likelion.festival.booth.dto.response;
 
-import java.util.List;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.mju_likelion.festival.booth.domain.SimpleBooth;
@@ -12,17 +12,22 @@ import org.mju_likelion.festival.booth.domain.SimpleBooth;
 @AllArgsConstructor
 public class SimpleBoothsResponse {
 
-  private final List<SimpleBooth> simpleBooths;
+  private final UUID id;
+  private final String name;
+  private final String imageUrl;
 
-  public static SimpleBoothsResponse from(final List<SimpleBooth> simpleBooths) {
+  public static SimpleBoothsResponse from(final SimpleBooth simpleBooths) {
 
-    return new SimpleBoothsResponse(simpleBooths);
+    return new SimpleBoothsResponse(simpleBooths.getId(), simpleBooths.getName(),
+        simpleBooths.getImageUrl());
   }
 
   @Override
   public String toString() {
     return "SimpleBoothsResponse{" +
-        "simpleBooths=" + simpleBooths +
+        "id=" + id +
+        ", name='" + name + '\'' +
+        ", imageUrl='" + imageUrl + '\'' +
         '}';
   }
 }
