@@ -45,14 +45,12 @@ public class BoothQueryServiceTest {
   public void testGetBooths() {
     // given
     BoothDepartment department = boothDepartmentJpaRepository.findAll().get(0);
-    int page = 0;
-    int size = 5;
 
     // when
-    SimpleBoothsResponse booths = boothQueryService.getBooths(department.getId(), page, size);
+    SimpleBoothsResponse booths = boothQueryService.getBooths(department.getId());
 
     // then
-    assertThat(booths).isNotNull();
+    assertThat(booths.getSimpleBooths()).isNotEmpty();
   }
 
   @DisplayName("부스 상세 정보 조회")
