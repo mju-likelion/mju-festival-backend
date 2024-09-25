@@ -11,9 +11,9 @@ import lombok.Getter;
 @AllArgsConstructor
 public class SimpleBooth {
 
-  protected final UUID id;
-  protected final String name;
-  protected final String imageUrl;
+  private final UUID id;
+  private final String name;
+  private final String imageUrl;
 
   @Override
   public String toString() {
