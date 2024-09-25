@@ -28,6 +28,7 @@ public enum ErrorType {
   INVALID_LOST_ITEM_CONTENT_LENGTH_ERROR(40018, "분실물 내용 길이가 올바르지 않습니다."),
   LOST_ITEM_IMAGE_MISSING_ERROR(40019, "분실물 이미지가 누락되었습니다."),
   LOST_ITEM_WRITER_MISSING_ERROR(40020, "분실물 작성자가 누락되었습니다."),
+  NOT_EVENT_BOOTH_ERROR(40021, "도장 이벤트 부스가 아닙니다."),
 
   INVALID_CREDENTIALS_ERROR(40100, "아이디나 비밀번호가 일치하지 않습니다."),
   NOT_AUTHENTICATED_ERROR(40101, "인증되지 않았습니다."),
