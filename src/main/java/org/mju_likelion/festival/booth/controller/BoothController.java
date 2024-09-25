@@ -44,7 +44,7 @@ public class BoothController {
   }
 
   @GetMapping(GET_ALL_BOOTHS)
-  public ResponseEntity<SimpleBoothsResponse> getBooths(
+  public ResponseEntity<List<SimpleBoothsResponse>> getBooths(
       @RequestParam(name = "department_id") final UUID departmentId) {
 
     return ResponseEntity.ok(boothQueryService.getBooths(departmentId));
