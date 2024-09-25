@@ -46,13 +46,15 @@ public class BoothQueryService {
         .toList();
   }
 
-  public SimpleBoothsResponse getBooths(final UUID departmentId) {
+  public List<SimpleBoothsResponse> getBooths(final UUID departmentId) {
     validateBoothDepartment(departmentId);
 
     List<SimpleBooth> simpleBooths = boothQueryRepository.findAllSimpleBoothByDepartmentId(
         departmentId);
 
-    return SimpleBoothsResponse.from(simpleBooths);
+    return simpleBooths.stream()
+        .map(SimpleBoothsResponse::from)
+        .toList();
   }
 
   public BoothDetailResponse getBooth(final UUID id) {
