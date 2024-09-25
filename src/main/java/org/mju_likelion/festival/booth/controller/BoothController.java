@@ -57,7 +57,7 @@ public class BoothController {
     return ResponseEntity.ok(boothQueryService.getBooth(id));
   }
 
-  @GetMapping(GET_BOOTH_OWNERSHIP)
+  @GetMapping(GET_BOOTH_MANAGING_DETAIL)
   public ResponseEntity<BoothOwnershipResponse> isBoothOwner(
       @PathVariable final UUID id,
       @AuthenticationPrincipal final UUID boothAdminId) {
