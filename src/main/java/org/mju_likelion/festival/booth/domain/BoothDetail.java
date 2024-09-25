@@ -8,8 +8,12 @@ import lombok.Getter;
  * 부스 상세 정보.
  */
 @Getter
-public class BoothDetail extends SimpleBooth {
+public class BoothDetail {
 
+  private final UUID id;
+  private final String name;
+  private final String imageUrl;
+  private final String description;
   private final String department;
   private final String location;
   private final String locationImageUrl;
@@ -25,7 +29,10 @@ public class BoothDetail extends SimpleBooth {
       final String locationImageUrl,
       final LocalDateTime createdAt) {
 
-    super(id, name, description, imageUrl);
+    this.id = id;
+    this.name = name;
+    this.imageUrl = imageUrl;
+    this.description = description;
     this.department = department;
     this.location = location;
     this.locationImageUrl = locationImageUrl;

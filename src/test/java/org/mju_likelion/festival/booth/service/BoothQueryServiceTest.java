@@ -14,7 +14,7 @@ import org.mju_likelion.festival.booth.domain.BoothDepartment;
 import org.mju_likelion.festival.booth.domain.repository.BoothDepartmentJpaRepository;
 import org.mju_likelion.festival.booth.domain.repository.BoothJpaRepository;
 import org.mju_likelion.festival.booth.dto.response.BoothDetailResponse;
-import org.mju_likelion.festival.booth.dto.response.SimpleBoothsResponse;
+import org.mju_likelion.festival.booth.dto.response.SimpleBoothResponse;
 import org.mju_likelion.festival.booth.util.qr.manager.BoothQrManagerContext;
 import org.mju_likelion.festival.booth.util.qr.manager.RedisBoothQrManager;
 import org.mju_likelion.festival.booth.util.qr.manager.TokenBoothQrManager;
@@ -47,10 +47,11 @@ public class BoothQueryServiceTest {
     BoothDepartment department = boothDepartmentJpaRepository.findAll().get(0);
 
     // when
-    SimpleBoothsResponse booths = boothQueryService.getBooths(department.getId());
+    List<SimpleBoothResponse> simpleBoothResponses = boothQueryService.getBooths(
+        department.getId());
 
     // then
-    assertThat(booths.getSimpleBooths()).isNotEmpty();
+    assertThat(simpleBoothResponses).isNotEmpty();
   }
 
   @DisplayName("부스 상세 정보 조회")

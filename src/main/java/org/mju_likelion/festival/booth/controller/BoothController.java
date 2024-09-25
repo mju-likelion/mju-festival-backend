@@ -16,7 +16,7 @@ import org.mju_likelion.festival.booth.dto.response.BoothDepartmentResponse;
 import org.mju_likelion.festival.booth.dto.response.BoothDetailResponse;
 import org.mju_likelion.festival.booth.dto.response.BoothManagingDetailResponse;
 import org.mju_likelion.festival.booth.dto.response.BoothQrResponse;
-import org.mju_likelion.festival.booth.dto.response.SimpleBoothsResponse;
+import org.mju_likelion.festival.booth.dto.response.SimpleBoothResponse;
 import org.mju_likelion.festival.booth.service.BoothQueryService;
 import org.mju_likelion.festival.booth.service.BoothService;
 import org.mju_likelion.festival.booth.util.qr.BoothQrStrategy;
@@ -44,7 +44,7 @@ public class BoothController {
   }
 
   @GetMapping(GET_ALL_BOOTHS)
-  public ResponseEntity<SimpleBoothsResponse> getBooths(
+  public ResponseEntity<List<SimpleBoothResponse>> getBooths(
       @RequestParam(name = "department_id") final UUID departmentId) {
 
     return ResponseEntity.ok(boothQueryService.getBooths(departmentId));
