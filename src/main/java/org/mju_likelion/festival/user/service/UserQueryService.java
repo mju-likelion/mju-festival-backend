@@ -8,9 +8,9 @@ import org.mju_likelion.festival.common.exception.NotFoundException;
 import org.mju_likelion.festival.common.exception.UnauthorizedException;
 import org.mju_likelion.festival.common.exception.type.ErrorType;
 import org.mju_likelion.festival.common.util.api.mju.MjuApiUtil;
+import org.mju_likelion.festival.stamp.service.StampQueryService;
 import org.mju_likelion.festival.user.domain.User;
 import org.mju_likelion.festival.user.domain.repository.UserJpaRepository;
-import org.mju_likelion.festival.user.domain.repository.UserQueryRepository;
 import org.mju_likelion.festival.user.dto.response.StampResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,12 +21,12 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserQueryService {
 
   private final UserJpaRepository userJpaRepository;
-  private final UserQueryRepository userQueryRepository;
   private final MjuApiUtil mjuApiUtil;
+  private final StampQueryService stampQueryService;
 
   public StampResponse getUserStampById(final UUID userId) {
     validateUserExists(userId);
-    return StampResponse.from(userQueryRepository.findUserStampByUserId(userId));
+    return stampQueryService.getStampResponseByUserId(userId);
   }
 
   public void validateUserExists(final UUID userId) {
