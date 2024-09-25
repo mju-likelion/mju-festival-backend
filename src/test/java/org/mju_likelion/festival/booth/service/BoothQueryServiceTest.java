@@ -75,7 +75,8 @@ public class BoothQueryServiceTest {
     Admin admin = booth.getOwner();
 
     // when
-    boolean isOwner = boothQueryService.isBoothOwner(booth.getId(), admin.getId()).getIsOwner();
+    boolean isOwner = boothQueryService.getBoothManagingDetail(booth.getId(), admin.getId())
+        .getIsOwner();
 
     // then
     assertThat(isOwner).isTrue();
@@ -91,7 +92,8 @@ public class BoothQueryServiceTest {
     Admin adminB = boothB.getOwner();
 
     // when
-    boolean isOwner = boothQueryService.isBoothOwner(boothA.getId(), adminB.getId()).getIsOwner();
+    boolean isOwner = boothQueryService.getBoothManagingDetail(boothA.getId(), adminB.getId())
+        .getIsOwner();
 
     // then
     assertThat(isOwner).isFalse();
