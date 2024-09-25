@@ -60,7 +60,7 @@ public class BoothServiceTest {
 
   @BeforeEach
   void setUp() {
-    booth = boothJpaRepository.findAll().get(0);
+    booth = boothJpaRepository.findAllByIsEventBooth(true).get(0);
     user = userJpaRepository.findAll().get(0);
     admin = booth.getOwner();
   }

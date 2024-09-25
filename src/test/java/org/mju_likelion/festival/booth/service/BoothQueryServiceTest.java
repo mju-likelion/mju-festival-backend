@@ -137,7 +137,7 @@ public class BoothQueryServiceTest {
     // given
     willReturn(redisBoothQrManager).given(boothQrManagerContext).boothQrManager();
 
-    Booth booth = boothJpaRepository.findAll().get(0);
+    Booth booth = boothJpaRepository.findAllByIsEventBooth(true).get(0);
     Admin admin = booth.getOwner();
 
     // when
@@ -153,7 +153,7 @@ public class BoothQueryServiceTest {
     // given
     willReturn(tokenBoothQrManager).given(boothQrManagerContext).boothQrManager();
 
-    Booth booth = boothJpaRepository.findAll().get(0);
+    Booth booth = boothJpaRepository.findAllByIsEventBooth(true).get(0);
     Admin admin = booth.getOwner();
 
     // when
@@ -169,7 +169,7 @@ public class BoothQueryServiceTest {
     // given
     willReturn(redisBoothQrManager).given(boothQrManagerContext).boothQrManager();
 
-    List<Booth> booths = boothJpaRepository.findAll();
+    List<Booth> booths = boothJpaRepository.findAllByIsEventBooth(true);
     Booth boothA = booths.get(0);
     Booth boothB = booths.get(1);
 
@@ -186,7 +186,7 @@ public class BoothQueryServiceTest {
     // given
     willReturn(tokenBoothQrManager).given(boothQrManagerContext).boothQrManager();
 
-    List<Booth> booths = boothJpaRepository.findAll();
+    List<Booth> booths = boothJpaRepository.findAllByIsEventBooth(true);
     Booth boothA = booths.get(0);
     Booth boothB = booths.get(1);
 
