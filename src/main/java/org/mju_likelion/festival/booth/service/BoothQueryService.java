@@ -21,7 +21,7 @@ import org.mju_likelion.festival.booth.dto.response.BoothDepartmentResponse;
 import org.mju_likelion.festival.booth.dto.response.BoothDetailResponse;
 import org.mju_likelion.festival.booth.dto.response.BoothManagingDetailResponse;
 import org.mju_likelion.festival.booth.dto.response.BoothQrResponse;
-import org.mju_likelion.festival.booth.dto.response.SimpleBoothsResponse;
+import org.mju_likelion.festival.booth.dto.response.SimpleBoothResponse;
 import org.mju_likelion.festival.booth.util.qr.manager.BoothQrManager;
 import org.mju_likelion.festival.common.exception.BadRequestException;
 import org.mju_likelion.festival.common.exception.ForbiddenException;
@@ -46,14 +46,14 @@ public class BoothQueryService {
         .toList();
   }
 
-  public List<SimpleBoothsResponse> getBooths(final UUID departmentId) {
+  public List<SimpleBoothResponse> getBooths(final UUID departmentId) {
     validateBoothDepartment(departmentId);
 
     List<SimpleBooth> simpleBooths = boothQueryRepository.findAllSimpleBoothByDepartmentId(
         departmentId);
 
     return simpleBooths.stream()
-        .map(SimpleBoothsResponse::from)
+        .map(SimpleBoothResponse::from)
         .toList();
   }
 
