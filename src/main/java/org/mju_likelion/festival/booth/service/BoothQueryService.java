@@ -3,6 +3,7 @@ package org.mju_likelion.festival.booth.service;
 import static org.mju_likelion.festival.common.exception.type.ErrorType.BOOTH_DEPARTMENT_NOT_FOUND_ERROR;
 import static org.mju_likelion.festival.common.exception.type.ErrorType.BOOTH_NOT_FOUND_ERROR;
 import static org.mju_likelion.festival.common.exception.type.ErrorType.NOT_BOOTH_OWNER_ERROR;
+import static org.mju_likelion.festival.common.exception.type.ErrorType.NOT_EVENT_BOOTH_ERROR;
 
 import java.util.List;
 import java.util.UUID;
@@ -22,6 +23,7 @@ import org.mju_likelion.festival.booth.dto.response.BoothManagingDetailResponse;
 import org.mju_likelion.festival.booth.dto.response.BoothQrResponse;
 import org.mju_likelion.festival.booth.dto.response.SimpleBoothsResponse;
 import org.mju_likelion.festival.booth.util.qr.manager.BoothQrManager;
+import org.mju_likelion.festival.common.exception.BadRequestException;
 import org.mju_likelion.festival.common.exception.ForbiddenException;
 import org.mju_likelion.festival.common.exception.NotFoundException;
 import org.springframework.stereotype.Service;
@@ -70,8 +72,9 @@ public class BoothQueryService {
   public BoothQrResponse getBoothQr(final UUID boothId, final UUID boothAdminId) {
     BoothQrManager boothQrManager = boothServiceUtil.boothQrManager();
 
-    Admin admin = adminQueryService.getExistingAdmin(boothAdminId);
     Booth booth = getExistingBooth(boothId);
+    validateEventBooth(booth);
+    Admin admin = adminQueryService.getExistingAdmin(boothAdminId);
 
     validateBoothAdminOwner(admin, booth);
 
@@ -110,6 +113,12 @@ public class BoothQueryService {
     return boothJpaRepository.findById(boothId).orElseThrow(
         () -> new NotFoundException(BOOTH_NOT_FOUND_ERROR)
     );
+  }
+
+  public void validateEventBooth(final Booth booth) {
+    if (!booth.getIsEventBooth()) {
+      throw new BadRequestException(NOT_EVENT_BOOTH_ERROR);
+    }
   }
 }
 
