@@ -8,6 +8,7 @@ import java.util.Optional;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.mju_likelion.festival.booth.domain.BoothDetail;
+import org.mju_likelion.festival.booth.domain.BoothNames;
 import org.mju_likelion.festival.booth.domain.SimpleBooth;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.jdbc.core.RowMapper;
@@ -24,6 +25,7 @@ public class BoothQueryRepository {
 
   private final RowMapper<SimpleBooth> simpleBoothRowMapper = simpleBoothRowMapper();
   private final RowMapper<BoothDetail> boothDetailRowMapper = boothDetailRowMapper();
+  private final RowMapper<String> boothNameRowMapper = boothNameRowMapper();
   private final NamedParameterJdbcTemplate jdbcTemplate;
 
   private RowMapper<SimpleBooth> simpleBoothRowMapper() {
@@ -54,6 +56,10 @@ public class BoothQueryRepository {
           rs.getTimestamp("createdAt").toLocalDateTime()
       );
     };
+  }
+
+  private RowMapper<String> boothNameRowMapper() {
+    return (rs, rowNum) -> rs.getString("boothName");
   }
 
   /**
@@ -122,5 +128,26 @@ public class BoothQueryRepository {
     return Optional
         .ofNullable(
             DataAccessUtils.singleResult(jdbcTemplate.query(sql, params, boothDetailRowMapper)));
+  }
+
+  /**
+   * 사용자가 참여한 부스 이름 전체 조회.
+   *
+   * @param userId 사용자 ID
+   * @return 부스 이름 List
+   */
+  public BoothNames findBoothNamesByUserId(final UUID userId) {
+    String sql =
+        "SELECT b.name AS boothName "
+            + "FROM booth b "
+            + "INNER JOIN booth_user bu ON b.id = bu.booth_id "
+            + "WHERE bu.user_id = UNHEX(:userId) "
+            + "ORDER BY b.sequence ASC ";
+
+    MapSqlParameterSource params = new MapSqlParameterSource()
+        .addValue("userId", uuidToHex(userId));
+
+    List<String> boothNames = jdbcTemplate.query(sql, params, boothNameRowMapper);
+    return new BoothNames(boothNames);
   }
 }

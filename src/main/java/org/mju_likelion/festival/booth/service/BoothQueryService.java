@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.mju_likelion.festival.admin.domain.Admin;
 import org.mju_likelion.festival.admin.service.AdminQueryService;
 import org.mju_likelion.festival.booth.domain.Booth;
+import org.mju_likelion.festival.booth.domain.BoothNames;
 import org.mju_likelion.festival.booth.domain.SimpleBooth;
 import org.mju_likelion.festival.booth.domain.repository.BoothDepartmentJpaRepository;
 import org.mju_likelion.festival.booth.domain.repository.BoothJpaRepository;
@@ -74,6 +75,10 @@ public class BoothQueryService {
     validateBoothAdminOwner(admin, booth);
 
     return new BoothQrResponse(boothQrManager.generateBoothQr(boothId));
+  }
+
+  public BoothNames getVisitedBoothNamesByUserId(final UUID userId) {
+    return boothQueryRepository.findBoothNamesByUserId(userId);
   }
 
   private void validateBoothDepartment(final UUID departmentId) {
