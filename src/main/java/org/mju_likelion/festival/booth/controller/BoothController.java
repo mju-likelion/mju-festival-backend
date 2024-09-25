@@ -20,8 +20,6 @@ import org.mju_likelion.festival.booth.dto.response.SimpleBoothsResponse;
 import org.mju_likelion.festival.booth.service.BoothQueryService;
 import org.mju_likelion.festival.booth.service.BoothService;
 import org.mju_likelion.festival.booth.util.qr.BoothQrStrategy;
-import org.mju_likelion.festival.common.annotaion.page_number.PageNumber;
-import org.mju_likelion.festival.common.annotaion.page_size.PageSize;
 import org.mju_likelion.festival.common.authentication.AuthenticationPrincipal;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -47,11 +45,9 @@ public class BoothController {
 
   @GetMapping(GET_ALL_BOOTHS)
   public ResponseEntity<SimpleBoothsResponse> getBooths(
-      @RequestParam(name = "department_id") final UUID departmentId,
-      @RequestParam @PageNumber final int page,
-      @RequestParam @PageSize final int size) {
+      @RequestParam(name = "department_id") final UUID departmentId) {
 
-    return ResponseEntity.ok(boothQueryService.getBooths(departmentId, page, size));
+    return ResponseEntity.ok(boothQueryService.getBooths(departmentId));
   }
 
   @GetMapping(GET_BOOTH)

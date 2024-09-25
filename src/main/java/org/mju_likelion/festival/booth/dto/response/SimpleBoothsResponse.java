@@ -13,20 +13,16 @@ import org.mju_likelion.festival.booth.domain.SimpleBooth;
 public class SimpleBoothsResponse {
 
   private final List<SimpleBooth> simpleBooths;
-  private final int totalPage;
 
-  public static SimpleBoothsResponse from(
-      final List<SimpleBooth> simpleBooths,
-      final int totalPage) {
+  public static SimpleBoothsResponse from(final List<SimpleBooth> simpleBooths) {
 
-    return new SimpleBoothsResponse(simpleBooths, totalPage);
+    return new SimpleBoothsResponse(simpleBooths);
   }
 
   @Override
   public String toString() {
     return "SimpleBoothsResponse{" +
         "simpleBooths=" + simpleBooths +
-        ", totalPage=" + totalPage +
         '}';
   }
 }
