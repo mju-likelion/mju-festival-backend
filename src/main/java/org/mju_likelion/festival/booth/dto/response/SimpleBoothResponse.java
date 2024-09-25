@@ -10,15 +10,15 @@ import org.mju_likelion.festival.booth.domain.SimpleBooth;
  */
 @Getter
 @AllArgsConstructor
-public class SimpleBoothsResponse {
+public class SimpleBoothResponse {
 
   private final UUID id;
   private final String name;
   private final String imageUrl;
 
-  public static SimpleBoothsResponse from(final SimpleBooth simpleBooths) {
+  public static SimpleBoothResponse from(final SimpleBooth simpleBooths) {
 
-    return new SimpleBoothsResponse(simpleBooths.getId(), simpleBooths.getName(),
+    return new SimpleBoothResponse(simpleBooths.getId(), simpleBooths.getName(),
         simpleBooths.getImageUrl());
   }
 
