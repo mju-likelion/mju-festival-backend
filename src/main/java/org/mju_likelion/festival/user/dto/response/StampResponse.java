@@ -1,25 +1,26 @@
 package org.mju_likelion.festival.user.dto.response;
 
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.mju_likelion.festival.user.domain.UserStamp;
+import org.mju_likelion.festival.booth.domain.BoothNames;
 
 @Getter
 @AllArgsConstructor(access = lombok.AccessLevel.PRIVATE)
 public class StampResponse {
 
-  private final int totalStampCount;
-  private final int stampCount;
+  private final List<String> participatedBoothNames;
+  private final int boothsCountToComplete;
 
-  public static StampResponse from(final UserStamp userStamp) {
-    return new StampResponse(userStamp.getTotalStampCount(), userStamp.getStampCount());
+  public static StampResponse of(final BoothNames boothNames, final int boothsCountToComplete) {
+    return new StampResponse(boothNames.getBoothNames(), boothsCountToComplete);
   }
 
   @Override
   public String toString() {
     return "StampResponse{" +
-        "totalStampCount=" + totalStampCount + '\'' +
-        ", stampCount=" + stampCount + '\'' +
+        "participatedBoothNames=" + participatedBoothNames +
+        ", boothsCountToComplete=" + boothsCountToComplete +
         '}';
   }
 }
