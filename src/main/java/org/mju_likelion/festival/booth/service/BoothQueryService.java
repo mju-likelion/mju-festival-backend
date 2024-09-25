@@ -3,7 +3,6 @@ package org.mju_likelion.festival.booth.service;
 import static org.mju_likelion.festival.common.exception.type.ErrorType.BOOTH_DEPARTMENT_NOT_FOUND_ERROR;
 import static org.mju_likelion.festival.common.exception.type.ErrorType.BOOTH_NOT_FOUND_ERROR;
 import static org.mju_likelion.festival.common.exception.type.ErrorType.NOT_BOOTH_OWNER_ERROR;
-import static org.mju_likelion.festival.common.exception.type.ErrorType.PAGE_OUT_OF_BOUND_ERROR;
 
 import java.util.List;
 import java.util.UUID;
@@ -43,17 +42,13 @@ public class BoothQueryService {
         .toList();
   }
 
-  public SimpleBoothsResponse getBooths(final UUID departmentId, final int page, final int size) {
+  public SimpleBoothsResponse getBooths(final UUID departmentId) {
     validateBoothDepartment(departmentId);
-    
-    int totalPage = boothQueryRepository.findTotalPage(departmentId, size);
 
-    validatePage(page, totalPage);
+    List<SimpleBooth> simpleBooths = boothQueryRepository.findAllSimpleBoothByDepartmentId(
+        departmentId);
 
-    List<SimpleBooth> simpleBooths = boothQueryRepository.findOrderedSimpleBoothsByDepartmentWithPagination(
-        departmentId, page, size);
-
-    return SimpleBoothsResponse.from(simpleBooths, totalPage);
+    return SimpleBoothsResponse.from(simpleBooths);
   }
 
   public BoothDetailResponse getBooth(final UUID id) {
@@ -97,12 +92,6 @@ public class BoothQueryService {
     return boothJpaRepository.findById(boothId).orElseThrow(
         () -> new NotFoundException(BOOTH_NOT_FOUND_ERROR)
     );
-  }
-
-  public void validatePage(final int page, final int totalPage) {
-    if (page != 0 && page >= totalPage) {
-      throw new NotFoundException(PAGE_OUT_OF_BOUND_ERROR);
-    }
   }
 }
 

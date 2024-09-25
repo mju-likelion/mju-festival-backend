@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.IntStream;
 import javax.sql.DataSource;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -35,34 +34,21 @@ public class BoothQueryRepositoryTest {
   private BoothQueryRepository boothQueryRepository;
 
   private BoothDepartment department;
-  private int totalBoothNum;
 
   @BeforeEach
   void setUp() {
     department = boothDepartmentJpaRepository.findAll().get(0);
     boothQueryRepository = new BoothQueryRepository(new NamedParameterJdbcTemplate(dataSource));
-    totalBoothNum = (int) boothJpaRepository.countByBoothInfo_Department(department);
   }
 
   @DisplayName("부스 간단 정보 List 조회 - 페이지네이션")
   @Test
-  void testFindOrderedSimpleBoothsWithPagination() {
-    // given
-    int pageSize = 5;
-    int totalPages = calculateTotalPages(totalBoothNum, pageSize);
-
+  void testFindAllSimpleBoothByDepartmentId() {
     // when & then
-    IntStream.range(0, totalPages).forEach(page -> {
-      List<SimpleBooth> pageContent = boothQueryRepository.findOrderedSimpleBoothsByDepartmentWithPagination(
-          department.getId(), page, pageSize);
+    List<SimpleBooth> simpleBooths = boothQueryRepository.findAllSimpleBoothByDepartmentId(
+        department.getId());
 
-      int expectedSize = calculateExpectedSize(page, pageSize, totalBoothNum);
-
-      assertThat(pageContent)
-          .hasSize(expectedSize)
-          .withFailMessage("For page %d, expected size %d but got %d", page, expectedSize,
-              pageContent.size());
-    });
+    assertThat(simpleBooths).isNotEmpty();
   }
 
   @DisplayName("부스 상세 정보 조회")
@@ -104,20 +90,5 @@ public class BoothQueryRepositoryTest {
         booth2.getOwner().getId());
     // then
     assertThat(isBoothOwner).isFalse();
-  }
-
-  private int calculateTotalPages(int totalItems, int pageSize) {
-    return (totalItems + pageSize - 1) / pageSize;
-  }
-
-  private int calculateExpectedSize(int page, int pageSize, int totalBoothNum) {
-    if (isLastPage(page, totalBoothNum, pageSize)) {
-      return totalBoothNum % pageSize == 0 ? pageSize : totalBoothNum % pageSize;
-    }
-    return pageSize;
-  }
-
-  private boolean isLastPage(int page, int totalBoothNum, int pageSize) {
-    return page == calculateTotalPages(totalBoothNum, pageSize) - 1;
   }
 }
