@@ -47,10 +47,11 @@ public class BoothQueryServiceTest {
     BoothDepartment department = boothDepartmentJpaRepository.findAll().get(0);
 
     // when
-    SimpleBoothsResponse booths = boothQueryService.getBooths(department.getId());
+    List<SimpleBoothsResponse> simpleBoothsResponses = boothQueryService.getBooths(
+        department.getId());
 
     // then
-    assertThat(booths.getSimpleBooths()).isNotEmpty();
+    assertThat(simpleBoothsResponses).isNotEmpty();
   }
 
   @DisplayName("부스 상세 정보 조회")
