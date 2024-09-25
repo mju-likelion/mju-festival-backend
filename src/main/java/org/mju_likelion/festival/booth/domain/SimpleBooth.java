@@ -13,7 +13,6 @@ public class SimpleBooth {
 
   protected final UUID id;
   protected final String name;
-  protected final String description;
   protected final String imageUrl;
 
   @Override
@@ -21,7 +20,6 @@ public class SimpleBooth {
     return "SimpleBooth{" +
         "id=" + id +
         ", name='" + name + '\'' +
-        ", description='" + description + '\'' +
         ", imageUrl='" + imageUrl + '\'' +
         '}';
   }
