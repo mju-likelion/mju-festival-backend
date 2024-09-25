@@ -35,7 +35,6 @@ public class BoothQueryRepository {
       return new SimpleBooth(
           uuid,
           rs.getString("boothName"),
-          rs.getString("boothDescription"),
           rs.getString("imageUrl")
       );
     };
@@ -71,7 +70,7 @@ public class BoothQueryRepository {
   public List<SimpleBooth> findAllSimpleBoothByDepartmentId(final UUID departmentId) {
 
     String sql =
-        "SELECT HEX(b.id) AS boothId, b.name AS boothName, b.description AS boothDescription, "
+        "SELECT HEX(b.id) AS boothId, b.name AS boothName, "
             + "i.url AS imageUrl "
             + "FROM booth b "
             + "INNER JOIN image i ON b.image_id = i.id "
