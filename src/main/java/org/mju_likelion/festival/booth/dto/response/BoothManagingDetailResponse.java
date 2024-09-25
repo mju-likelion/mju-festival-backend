@@ -22,6 +22,7 @@ public class BoothManagingDetailResponse {
   public String toString() {
     return "BoothOwnershipResponse{" +
         "isOwner=" + isOwner +
+        ", isEventBooth=" + isEventBooth +
         '}';
   }
 }
