@@ -75,7 +75,8 @@ public class BoothQueryServiceTest {
     Admin admin = booth.getOwner();
 
     // when
-    boolean isOwner = boothQueryService.isBoothOwner(booth.getId(), admin.getId()).getIsOwner();
+    boolean isOwner = boothQueryService.getBoothManagingDetail(booth.getId(), admin.getId())
+        .getIsOwner();
 
     // then
     assertThat(isOwner).isTrue();
@@ -91,10 +92,43 @@ public class BoothQueryServiceTest {
     Admin adminB = boothB.getOwner();
 
     // when
-    boolean isOwner = boothQueryService.isBoothOwner(boothA.getId(), adminB.getId()).getIsOwner();
+    boolean isOwner = boothQueryService.getBoothManagingDetail(boothA.getId(), adminB.getId())
+        .getIsOwner();
 
     // then
     assertThat(isOwner).isFalse();
+  }
+
+  @DisplayName("이벤트 부스 여부를 확인한다 - 이벤트 부스")
+  @Test
+  public void testIsEventBooth() {
+    // given
+    Booth booth = boothJpaRepository.findAllByIsEventBooth(true).get(0);
+    Admin admin = booth.getOwner();
+
+    // when
+    boolean isEventBooth = boothQueryService.getBoothManagingDetail(booth.getId(),
+            admin.getId())
+        .getIsEventBooth();
+
+    // then
+    assertThat(isEventBooth).isTrue();
+  }
+
+  @DisplayName("이벤트 부스 여부를 확인한다 - 일반 부스")
+  @Test
+  public void testIsNotEventBooth() {
+    // given
+    Booth booth = boothJpaRepository.findAllByIsEventBooth(false).get(0);
+    Admin admin = booth.getOwner();
+
+    // when
+    boolean isEventBooth = boothQueryService.getBoothManagingDetail(booth.getId(),
+            admin.getId())
+        .getIsEventBooth();
+
+    // then
+    assertThat(isEventBooth).isFalse();
   }
 
   @DisplayName("RedisBoothQrManager 를 사용하여 부스 QR 코드를 생성한다.")

@@ -9,18 +9,20 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class BoothOwnershipResponse {
+public class BoothManagingDetailResponse {
 
   private final Boolean isOwner;
+  private final Boolean isEventBooth;
 
-  public static BoothOwnershipResponse from(final boolean isOwner) {
-    return new BoothOwnershipResponse(isOwner);
+  public static BoothManagingDetailResponse of(final boolean isOwner, final boolean isEventBooth) {
+    return new BoothManagingDetailResponse(isOwner, isEventBooth);
   }
 
   @Override
   public String toString() {
     return "BoothOwnershipResponse{" +
         "isOwner=" + isOwner +
+        ", isEventBooth=" + isEventBooth +
         '}';
   }
 }

@@ -2,7 +2,7 @@ package org.mju_likelion.festival.common.authentication.config;
 
 import static org.mju_likelion.festival.common.api.ApiPaths.DELETE_LOST_ITEM;
 import static org.mju_likelion.festival.common.api.ApiPaths.FOUND_LOST_ITEM;
-import static org.mju_likelion.festival.common.api.ApiPaths.GET_BOOTH_OWNERSHIP;
+import static org.mju_likelion.festival.common.api.ApiPaths.GET_BOOTH_MANAGING_DETAIL;
 import static org.mju_likelion.festival.common.api.ApiPaths.GET_MY_STAMP;
 import static org.mju_likelion.festival.common.api.ApiPaths.ISSUE_BOOTH_QR;
 import static org.mju_likelion.festival.common.api.ApiPaths.PATCH_ANNOUNCEMENT;
@@ -52,7 +52,7 @@ public class AuthenticationConfig {
     registry.addInterceptor(boothAdminAuthenticationInterceptor)
         .addPathPatterns(ISSUE_BOOTH_QR)
         .addPathPatterns(PATCH_BOOTH)
-        .addPathPatterns(GET_BOOTH_OWNERSHIP);
+        .addPathPatterns(GET_BOOTH_MANAGING_DETAIL);
   }
 
   /**

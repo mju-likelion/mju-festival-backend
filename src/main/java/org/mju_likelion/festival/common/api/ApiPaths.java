@@ -29,7 +29,7 @@ public class ApiPaths {
   public static final String ISSUE_BOOTH_QR = BOOTHS + "/{id}/qr";
   public static final String VISIT_BOOTH = BOOTHS + "/{qrId}/visit";
   public static final String PATCH_BOOTH = BOOTHS + "/{id}";
-  public static final String GET_BOOTH_OWNERSHIP = BOOTHS + "/{id}/ownership";
+  public static final String GET_BOOTH_MANAGING_DETAIL = BOOTHS + "/{id}/managing-detail";
 
   // auth
   private static final String AUTH = "/auth";

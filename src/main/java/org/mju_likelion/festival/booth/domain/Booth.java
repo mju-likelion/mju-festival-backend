@@ -19,7 +19,7 @@ import org.mju_likelion.festival.image.domain.Image;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString(callSuper = true,
-    of = {"boothInfo", "locationImage", "image"})
+    of = {"boothInfo", "isEventBooth", "locationImage", "image"})
 @Entity(name = "booth")
 public class Booth extends BaseEntity {
 
@@ -29,6 +29,9 @@ public class Booth extends BaseEntity {
 
   @Embedded
   private BoothInfo boothInfo;
+
+  @Column(nullable = false)
+  private Boolean isEventBooth;
 
   @Column(nullable = false)
   private Short sequence;
@@ -44,12 +47,14 @@ public class Booth extends BaseEntity {
   public Booth(
       final Admin owner,
       final BoothInfo boothInfo,
+      final boolean isEventBooth,
       final Short sequence,
       final Image locationImage,
       final Image image) {
 
     this.owner = owner;
     this.boothInfo = boothInfo;
+    this.isEventBooth = isEventBooth;
     this.sequence = sequence;
     this.locationImage = locationImage;
     this.image = image;
