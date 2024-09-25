@@ -37,8 +37,9 @@ public class BoothService {
 
     UUID boothId = boothQrManager.getBoothIdFromQrId(qrId);
 
-    User user = userQueryService.getExistingUser(userId);
     Booth booth = boothQueryService.getExistingBooth(boothId);
+    boothQueryService.validateEventBooth(booth);
+    User user = userQueryService.getExistingUser(userId);
 
     user.visitBooth(booth);
     userQueryService.saveUser(user);
