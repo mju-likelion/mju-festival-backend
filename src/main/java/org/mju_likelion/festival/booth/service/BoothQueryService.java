@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.mju_likelion.festival.admin.domain.Admin;
 import org.mju_likelion.festival.admin.service.AdminQueryService;
 import org.mju_likelion.festival.booth.domain.Booth;
+import org.mju_likelion.festival.booth.domain.BoothDetail;
 import org.mju_likelion.festival.booth.domain.BoothNames;
 import org.mju_likelion.festival.booth.domain.SimpleBooth;
 import org.mju_likelion.festival.booth.domain.repository.BoothDepartmentJpaRepository;
@@ -17,7 +18,7 @@ import org.mju_likelion.festival.booth.domain.repository.BoothJpaRepository;
 import org.mju_likelion.festival.booth.domain.repository.BoothQueryRepository;
 import org.mju_likelion.festival.booth.dto.response.BoothDepartmentResponse;
 import org.mju_likelion.festival.booth.dto.response.BoothDetailResponse;
-import org.mju_likelion.festival.booth.dto.response.BoothOwnershipResponse;
+import org.mju_likelion.festival.booth.dto.response.BoothManagingDetailResponse;
 import org.mju_likelion.festival.booth.dto.response.BoothQrResponse;
 import org.mju_likelion.festival.booth.dto.response.SimpleBoothsResponse;
 import org.mju_likelion.festival.booth.util.qr.manager.BoothQrManager;
@@ -53,17 +54,17 @@ public class BoothQueryService {
   }
 
   public BoothDetailResponse getBooth(final UUID id) {
-    return BoothDetailResponse.from(
-        boothQueryRepository.findBoothById(id).orElseThrow(
-            () -> new NotFoundException(BOOTH_NOT_FOUND_ERROR)
-        )
-    );
+    return BoothDetailResponse.from(getExistingBoothDetail(id));
   }
 
-  public BoothOwnershipResponse isBoothOwner(final UUID boothId, final UUID boothAdminId) {
+  public BoothManagingDetailResponse getBoothManagingDetail(final UUID boothId,
+      final UUID boothAdminId) {
+    validateBoothExistence(boothId);
     adminQueryService.validateAdminExistence(boothAdminId);
+    boolean isBoothOwner = boothQueryRepository.isBoothOwner(boothId, boothAdminId);
+    boolean isEventBooth = boothQueryRepository.isEventBooth(boothId);
 
-    return BoothOwnershipResponse.from(boothQueryRepository.isBoothOwner(boothId, boothAdminId));
+    return BoothManagingDetailResponse.of(isBoothOwner, isEventBooth);
   }
 
   public BoothQrResponse getBoothQr(final UUID boothId, final UUID boothAdminId) {
@@ -85,6 +86,18 @@ public class BoothQueryService {
     if (!boothDepartmentJpaRepository.existsById(departmentId)) {
       throw new NotFoundException(BOOTH_DEPARTMENT_NOT_FOUND_ERROR);
     }
+  }
+
+  public void validateBoothExistence(final UUID boothId) {
+    if (!boothJpaRepository.existsById(boothId)) {
+      throw new NotFoundException(BOOTH_NOT_FOUND_ERROR);
+    }
+  }
+
+  public BoothDetail getExistingBoothDetail(final UUID boothId) {
+    return boothQueryRepository.findBoothById(boothId).orElseThrow(
+        () -> new NotFoundException(BOOTH_NOT_FOUND_ERROR)
+    );
   }
 
   public void validateBoothAdminOwner(final Admin admin, final Booth booth) {
