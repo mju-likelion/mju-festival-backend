@@ -20,7 +20,7 @@ import org.mju_likelion.festival.common.util.string.StringUtil;
 
 @Getter
 @Embeddable
-@ToString(of = {"name", "description", "location", "department"})
+@ToString(of = {"name", "description", "location", "affiliation"})
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class BoothInfo {
 
@@ -41,6 +41,10 @@ public class BoothInfo {
   private String location;
 
   @OneToOne(optional = false, fetch = FetchType.LAZY)
+  @JoinColumn(name = "affiliation_id")
+  private BoothAffiliation affiliation;
+
+  @OneToOne(optional = false, fetch = FetchType.LAZY)
   @JoinColumn(name = "department_id")
   private BoothDepartment department;
 
@@ -48,12 +52,14 @@ public class BoothInfo {
       final String name,
       final String description,
       final String location,
+      final BoothAffiliation affiliation,
       final BoothDepartment department) {
 
     validate(name, description, location);
     this.name = name;
     this.description = description;
     this.location = location;
+    this.affiliation = affiliation;
     this.department = department;
   }
 
