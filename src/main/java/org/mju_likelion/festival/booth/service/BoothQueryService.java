@@ -46,11 +46,11 @@ public class BoothQueryService {
         .toList();
   }
 
-  public List<SimpleBoothResponse> getBooths(final UUID departmentId) {
-    validateBoothDepartment(departmentId);
+  public List<SimpleBoothResponse> getBooths(final UUID affiliationId) {
+    validateBoothDepartment(affiliationId);
 
-    List<SimpleBooth> simpleBooths = boothQueryRepository.findAllSimpleBoothByDepartmentId(
-        departmentId);
+    List<SimpleBooth> simpleBooths = boothQueryRepository.findAllSimpleBoothByAffiliationId(
+        affiliationId);
 
     return simpleBooths.stream()
         .map(SimpleBoothResponse::from)
