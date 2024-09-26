@@ -1,6 +1,6 @@
 package org.mju_likelion.festival.common.config;
 
-import org.mju_likelion.festival.common.filter.FrontFilter;
+import org.mju_likelion.festival.common.filter.booth_operation.BoothOperationFilter;
 import org.mju_likelion.festival.common.filter.date_restriction.DateRestrictionFilter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -14,6 +14,10 @@ public class FilterConfig {
   private String endDateString;
   @Value("${application.service.start.date}")
   private String startDateString;
+  @Value("${booth.open.time}")
+  private String boothOpenTimeString;
+  @Value("${booth.close.time}")
+  private String boothCloseTimeString;
 
   @Bean
   public FilterRegistrationBean<DateRestrictionFilter> dateRestrictedFilterFilterRegistrationBean() {
@@ -22,6 +26,19 @@ public class FilterConfig {
     registrationBean.addUrlPatterns("/*");
     registrationBean.addInitParameter("startDateString", startDateString);
     registrationBean.addInitParameter("endDateString", endDateString);
+    registrationBean.setOrder(0);
+
+    return registrationBean;
+  }
+
+  @Bean
+  public FilterRegistrationBean<BoothOperationFilter> boothOperationFilterFilterRegistrationBean() {
+    FilterRegistrationBean<BoothOperationFilter> registrationBean = new FilterRegistrationBean<>();
+    registrationBean.setFilter(new BoothOperationFilter());
+    registrationBean.addUrlPatterns("/*");
+    registrationBean.addInitParameter("startTimeString", boothOpenTimeString);
+    registrationBean.addInitParameter("endTimeString", boothCloseTimeString);
+    registrationBean.setOrder(1);
 
     return registrationBean;
   }
