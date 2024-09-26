@@ -13,19 +13,25 @@ import org.mju_likelion.festival.booth.domain.SimpleBooth;
 public class SimpleBoothResponse {
 
   private final UUID id;
+  private final String departmentName;
   private final String name;
   private final String imageUrl;
 
   public static SimpleBoothResponse from(final SimpleBooth simpleBooths) {
 
-    return new SimpleBoothResponse(simpleBooths.getId(), simpleBooths.getName(),
-        simpleBooths.getImageUrl());
+    return new SimpleBoothResponse(
+        simpleBooths.getId(),
+        simpleBooths.getDepartmentName(),
+        simpleBooths.getName(),
+        simpleBooths.getImageUrl()
+    );
   }
 
   @Override
   public String toString() {
     return "SimpleBoothsResponse{" +
         "id=" + id +
+        ", departmentName='" + departmentName + '\'' +
         ", name='" + name + '\'' +
         ", imageUrl='" + imageUrl + '\'' +
         '}';

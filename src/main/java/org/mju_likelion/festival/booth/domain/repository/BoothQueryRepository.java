@@ -34,6 +34,7 @@ public class BoothQueryRepository {
       UUID uuid = hexToUUID(hexId);
       return new SimpleBooth(
           uuid,
+          rs.getString("departmentName"),
           rs.getString("boothName"),
           rs.getString("imageUrl")
       );
@@ -64,21 +65,22 @@ public class BoothQueryRepository {
   /**
    * 부스 소속 ID 에 해당하는 부스들 조회.
    *
-   * @param departmentId 부스 소속 ID
+   * @param affiliationId 부스 소속 ID
    * @return 부스 간단 정보 List
    */
-  public List<SimpleBooth> findAllSimpleBoothByDepartmentId(final UUID departmentId) {
+  public List<SimpleBooth> findAllSimpleBoothByAffiliationId(final UUID affiliationId) {
 
     String sql =
-        "SELECT HEX(b.id) AS boothId, b.name AS boothName, "
+        "SELECT HEX(b.id) AS boothId, bd.name AS departmentName, b.name AS boothName, "
             + "i.url AS imageUrl "
             + "FROM booth b "
             + "INNER JOIN image i ON b.image_id = i.id "
-            + "WHERE b.department_id = UNHEX(:departmentId) "
+            + "INNER JOIN booth_department bd ON b.department_id = bd.id "
+            + "WHERE b.affiliation_id = UNHEX(:affiliationId) "
             + "ORDER BY b.sequence ASC ";
 
     MapSqlParameterSource params = new MapSqlParameterSource()
-        .addValue("departmentId", uuidToHex(departmentId));
+        .addValue("affiliationId", uuidToHex(affiliationId));
 
     return jdbcTemplate.query(sql, params, simpleBoothRowMapper);
   }

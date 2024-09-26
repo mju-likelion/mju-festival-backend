@@ -33,11 +33,11 @@ public class BoothQueryRepositoryTest {
 
   private BoothQueryRepository boothQueryRepository;
 
-  private BoothAffiliation department;
+  private BoothAffiliation affiliation;
 
   @BeforeEach
   void setUp() {
-    department = boothAffiliationJpaRepository.findAll().get(0);
+    affiliation = boothAffiliationJpaRepository.findAll().get(0);
     boothQueryRepository = new BoothQueryRepository(new NamedParameterJdbcTemplate(dataSource));
   }
 
@@ -45,8 +45,8 @@ public class BoothQueryRepositoryTest {
   @Test
   void testFindAllSimpleBoothByDepartmentId() {
     // when & then
-    List<SimpleBooth> simpleBooths = boothQueryRepository.findAllSimpleBoothByDepartmentId(
-        department.getId());
+    List<SimpleBooth> simpleBooths = boothQueryRepository.findAllSimpleBoothByAffiliationId(
+        affiliation.getId());
 
     assertThat(simpleBooths).isNotEmpty();
   }

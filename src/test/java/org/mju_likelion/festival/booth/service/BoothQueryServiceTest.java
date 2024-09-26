@@ -44,11 +44,11 @@ public class BoothQueryServiceTest {
   @Test
   public void testGetBooths() {
     // given
-    BoothAffiliation department = boothAffiliationJpaRepository.findAll().get(0);
+    BoothAffiliation affiliation = boothAffiliationJpaRepository.findAll().get(0);
 
     // when
     List<SimpleBoothResponse> simpleBoothResponses = boothQueryService.getBooths(
-        department.getId());
+        affiliation.getId());
 
     // then
     assertThat(simpleBoothResponses).isNotEmpty();
