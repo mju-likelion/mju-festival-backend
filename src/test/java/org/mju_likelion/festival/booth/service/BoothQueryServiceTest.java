@@ -10,8 +10,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mju_likelion.festival.admin.domain.Admin;
 import org.mju_likelion.festival.booth.domain.Booth;
-import org.mju_likelion.festival.booth.domain.BoothDepartment;
-import org.mju_likelion.festival.booth.domain.repository.BoothDepartmentJpaRepository;
+import org.mju_likelion.festival.booth.domain.BoothAffiliation;
+import org.mju_likelion.festival.booth.domain.repository.BoothAffiliationJpaRepository;
 import org.mju_likelion.festival.booth.domain.repository.BoothJpaRepository;
 import org.mju_likelion.festival.booth.dto.response.BoothDetailResponse;
 import org.mju_likelion.festival.booth.dto.response.SimpleBoothResponse;
@@ -32,7 +32,7 @@ public class BoothQueryServiceTest {
   @Autowired
   private BoothJpaRepository boothJpaRepository;
   @Autowired
-  private BoothDepartmentJpaRepository boothDepartmentJpaRepository;
+  private BoothAffiliationJpaRepository boothAffiliationJpaRepository;
   @MockBean
   private BoothQrManagerContext boothQrManagerContext;
   @Autowired
@@ -44,7 +44,7 @@ public class BoothQueryServiceTest {
   @Test
   public void testGetBooths() {
     // given
-    BoothDepartment department = boothDepartmentJpaRepository.findAll().get(0);
+    BoothAffiliation department = boothAffiliationJpaRepository.findAll().get(0);
 
     // when
     List<SimpleBoothResponse> simpleBoothResponses = boothQueryService.getBooths(

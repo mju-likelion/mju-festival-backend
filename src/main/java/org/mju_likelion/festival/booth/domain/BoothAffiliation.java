@@ -12,15 +12,20 @@ import org.mju_likelion.festival.common.domain.BaseEntity;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString(callSuper = true, of = {"name"})
-@Entity(name = "booth_department")
-public class BoothDepartment extends BaseEntity {
+@ToString(callSuper = true, of = {"name", "categoryName"})
+@Entity(name = "booth_affiliation")
+public class BoothAffiliation extends BaseEntity {
 
   @Transient
-  private final int NAME_LENGTH = 20;
+  private final int NAME_LENGTH = 15;
+  @Transient
+  private final int CATEGORY_NAME_LENGTH = 15;
 
   @Column(nullable = false, length = NAME_LENGTH, unique = true)
   private String name;
+
+  @Column(nullable = false, length = CATEGORY_NAME_LENGTH, unique = true)
+  private String categoryName;
 
   @Override
   public boolean equals(final Object o) {
@@ -31,12 +36,12 @@ public class BoothDepartment extends BaseEntity {
       return false;
     }
 
-    final BoothDepartment that = (BoothDepartment) o;
-    return name.equals(that.name);
+    final BoothAffiliation that = (BoothAffiliation) o;
+    return Objects.equals(name, that.name) && Objects.equals(categoryName, that.categoryName);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name);
+    return Objects.hash(name) + Objects.hash(categoryName);
   }
 }
