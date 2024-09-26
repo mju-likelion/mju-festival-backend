@@ -1,4 +1,4 @@
-package org.mju_likelion.festival.common.filter.booth_operation;
+package org.mju_likelion.festival.common.filter.time_restriction;
 
 import static org.mju_likelion.festival.common.api.ApiPaths.ISSUE_BOOTH_QR;
 import static org.mju_likelion.festival.common.api.ApiPaths.VISIT_BOOTH;

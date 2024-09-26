@@ -1,7 +1,7 @@
 package org.mju_likelion.festival.common.config;
 
-import org.mju_likelion.festival.common.filter.booth_operation.BoothOperationTimeFilter;
 import org.mju_likelion.festival.common.filter.date_restriction.DateRestrictionFilter;
+import org.mju_likelion.festival.common.filter.time_restriction.BoothOperationTimeFilter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
