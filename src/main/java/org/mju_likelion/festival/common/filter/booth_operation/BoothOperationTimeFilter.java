@@ -13,7 +13,7 @@ import org.mju_likelion.festival.common.filter.RestFilter;
 import org.mju_likelion.festival.common.util.request_matcher.RequestMatcher;
 import org.springframework.http.HttpMethod;
 
-public class BoothOperationFilter extends RestFilter {
+public class BoothOperationTimeFilter extends RestFilter {
 
   private LocalTime startTime;
   private LocalTime endTime;

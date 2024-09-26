@@ -1,6 +1,6 @@
 package org.mju_likelion.festival.common.config;
 
-import org.mju_likelion.festival.common.filter.booth_operation.BoothOperationFilter;
+import org.mju_likelion.festival.common.filter.booth_operation.BoothOperationTimeFilter;
 import org.mju_likelion.festival.common.filter.date_restriction.DateRestrictionFilter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -32,9 +32,9 @@ public class FilterConfig {
   }
 
   @Bean
-  public FilterRegistrationBean<BoothOperationFilter> boothOperationFilterFilterRegistrationBean() {
-    FilterRegistrationBean<BoothOperationFilter> registrationBean = new FilterRegistrationBean<>();
-    registrationBean.setFilter(new BoothOperationFilter());
+  public FilterRegistrationBean<BoothOperationTimeFilter> boothOperationFilterFilterRegistrationBean() {
+    FilterRegistrationBean<BoothOperationTimeFilter> registrationBean = new FilterRegistrationBean<>();
+    registrationBean.setFilter(new BoothOperationTimeFilter());
     registrationBean.addUrlPatterns("/*");
     registrationBean.addInitParameter("startTimeString", boothOpenTimeString);
     registrationBean.addInitParameter("endTimeString", boothCloseTimeString);
