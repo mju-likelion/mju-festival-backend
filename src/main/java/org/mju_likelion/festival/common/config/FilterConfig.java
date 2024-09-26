@@ -16,16 +16,6 @@ public class FilterConfig {
   private String startDateString;
 
   @Bean
-  public FilterRegistrationBean<FrontFilter> frontFilterFilterRegistrationBean() {
-    FilterRegistrationBean<FrontFilter> registrationBean = new FilterRegistrationBean<>();
-    registrationBean.setFilter(new FrontFilter());
-    registrationBean.addUrlPatterns("/*");
-    registrationBean.setOrder(0);
-
-    return registrationBean;
-  }
-
-  @Bean
   public FilterRegistrationBean<DateRestrictionFilter> dateRestrictedFilterFilterRegistrationBean() {
     FilterRegistrationBean<DateRestrictionFilter> registrationBean = new FilterRegistrationBean<>();
     registrationBean.setFilter(new DateRestrictionFilter());
