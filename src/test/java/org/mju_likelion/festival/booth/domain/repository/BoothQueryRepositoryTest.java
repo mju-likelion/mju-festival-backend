@@ -9,7 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mju_likelion.festival.booth.domain.Booth;
-import org.mju_likelion.festival.booth.domain.BoothDepartment;
+import org.mju_likelion.festival.booth.domain.BoothAffiliation;
 import org.mju_likelion.festival.booth.domain.BoothDetail;
 import org.mju_likelion.festival.booth.domain.SimpleBooth;
 import org.mju_likelion.festival.common.annotation.ApplicationTest;
@@ -26,18 +26,18 @@ public class BoothQueryRepositoryTest {
   private BoothJpaRepository boothJpaRepository;
 
   @Autowired
-  private BoothDepartmentJpaRepository boothDepartmentJpaRepository;
+  private BoothAffiliationJpaRepository boothAffiliationJpaRepository;
 
   @Autowired
   private DataSource dataSource;
 
   private BoothQueryRepository boothQueryRepository;
 
-  private BoothDepartment department;
+  private BoothAffiliation department;
 
   @BeforeEach
   void setUp() {
-    department = boothDepartmentJpaRepository.findAll().get(0);
+    department = boothAffiliationJpaRepository.findAll().get(0);
     boothQueryRepository = new BoothQueryRepository(new NamedParameterJdbcTemplate(dataSource));
   }
 

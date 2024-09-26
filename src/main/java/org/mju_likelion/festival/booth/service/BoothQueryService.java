@@ -14,10 +14,10 @@ import org.mju_likelion.festival.booth.domain.Booth;
 import org.mju_likelion.festival.booth.domain.BoothDetail;
 import org.mju_likelion.festival.booth.domain.BoothNames;
 import org.mju_likelion.festival.booth.domain.SimpleBooth;
-import org.mju_likelion.festival.booth.domain.repository.BoothDepartmentJpaRepository;
+import org.mju_likelion.festival.booth.domain.repository.BoothAffiliationJpaRepository;
 import org.mju_likelion.festival.booth.domain.repository.BoothJpaRepository;
 import org.mju_likelion.festival.booth.domain.repository.BoothQueryRepository;
-import org.mju_likelion.festival.booth.dto.response.BoothDepartmentResponse;
+import org.mju_likelion.festival.booth.dto.response.BoothAffiliationResponse;
 import org.mju_likelion.festival.booth.dto.response.BoothDetailResponse;
 import org.mju_likelion.festival.booth.dto.response.BoothManagingDetailResponse;
 import org.mju_likelion.festival.booth.dto.response.BoothQrResponse;
@@ -38,11 +38,11 @@ public class BoothQueryService {
   private final BoothServiceUtil boothServiceUtil;
   private final BoothQueryRepository boothQueryRepository;
   private final BoothJpaRepository boothJpaRepository;
-  private final BoothDepartmentJpaRepository boothDepartmentJpaRepository;
+  private final BoothAffiliationJpaRepository boothAffiliationJpaRepository;
 
-  public List<BoothDepartmentResponse> getBoothDepartments() {
-    return boothDepartmentJpaRepository.findAll().stream()
-        .map(BoothDepartmentResponse::from)
+  public List<BoothAffiliationResponse> getBoothAffiliations() {
+    return boothAffiliationJpaRepository.findAll().stream()
+        .map(BoothAffiliationResponse::from)
         .toList();
   }
 
@@ -88,7 +88,7 @@ public class BoothQueryService {
   }
 
   private void validateBoothDepartment(final UUID departmentId) {
-    if (!boothDepartmentJpaRepository.existsById(departmentId)) {
+    if (!boothAffiliationJpaRepository.existsById(departmentId)) {
       throw new NotFoundException(BOOTH_DEPARTMENT_NOT_FOUND_ERROR);
     }
   }

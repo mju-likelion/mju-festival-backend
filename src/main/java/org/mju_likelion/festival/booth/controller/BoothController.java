@@ -1,7 +1,7 @@
 package org.mju_likelion.festival.booth.controller;
 
 import static org.mju_likelion.festival.common.api.ApiPaths.GET_ALL_BOOTHS;
-import static org.mju_likelion.festival.common.api.ApiPaths.GET_ALL_BOOTH_DEPARTMENTS;
+import static org.mju_likelion.festival.common.api.ApiPaths.GET_ALL_BOOTH_AFFILIATION;
 import static org.mju_likelion.festival.common.api.ApiPaths.GET_BOOTH;
 import static org.mju_likelion.festival.common.api.ApiPaths.GET_BOOTH_MANAGING_DETAIL;
 import static org.mju_likelion.festival.common.api.ApiPaths.ISSUE_BOOTH_QR;
@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import org.mju_likelion.festival.booth.dto.request.UpdateBoothRequest;
-import org.mju_likelion.festival.booth.dto.response.BoothDepartmentResponse;
+import org.mju_likelion.festival.booth.dto.response.BoothAffiliationResponse;
 import org.mju_likelion.festival.booth.dto.response.BoothDetailResponse;
 import org.mju_likelion.festival.booth.dto.response.BoothManagingDetailResponse;
 import org.mju_likelion.festival.booth.dto.response.BoothQrResponse;
@@ -37,15 +37,15 @@ public class BoothController {
   private final BoothQueryService boothQueryService;
   private final BoothService boothService;
 
-  @GetMapping(GET_ALL_BOOTH_DEPARTMENTS)
-  public ResponseEntity<List<BoothDepartmentResponse>> getBoothDepartments() {
+  @GetMapping(GET_ALL_BOOTH_AFFILIATION)
+  public ResponseEntity<List<BoothAffiliationResponse>> getBoothAffiliations() {
 
-    return ResponseEntity.ok(boothQueryService.getBoothDepartments());
+    return ResponseEntity.ok(boothQueryService.getBoothAffiliations());
   }
 
   @GetMapping(GET_ALL_BOOTHS)
   public ResponseEntity<List<SimpleBoothResponse>> getBooths(
-      @RequestParam(name = "department_id") final UUID departmentId) {
+      @RequestParam(name = "affiliation_id") final UUID departmentId) {
 
     return ResponseEntity.ok(boothQueryService.getBooths(departmentId));
   }
