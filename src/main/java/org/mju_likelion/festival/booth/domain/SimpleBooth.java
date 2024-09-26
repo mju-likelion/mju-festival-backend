@@ -12,6 +12,7 @@ import lombok.Getter;
 public class SimpleBooth {
 
   private final UUID id;
+  private final String departmentName;
   private final String name;
   private final String imageUrl;
 
@@ -19,6 +20,7 @@ public class SimpleBooth {
   public String toString() {
     return "SimpleBooth{" +
         "id=" + id +
+        ", departmentName='" + departmentName + '\'' +
         ", name='" + name + '\'' +
         ", imageUrl='" + imageUrl + '\'' +
         '}';
