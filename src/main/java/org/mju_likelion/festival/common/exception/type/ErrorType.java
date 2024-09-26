@@ -74,6 +74,7 @@ public enum ErrorType {
   REDIS_ERROR(50008, "Redis 에러가 발생했습니다."),
 
   DATE_RESTRICTED_ERROR(50300, "운영 기간이 아닙니다."),
+  BOOTH_RESTRICTED_ERROR(50301, "부스 운영 시간이 아닙니다."),
 
   UNEXPECTED_ERROR(99999, "예기치 않은 오류가 발생했습니다.");
 
