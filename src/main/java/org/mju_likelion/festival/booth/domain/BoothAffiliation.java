@@ -13,8 +13,8 @@ import org.mju_likelion.festival.common.domain.BaseEntity;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString(callSuper = true, of = {"name", "categoryName"})
-@Entity(name = "booth_department")
-public class BoothDepartment extends BaseEntity {
+@Entity(name = "booth_affiliation")
+public class BoothAffiliation extends BaseEntity {
 
   @Transient
   private final int NAME_LENGTH = 15;
@@ -36,7 +36,7 @@ public class BoothDepartment extends BaseEntity {
       return false;
     }
 
-    final BoothDepartment that = (BoothDepartment) o;
+    final BoothAffiliation that = (BoothAffiliation) o;
     return Objects.equals(name, that.name) && Objects.equals(categoryName, that.categoryName);
   }
 
