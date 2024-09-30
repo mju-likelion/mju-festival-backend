@@ -156,7 +156,7 @@ public class BoothQueryRepository {
    * @param userId 사용자 ID
    * @return 부스 이름 List
    */
-  public BoothNames findBoothNamesByUserId(final UUID userId) {
+  public BoothNames findBoothNamesSortedByCreatedAt(final UUID userId) {
     String sql =
         "SELECT b.name AS boothName "
             + "FROM booth b "

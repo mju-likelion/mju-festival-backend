@@ -84,7 +84,7 @@ public class BoothQueryService {
   }
 
   public BoothNames getVisitedBoothNamesByUserId(final UUID userId) {
-    return boothQueryRepository.findBoothNamesByUserId(userId);
+    return boothQueryRepository.findBoothNamesSortedByCreatedAt(userId);
   }
 
   private void validateBoothDepartment(final UUID departmentId) {
