@@ -162,7 +162,7 @@ public class BoothQueryRepository {
             + "FROM booth b "
             + "INNER JOIN booth_user bu ON b.id = bu.booth_id "
             + "WHERE bu.user_id = UNHEX(:userId) "
-            + "ORDER BY b.sequence ASC ";
+            + "ORDER BY bu.created_at ASC ";
 
     MapSqlParameterSource params = new MapSqlParameterSource()
         .addValue("userId", uuidToHex(userId));
