@@ -156,13 +156,13 @@ public class BoothQueryRepository {
    * @param userId 사용자 ID
    * @return 부스 이름 List
    */
-  public BoothNames findBoothNamesByUserId(final UUID userId) {
+  public BoothNames findBoothNamesSortedByCreatedAt(final UUID userId) {
     String sql =
         "SELECT b.name AS boothName "
             + "FROM booth b "
             + "INNER JOIN booth_user bu ON b.id = bu.booth_id "
             + "WHERE bu.user_id = UNHEX(:userId) "
-            + "ORDER BY b.sequence ASC ";
+            + "ORDER BY bu.created_at ASC ";
 
     MapSqlParameterSource params = new MapSqlParameterSource()
         .addValue("userId", uuidToHex(userId));
