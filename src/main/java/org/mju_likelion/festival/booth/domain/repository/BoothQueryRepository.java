@@ -36,7 +36,8 @@ public class BoothQueryRepository {
           uuid,
           rs.getString("departmentName"),
           rs.getString("boothName"),
-          rs.getString("imageUrl")
+          rs.getString("imageUrl"),
+          rs.getBoolean("isEventBooth")
       );
     };
   }
@@ -53,6 +54,7 @@ public class BoothQueryRepository {
           rs.getString("boothLocation"),
           rs.getString("imageUrl"),
           rs.getString("locationImageUrl"),
+          rs.getBoolean("isEventBooth"),
           rs.getTimestamp("createdAt").toLocalDateTime()
       );
     };
@@ -72,7 +74,7 @@ public class BoothQueryRepository {
 
     String sql =
         "SELECT HEX(b.id) AS boothId, bd.name AS departmentName, b.name AS boothName, "
-            + "i.url AS imageUrl "
+            + "i.url AS imageUrl, b.is_event_booth AS isEventBooth "
             + "FROM booth b "
             + "INNER JOIN image i ON b.image_id = i.id "
             + "INNER JOIN booth_department bd ON b.department_id = bd.id "
@@ -107,25 +109,6 @@ public class BoothQueryRepository {
   }
 
   /**
-   * 이벤트 부스인지 확인.
-   *
-   * @param boothId 부스 ID
-   * @return 이벤트 부스 여부
-   */
-  public boolean isEventBooth(final UUID boothId) {
-    String sql =
-        "SELECT EXISTS("
-            + "SELECT 1 FROM booth b "
-            + "WHERE b.id = UNHEX(:boothId) AND b.is_event_booth = TRUE"
-            + ") AS isEventBooth";
-
-    MapSqlParameterSource params = new MapSqlParameterSource()
-        .addValue("boothId", uuidToHex(boothId));
-
-    return jdbcTemplate.queryForObject(sql, params, Integer.class) > 0;
-  }
-
-  /**
    * 부스 상세 정보 조회.
    *
    * @param id 부스 ID
@@ -135,7 +118,7 @@ public class BoothQueryRepository {
     String sql =
         "SELECT HEX(b.id) AS boothId, b.name AS boothName, b.description AS boothDescription, "
             + "bd.name AS department, b.location AS boothLocation, i.url AS imageUrl, li.url AS locationImageUrl, "
-            + "b.created_at AS createdAt "
+            + "b.is_event_booth AS isEventBooth, b.created_at AS createdAt "
             + "FROM booth b "
             + "INNER JOIN image i ON b.image_id = i.id "
             + "INNER JOIN image li ON b.location_image_id = li.id "

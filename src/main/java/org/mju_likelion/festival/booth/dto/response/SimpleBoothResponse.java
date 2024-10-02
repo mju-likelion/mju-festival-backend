@@ -19,6 +19,7 @@ public class SimpleBoothResponse {
   private String departmentName;
   private String name;
   private String imageUrl;
+  private Boolean isEventBooth;
 
   public static SimpleBoothResponse from(final SimpleBooth simpleBooths) {
 
@@ -26,7 +27,8 @@ public class SimpleBoothResponse {
         simpleBooths.getId(),
         simpleBooths.getDepartmentName(),
         simpleBooths.getName(),
-        simpleBooths.getImageUrl()
+        simpleBooths.getImageUrl(),
+        simpleBooths.getIsEventBooth()
     );
   }
 
@@ -37,6 +39,7 @@ public class SimpleBoothResponse {
         ", departmentName='" + departmentName + '\'' +
         ", name='" + name + '\'' +
         ", imageUrl='" + imageUrl + '\'' +
+        ", isEventBooth=" + isEventBooth +
         '}';
   }
 }
