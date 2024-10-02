@@ -26,6 +26,7 @@ import org.mju_likelion.festival.booth.util.qr.manager.BoothQrManager;
 import org.mju_likelion.festival.common.exception.BadRequestException;
 import org.mju_likelion.festival.common.exception.ForbiddenException;
 import org.mju_likelion.festival.common.exception.NotFoundException;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -61,6 +62,7 @@ public class BoothQueryService {
     return BoothDetailResponse.from(getExistingBoothDetail(id));
   }
 
+  @Cacheable(value = "boothDetails", key = "#boothId + ' : ' + #boothAdminId")
   public BoothManagingDetailResponse getBoothManagingDetail(final UUID boothId,
       final UUID boothAdminId) {
     validateBoothExistence(boothId);
