@@ -48,6 +48,7 @@ public class BoothQueryService {
         .toList();
   }
 
+  @Cacheable(value = "simpleBooths", key = "#affiliationId")
   public SimpleBoothResponses getBooths(final UUID affiliationId) {
     validateBoothDepartment(affiliationId);
 
