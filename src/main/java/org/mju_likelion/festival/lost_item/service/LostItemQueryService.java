@@ -9,10 +9,13 @@ import lombok.RequiredArgsConstructor;
 import org.mju_likelion.festival.common.enums.SortOrder;
 import org.mju_likelion.festival.common.exception.NotFoundException;
 import org.mju_likelion.festival.lost_item.domain.LostItem;
+import org.mju_likelion.festival.lost_item.domain.LostItemDetail;
 import org.mju_likelion.festival.lost_item.domain.SimpleLostItem;
 import org.mju_likelion.festival.lost_item.domain.repository.LostItemJpaRepository;
 import org.mju_likelion.festival.lost_item.domain.repository.LostItemQueryRepository;
+import org.mju_likelion.festival.lost_item.dto.response.LostItemDetailResponse;
 import org.mju_likelion.festival.lost_item.dto.response.SimpleLostItemsResponse;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -55,6 +58,14 @@ public class LostItemQueryService {
     return SimpleLostItemsResponse.of(simpleLostItems, totalPage);
   }
 
+  @Cacheable(value = "lostItem", key = "#lostItemId")
+  public LostItemDetailResponse getLostItem(final UUID lostItemId) {
+    validateLostItemExistence(lostItemId);
+    LostItemDetail lostItemDetail = lostItemQueryRepository.findLostItemDetailById(lostItemId);
+
+    return LostItemDetailResponse.from(lostItemDetail);
+  }
+
   public LostItem getExistLostItem(final UUID lostItemId) {
     return lostItemJpaRepository.findById(lostItemId)
         .orElseThrow(() -> new NotFoundException(LOST_ITEM_NOT_FOUND_ERROR));
@@ -63,6 +74,12 @@ public class LostItemQueryService {
   public void validatePage(final int page, final int totalPage) {
     if (page != 0 && page >= totalPage) {
       throw new NotFoundException(PAGE_OUT_OF_BOUND_ERROR);
+    }
+  }
+
+  public void validateLostItemExistence(final UUID lostItemId) {
+    if (!lostItemJpaRepository.existsById(lostItemId)) {
+      throw new NotFoundException(LOST_ITEM_NOT_FOUND_ERROR);
     }
   }
 }
