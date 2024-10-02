@@ -62,6 +62,7 @@ public class BoothQueryService {
     return SimpleBoothResponses.from(simpleBoothResponseList);
   }
 
+  @Cacheable(value = "boothDetail", key = "#id")
   public BoothDetailResponse getBooth(final UUID id) {
     return BoothDetailResponse.from(getExistingBoothDetail(id));
   }
