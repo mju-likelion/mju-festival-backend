@@ -14,17 +14,15 @@ import lombok.NoArgsConstructor;
 public class BoothManagingDetailResponse {
 
   private Boolean isOwner;
-  private Boolean isEventBooth;
 
-  public static BoothManagingDetailResponse of(final boolean isOwner, final boolean isEventBooth) {
-    return new BoothManagingDetailResponse(isOwner, isEventBooth);
+  public static BoothManagingDetailResponse of(final boolean isOwner) {
+    return new BoothManagingDetailResponse(isOwner);
   }
 
   @Override
   public String toString() {
     return "BoothOwnershipResponse{" +
         "isOwner=" + isOwner +
-        ", isEventBooth=" + isEventBooth +
         '}';
   }
 }
