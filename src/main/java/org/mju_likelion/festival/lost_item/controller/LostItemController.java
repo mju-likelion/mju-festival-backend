@@ -3,6 +3,7 @@ package org.mju_likelion.festival.lost_item.controller;
 import static org.mju_likelion.festival.common.api.ApiPaths.DELETE_LOST_ITEM;
 import static org.mju_likelion.festival.common.api.ApiPaths.FOUND_LOST_ITEM;
 import static org.mju_likelion.festival.common.api.ApiPaths.GET_ALL_LOST_ITEMS;
+import static org.mju_likelion.festival.common.api.ApiPaths.GET_LOST_ITEM;
 import static org.mju_likelion.festival.common.api.ApiPaths.PATCH_LOST_ITEM;
 import static org.mju_likelion.festival.common.api.ApiPaths.POST_LOST_ITEM;
 import static org.mju_likelion.festival.common.api.ApiPaths.SEARCH_LOST_ITEMS;
@@ -17,6 +18,7 @@ import org.mju_likelion.festival.common.enums.SortOrder;
 import org.mju_likelion.festival.lost_item.dto.request.CreateLostItemRequest;
 import org.mju_likelion.festival.lost_item.dto.request.LostItemFoundRequest;
 import org.mju_likelion.festival.lost_item.dto.request.UpdateLostItemRequest;
+import org.mju_likelion.festival.lost_item.dto.response.LostItemDetailResponse;
 import org.mju_likelion.festival.lost_item.dto.response.SimpleLostItemsResponse;
 import org.mju_likelion.festival.lost_item.service.LostItemQueryService;
 import org.mju_likelion.festival.lost_item.service.LostItemService;
@@ -56,6 +58,13 @@ public class LostItemController {
 
     return ResponseEntity.ok(
         lostItemQueryService.searchLostItems(SortOrder.fromString(sort), keyword, page, size));
+  }
+
+  @GetMapping(GET_LOST_ITEM)
+  public ResponseEntity<LostItemDetailResponse> getLostItem(
+      @PathVariable final UUID id) {
+
+    return ResponseEntity.ok(lostItemQueryService.getLostItem(id));
   }
 
   @PostMapping(POST_LOST_ITEM)
