@@ -34,7 +34,8 @@ dependencies {
 
     implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'//AWS
 
-    implementation 'org.springframework.boot:spring-boot-starter-data-redis'//Redis
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'// Redis
+    implementation 'org.springframework.boot:spring-boot-starter-cache'// Cache
 
     implementation 'org.springframework.security:spring-security-crypto'// Security
 
