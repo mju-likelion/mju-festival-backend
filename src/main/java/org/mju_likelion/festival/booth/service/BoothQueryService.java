@@ -73,9 +73,8 @@ public class BoothQueryService {
     validateBoothExistence(boothId);
     adminQueryService.validateAdminExistence(boothAdminId);
     boolean isBoothOwner = boothQueryRepository.isBoothOwner(boothId, boothAdminId);
-    boolean isEventBooth = boothQueryRepository.isEventBooth(boothId);
 
-    return BoothManagingDetailResponse.of(isBoothOwner, isEventBooth);
+    return BoothManagingDetailResponse.of(isBoothOwner);
   }
 
   public BoothQrResponse getBoothQr(final UUID boothId, final UUID boothAdminId) {
