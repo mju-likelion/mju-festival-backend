@@ -19,11 +19,11 @@ public class SimpleLostItem {
   @Override
   public String toString() {
     return "SimpleLostItem{" +
-        "id=" + id +
+        "id=" + id + '\'' +
         ", title='" + title + '\'' +
         ", content='" + content + '\'' +
         ", imageUrl='" + imageUrl + '\'' +
-        ", createdAt=" + createdAt +
+        ", createdAt=" + createdAt + '\'' +
         ", isFounded=" + isFounded +
         '}';
   }
