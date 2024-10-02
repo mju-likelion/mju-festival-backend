@@ -2,28 +2,22 @@ package org.mju_likelion.festival.booth.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 /**
  * 부스 수정 요청 DTO
  */
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 public class UpdateBoothRequest {
 
-  private String name;
   private String description;
-  private String location;
-  private String locationImageUrl;
-  private String imageUrl;
 
   @Override
   public String toString() {
     return "UpdateBoothRequest{" +
-        "name='" + name + '\'' +
         ", description='" + description + '\'' +
-        ", location='" + location + '\'' +
-        ", locationImageUrl='" + locationImageUrl + '\'' +
-        ", imageUrl='" + imageUrl + '\'' +
         '}';
   }
 }

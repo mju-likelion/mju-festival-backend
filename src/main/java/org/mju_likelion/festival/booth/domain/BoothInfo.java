@@ -87,19 +87,9 @@ public class BoothInfo {
     }
   }
 
-  public void updateName(final String name) {
-    validateName(name);
-    this.name = name;
-  }
-
   public void updateDescription(final String description) {
     validateDescription(description);
     this.description = description;
-  }
-
-  public void updateLocation(final String location) {
-    validateLocation(location);
-    this.location = location;
   }
 
   @Override
