@@ -28,6 +28,7 @@ public class BoothDetailResponse {
   private String location;
   private String imageUrl;
   private String locationImageUrl;
+  private Boolean isEventBooth;
   @JsonSerialize(using = LocalDateTimeSerializer.class)
   @JsonDeserialize(using = LocalDateTimeDeserializer.class)
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
@@ -36,7 +37,8 @@ public class BoothDetailResponse {
   public static BoothDetailResponse from(final BoothDetail boothDetail) {
     return new BoothDetailResponse(boothDetail.getId(), boothDetail.getName(),
         boothDetail.getDescription(), boothDetail.getDepartment(), boothDetail.getLocation(),
-        boothDetail.getImageUrl(), boothDetail.getLocationImageUrl(), boothDetail.getCreatedAt());
+        boothDetail.getImageUrl(), boothDetail.getLocationImageUrl(),
+        boothDetail.getIsEventBooth(), boothDetail.getCreatedAt());
   }
 
   @Override
@@ -49,6 +51,7 @@ public class BoothDetailResponse {
         ", location='" + location + '\'' +
         ", imageUrl='" + imageUrl + '\'' +
         ", locationImageUrl='" + locationImageUrl + '\'' +
+        ", isEventBooth=" + isEventBooth + '\'' +
         ", createdAt=" + createdAt +
         '}';
   }
