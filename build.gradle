@@ -23,18 +23,19 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'// Lombok
     implementation 'org.springframework.boot:spring-boot-starter-validation'// Validation
 
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'//JPA
-    implementation 'org.springframework.boot:spring-boot-starter-jdbc'//JDBC
-    runtimeOnly 'com.mysql:mysql-connector-j'//MySQL
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'// JPA
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'// JDBC
+    runtimeOnly 'com.mysql:mysql-connector-j'// MySQL
 
-    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'//JWT
-    implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'//JWT
-    implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'//JWT
-    implementation 'javax.xml.bind:jaxb-api:2.3.1'//JAXB
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'// JWT
+    implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'// JWT
+    implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'// JWT
+    implementation 'javax.xml.bind:jaxb-api:2.3.1'// JAXB
 
-    implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'//AWS
+    implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'// AWS
 
-    implementation 'org.springframework.boot:spring-boot-starter-data-redis'//Redis
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'// Redis
+    implementation 'org.springframework.boot:spring-boot-starter-cache'// Cache
 
     implementation 'org.springframework.security:spring-security-crypto'// Security
 

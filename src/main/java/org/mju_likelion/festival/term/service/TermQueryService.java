@@ -12,6 +12,7 @@ import org.mju_likelion.festival.term.domain.Term;
 import org.mju_likelion.festival.term.domain.repository.TermJpaRepository;
 import org.mju_likelion.festival.term.domain.repository.TermQueryRepository;
 import org.mju_likelion.festival.term.dto.response.TermResponse;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +24,7 @@ public class TermQueryService {
   private final TermQueryRepository termQueryRepository;
   private final TermJpaRepository termJpaRepository;
 
+  @Cacheable(value = "terms")
   public List<TermResponse> getTerms() {
     return termQueryRepository.findTermsByOrderBySequenceAsc().stream()
         .map(TermResponse::of)
