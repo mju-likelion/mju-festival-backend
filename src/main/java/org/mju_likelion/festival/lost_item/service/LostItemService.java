@@ -12,6 +12,7 @@ import org.mju_likelion.festival.lost_item.domain.repository.LostItemJpaReposito
 import org.mju_likelion.festival.lost_item.dto.request.CreateLostItemRequest;
 import org.mju_likelion.festival.lost_item.dto.request.LostItemFoundRequest;
 import org.mju_likelion.festival.lost_item.dto.request.UpdateLostItemRequest;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,6 +41,7 @@ public class LostItemService {
     lostItemJpaRepository.save(lostItem);
   }
 
+  @CacheEvict(value = "lostItem", key = "#lostItemId")
   public void updateLostItem(
       final UUID lostItemId,
       final UpdateLostItemRequest updateLostItemRequest,
@@ -53,6 +55,7 @@ public class LostItemService {
     lostItemJpaRepository.save(lostItem);
   }
 
+  @CacheEvict(value = "lostItem", key = "#lostItemId")
   public void foundLostItem(
       final UUID lostItemId,
       final LostItemFoundRequest lostItemFoundRequest,
@@ -66,6 +69,7 @@ public class LostItemService {
     lostItemJpaRepository.save(lostItem);
   }
 
+  @CacheEvict(value = "lostItem", key = "#lostItemId")
   public void deleteLostItem(final UUID lostItemId, final UUID studentCouncilId) {
     LostItem lostItem = lostItemQueryService.getExistLostItem(lostItemId);
     adminQueryService.validateAdminExistence(studentCouncilId);
