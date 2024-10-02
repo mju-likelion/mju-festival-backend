@@ -16,6 +16,7 @@ public class ApiPaths {
   private static final String LOST_ITEMS = "/lost-items";
   public static final String GET_ALL_LOST_ITEMS = LOST_ITEMS;
   public static final String SEARCH_LOST_ITEMS = LOST_ITEMS + "/search";
+  public static final String GET_LOST_ITEM = LOST_ITEMS + "/{id}";
   public static final String POST_LOST_ITEM = LOST_ITEMS;
   public static final String PATCH_LOST_ITEM = LOST_ITEMS + "/{id}";
   public static final String FOUND_LOST_ITEM = LOST_ITEMS + "/{id}/found";

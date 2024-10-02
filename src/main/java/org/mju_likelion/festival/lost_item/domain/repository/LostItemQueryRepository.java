@@ -1,11 +1,13 @@
 package org.mju_likelion.festival.lost_item.domain.repository;
 
 import static org.mju_likelion.festival.common.util.uuid.UUIDUtil.hexToUUID;
+import static org.mju_likelion.festival.common.util.uuid.UUIDUtil.uuidToHex;
 
 import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.mju_likelion.festival.common.enums.SortOrder;
+import org.mju_likelion.festival.lost_item.domain.LostItemDetail;
 import org.mju_likelion.festival.lost_item.domain.SimpleLostItem;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Repository;
 public class LostItemQueryRepository {
 
   private final RowMapper<SimpleLostItem> simpleLostItemRowMapper = simpleLostItemRowMapper();
+  private final RowMapper<LostItemDetail> lostItemDetailRowMapper = lostItemDetailRowMapper();
   private final NamedParameterJdbcTemplate jdbcTemplate;
 
   private RowMapper<SimpleLostItem> simpleLostItemRowMapper() {
@@ -24,6 +27,21 @@ public class LostItemQueryRepository {
       String hexId = rs.getString("lostItemId");
       UUID uuid = hexToUUID(hexId);
       return new SimpleLostItem(
+          uuid,
+          rs.getString("title"),
+          rs.getString("content"),
+          rs.getString("imageUrl"),
+          rs.getTimestamp("createdAt").toLocalDateTime(),
+          rs.getBoolean("isFounded")
+      );
+    };
+  }
+
+  private RowMapper<LostItemDetail> lostItemDetailRowMapper() {
+    return (rs, rowNum) -> {
+      String hexId = rs.getString("lostItemId");
+      UUID uuid = hexToUUID(hexId);
+      return new LostItemDetail(
           uuid,
           rs.getString("title"),
           rs.getString("content"),
@@ -127,5 +145,19 @@ public class LostItemQueryRepository {
         .addValue("size", size);
 
     return jdbcTemplate.queryForObject(sql, params, Integer.class);
+  }
+
+  public LostItemDetail findLostItemDetailById(final UUID id) {
+    String sql = "SELECT HEX(li.id) AS lostItemId, li.title AS title, li.content AS content, "
+        + "CASE WHEN li.retriever_info IS NULL THEN FALSE ELSE TRUE END AS isFounded, "
+        + "i.url AS imageUrl, li.created_at AS createdAt "
+        + "FROM lost_item li "
+        + "INNER JOIN image i ON li.image_id = i.id "
+        + "WHERE li.id = UNHEX(:id)";
+
+    MapSqlParameterSource params = new MapSqlParameterSource()
+        .addValue("id", uuidToHex(id));
+
+    return jdbcTemplate.queryForObject(sql, params, lostItemDetailRowMapper);
   }
 }

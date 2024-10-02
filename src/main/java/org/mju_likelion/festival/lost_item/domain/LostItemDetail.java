@@ -7,7 +7,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class SimpleLostItem {
+public class LostItemDetail {
 
   private final UUID id;
   private final String title;
