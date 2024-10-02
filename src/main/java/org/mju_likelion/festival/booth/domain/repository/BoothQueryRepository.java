@@ -109,25 +109,6 @@ public class BoothQueryRepository {
   }
 
   /**
-   * 이벤트 부스인지 확인.
-   *
-   * @param boothId 부스 ID
-   * @return 이벤트 부스 여부
-   */
-  public boolean isEventBooth(final UUID boothId) {
-    String sql =
-        "SELECT EXISTS("
-            + "SELECT 1 FROM booth b "
-            + "WHERE b.id = UNHEX(:boothId) AND b.is_event_booth = TRUE"
-            + ") AS isEventBooth";
-
-    MapSqlParameterSource params = new MapSqlParameterSource()
-        .addValue("boothId", uuidToHex(boothId));
-
-    return jdbcTemplate.queryForObject(sql, params, Integer.class) > 0;
-  }
-
-  /**
    * 부스 상세 정보 조회.
    *
    * @param id 부스 ID
