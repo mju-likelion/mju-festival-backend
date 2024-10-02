@@ -11,6 +11,7 @@ import org.mju_likelion.festival.booth.util.qr.BoothQrStrategy;
 import org.mju_likelion.festival.booth.util.qr.manager.BoothQrManager;
 import org.mju_likelion.festival.user.domain.User;
 import org.mju_likelion.festival.user.service.UserQueryService;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,6 +43,7 @@ public class BoothService {
     userQueryService.saveUser(user);
   }
 
+  @CacheEvict(value = "boothDetail", key = "#boothId")
   public void updateBooth(
       final UUID boothId,
       final UpdateBoothRequest updateBoothRequest,
