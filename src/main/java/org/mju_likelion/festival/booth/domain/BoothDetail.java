@@ -17,6 +17,7 @@ public class BoothDetail {
   private final String department;
   private final String location;
   private final String locationImageUrl;
+  private final Boolean isEventBooth;
   private final LocalDateTime createdAt;
 
   public BoothDetail(
@@ -27,6 +28,7 @@ public class BoothDetail {
       final String location,
       final String imageUrl,
       final String locationImageUrl,
+      final Boolean isEventBooth,
       final LocalDateTime createdAt) {
 
     this.id = id;
@@ -36,6 +38,7 @@ public class BoothDetail {
     this.department = department;
     this.location = location;
     this.locationImageUrl = locationImageUrl;
+    this.isEventBooth = isEventBooth;
     this.createdAt = createdAt;
   }
 
@@ -49,6 +52,7 @@ public class BoothDetail {
         ", location='" + location + '\'' +
         ", imageUrl='" + imageUrl + '\'' +
         ", locationImageUrl='" + locationImageUrl + '\'' +
+        ", isEventBooth=" + isEventBooth + '\'' +
         ", createdAt=" + createdAt +
         '}';
   }

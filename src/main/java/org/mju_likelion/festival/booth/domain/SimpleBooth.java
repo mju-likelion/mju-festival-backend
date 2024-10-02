@@ -15,6 +15,7 @@ public class SimpleBooth {
   private final String departmentName;
   private final String name;
   private final String imageUrl;
+  private final Boolean isEventBooth;
 
   @Override
   public String toString() {
@@ -23,6 +24,7 @@ public class SimpleBooth {
         ", departmentName='" + departmentName + '\'' +
         ", name='" + name + '\'' +
         ", imageUrl='" + imageUrl + '\'' +
+        ", isEventBooth=" + isEventBooth +
         '}';
   }
 }
