@@ -1,10 +1,16 @@
 package org.mju_likelion.festival.booth.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import java.time.LocalDateTime;
 import java.util.UUID;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.mju_likelion.festival.booth.domain.BoothDetail;
 
 /**
@@ -12,16 +18,20 @@ import org.mju_likelion.festival.booth.domain.BoothDetail;
  */
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor
 public class BoothDetailResponse {
 
-  private final UUID id;
-  private final String name;
-  private final String description;
-  private final String department;
-  private final String location;
-  private final String imageUrl;
-  private final String locationImageUrl;
-  private final LocalDateTime createdAt;
+  private UUID id;
+  private String name;
+  private String description;
+  private String department;
+  private String location;
+  private String imageUrl;
+  private String locationImageUrl;
+  @JsonSerialize(using = LocalDateTimeSerializer.class)
+  @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
+  private LocalDateTime createdAt;
 
   public static BoothDetailResponse from(final BoothDetail boothDetail) {
     return new BoothDetailResponse(boothDetail.getId(), boothDetail.getName(),

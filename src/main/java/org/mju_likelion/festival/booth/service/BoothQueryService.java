@@ -62,11 +62,12 @@ public class BoothQueryService {
     return SimpleBoothResponses.from(simpleBoothResponseList);
   }
 
+  @Cacheable(value = "boothDetail", key = "#id")
   public BoothDetailResponse getBooth(final UUID id) {
     return BoothDetailResponse.from(getExistingBoothDetail(id));
   }
 
-  @Cacheable(value = "boothDetails", key = "#boothId + ' : ' + #boothAdminId")
+  @Cacheable(value = "boothManagingDetail", key = "#boothId + ' : ' + #boothAdminId")
   public BoothManagingDetailResponse getBoothManagingDetail(final UUID boothId,
       final UUID boothAdminId) {
     validateBoothExistence(boothId);
