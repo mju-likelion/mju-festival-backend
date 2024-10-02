@@ -1,21 +1,24 @@
 package org.mju_likelion.festival.booth.dto.response;
 
 import java.util.UUID;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.mju_likelion.festival.booth.domain.SimpleBooth;
 
 /**
  * 부스 간단 정보 응답 DTO.
  */
 @Getter
-@AllArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor
 public class SimpleBoothResponse {
 
-  private final UUID id;
-  private final String departmentName;
-  private final String name;
-  private final String imageUrl;
+  private UUID id;
+  private String departmentName;
+  private String name;
+  private String imageUrl;
 
   public static SimpleBoothResponse from(final SimpleBooth simpleBooths) {
 
