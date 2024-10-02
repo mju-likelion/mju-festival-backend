@@ -1,7 +1,5 @@
 package org.mju_likelion.festival.booth.service;
 
-import static org.mju_likelion.festival.common.util.null_handler.NullHandler.doIfNotNull;
-
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.mju_likelion.festival.admin.domain.Admin;
@@ -11,7 +9,6 @@ import org.mju_likelion.festival.booth.domain.repository.BoothJpaRepository;
 import org.mju_likelion.festival.booth.dto.request.UpdateBoothRequest;
 import org.mju_likelion.festival.booth.util.qr.BoothQrStrategy;
 import org.mju_likelion.festival.booth.util.qr.manager.BoothQrManager;
-import org.mju_likelion.festival.image.domain.Image;
 import org.mju_likelion.festival.user.domain.User;
 import org.mju_likelion.festival.user.service.UserQueryService;
 import org.springframework.stereotype.Service;
@@ -55,17 +52,8 @@ public class BoothService {
 
     boothQueryService.validateBoothAdminOwner(admin, booth);
 
-    updateBoothFields(updateBoothRequest, booth);
+    booth.getBoothInfo().updateDescription(updateBoothRequest.getDescription());
 
     boothJpaRepository.save(booth);
-  }
-
-  private void updateBoothFields(final UpdateBoothRequest updateBoothRequest, final Booth booth) {
-    doIfNotNull(updateBoothRequest.getName(), booth.getBoothInfo()::updateName);
-    doIfNotNull(updateBoothRequest.getDescription(), booth.getBoothInfo()::updateDescription);
-    doIfNotNull(updateBoothRequest.getLocation(), booth.getBoothInfo()::updateLocation);
-    doIfNotNull(updateBoothRequest.getLocationImageUrl(),
-        url -> booth.updateLocationImage(new Image(url)));
-    doIfNotNull(updateBoothRequest.getImageUrl(), url -> booth.updateImage(new Image(url)));
   }
 }
