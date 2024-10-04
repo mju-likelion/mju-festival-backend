@@ -3,7 +3,6 @@ package org.mju_likelion.festival.common.authentication.config;
 import static org.mju_likelion.festival.common.api.ApiPaths.DELETE_LOST_ITEM;
 import static org.mju_likelion.festival.common.api.ApiPaths.FOUND_LOST_ITEM;
 import static org.mju_likelion.festival.common.api.ApiPaths.GET_BOOTH_MANAGING_DETAIL;
-import static org.mju_likelion.festival.common.api.ApiPaths.GET_LOST_ITEM;
 import static org.mju_likelion.festival.common.api.ApiPaths.GET_MY_STAMP;
 import static org.mju_likelion.festival.common.api.ApiPaths.ISSUE_BOOTH_QR;
 import static org.mju_likelion.festival.common.api.ApiPaths.PATCH_ANNOUNCEMENT;
@@ -69,8 +68,7 @@ public class AuthenticationConfig {
         .addPathPatterns(POST_LOST_ITEM)
         .addPathPatterns(PATCH_LOST_ITEM)
         .addPathPatterns(FOUND_LOST_ITEM)
-        .excludePathPatterns(SEARCH_LOST_ITEMS)
-        .excludePathPatterns(GET_LOST_ITEM);
+        .excludePathPatterns(SEARCH_LOST_ITEMS);
   }
 
   /**
