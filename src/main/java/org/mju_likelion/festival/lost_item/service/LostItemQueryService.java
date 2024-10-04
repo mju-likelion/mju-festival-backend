@@ -1,11 +1,14 @@
 package org.mju_likelion.festival.lost_item.service;
 
+import static org.mju_likelion.festival.common.config.Resilience4jConfig.REDIS_CIRCUIT_BREAKER;
 import static org.mju_likelion.festival.common.exception.type.ErrorType.LOST_ITEM_NOT_FOUND_ERROR;
 import static org.mju_likelion.festival.common.exception.type.ErrorType.PAGE_OUT_OF_BOUND_ERROR;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import org.mju_likelion.festival.common.circuit_breaker.FallBackUtil;
 import org.mju_likelion.festival.common.enums.SortOrder;
 import org.mju_likelion.festival.common.exception.NotFoundException;
 import org.mju_likelion.festival.lost_item.domain.LostItem;
@@ -59,7 +62,17 @@ public class LostItemQueryService {
   }
 
   @Cacheable(value = "lostItem", key = "#lostItemId")
+  @CircuitBreaker(name = REDIS_CIRCUIT_BREAKER, fallbackMethod = "getLostItemFallback")
   public LostItemDetailResponse getLostItem(final UUID lostItemId) {
+    return getLostItemLogic(lostItemId);
+  }
+
+  public LostItemDetailResponse getLostItemFallback(final UUID lostItemId, final Exception e) {
+    FallBackUtil.handleFallBack(e);
+    return getLostItemLogic(lostItemId);
+  }
+
+  private LostItemDetailResponse getLostItemLogic(final UUID lostItemId) {
     validateLostItemExistence(lostItemId);
     LostItemDetail lostItemDetail = lostItemQueryRepository.findLostItemDetailById(lostItemId);
 
