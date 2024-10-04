@@ -47,7 +47,7 @@ public class BoothService {
     userQueryService.saveUser(user);
   }
 
-  @CacheEvict(value = "boothDetail", key = "#boothId")
+  @CacheEvict(value = "boothDetail", key = "#boothId", beforeInvocation = true)
   @CircuitBreaker(name = REDIS_CIRCUIT_BREAKER, fallbackMethod = "updateBoothFallback")
   public void updateBooth(
       final UUID boothId,

@@ -44,7 +44,7 @@ public class LostItemService {
     lostItemJpaRepository.save(lostItem);
   }
 
-  @CacheEvict(value = "lostItem", key = "#lostItemId")
+  @CacheEvict(value = "lostItem", key = "#lostItemId", beforeInvocation = true)
   @CircuitBreaker(name = REDIS_CIRCUIT_BREAKER, fallbackMethod = "updateLostItemFallback")
   public void updateLostItem(
       final UUID lostItemId,
@@ -110,7 +110,7 @@ public class LostItemService {
     lostItemJpaRepository.save(lostItem);
   }
 
-  @CacheEvict(value = "lostItem", key = "#lostItemId")
+  @CacheEvict(value = "lostItem", key = "#lostItemId", beforeInvocation = true)
   @CircuitBreaker(name = REDIS_CIRCUIT_BREAKER, fallbackMethod = "deleteLostItemFallback")
   public void deleteLostItem(final UUID lostItemId, final UUID studentCouncilId) {
     deleteLostItemLogic(lostItemId, studentCouncilId);
