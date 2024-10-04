@@ -1,13 +1,16 @@
 package org.mju_likelion.festival.booth.service;
 
+import static org.mju_likelion.festival.common.config.Resilience4jConfig.REDIS_CIRCUIT_BREAKER;
 import static org.mju_likelion.festival.common.exception.type.ErrorType.BOOTH_DEPARTMENT_NOT_FOUND_ERROR;
 import static org.mju_likelion.festival.common.exception.type.ErrorType.BOOTH_NOT_FOUND_ERROR;
 import static org.mju_likelion.festival.common.exception.type.ErrorType.NOT_BOOTH_OWNER_ERROR;
 import static org.mju_likelion.festival.common.exception.type.ErrorType.NOT_EVENT_BOOTH_ERROR;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.mju_likelion.festival.admin.domain.Admin;
 import org.mju_likelion.festival.admin.service.AdminQueryService;
 import org.mju_likelion.festival.booth.domain.Booth;
@@ -24,6 +27,7 @@ import org.mju_likelion.festival.booth.dto.response.BoothQrResponse;
 import org.mju_likelion.festival.booth.dto.response.SimpleBoothResponse;
 import org.mju_likelion.festival.booth.dto.response.SimpleBoothResponses;
 import org.mju_likelion.festival.booth.util.qr.manager.BoothQrManager;
+import org.mju_likelion.festival.common.circuit_breaker.FallBackUtil;
 import org.mju_likelion.festival.common.exception.BadRequestException;
 import org.mju_likelion.festival.common.exception.ForbiddenException;
 import org.mju_likelion.festival.common.exception.NotFoundException;
@@ -31,6 +35,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -49,7 +54,17 @@ public class BoothQueryService {
   }
 
   @Cacheable(value = "simpleBooths", key = "#affiliationId")
+  @CircuitBreaker(name = REDIS_CIRCUIT_BREAKER, fallbackMethod = "getBoothsFallback")
   public SimpleBoothResponses getBooths(final UUID affiliationId) {
+    return getBoothsLogic(affiliationId);
+  }
+
+  public SimpleBoothResponses getBoothsFallback(final UUID affiliationId, final Exception e) {
+    FallBackUtil.handleFallBack(e);
+    return getBoothsLogic(affiliationId);
+  }
+
+  private SimpleBoothResponses getBoothsLogic(final UUID affiliationId) {
     validateBoothDepartment(affiliationId);
 
     List<SimpleBooth> simpleBooths = boothQueryRepository.findAllSimpleBoothByAffiliationId(
@@ -63,12 +78,39 @@ public class BoothQueryService {
   }
 
   @Cacheable(value = "boothDetail", key = "#id")
+  @CircuitBreaker(name = REDIS_CIRCUIT_BREAKER, fallbackMethod = "getBoothFallback")
   public BoothDetailResponse getBooth(final UUID id) {
+    return getBoothLogic(id);
+  }
+
+  public BoothDetailResponse getBoothFallback(final UUID id, final Exception e) {
+    FallBackUtil.handleFallBack(e);
+    return getBoothLogic(id);
+  }
+
+  private BoothDetailResponse getBoothLogic(final UUID id) {
     return BoothDetailResponse.from(getExistingBoothDetail(id));
   }
 
   @Cacheable(value = "boothManagingDetail", key = "#boothId + ' : ' + #boothAdminId")
-  public BoothManagingDetailResponse getBoothManagingDetail(final UUID boothId,
+  @CircuitBreaker(name = REDIS_CIRCUIT_BREAKER, fallbackMethod = "getBoothManagingDetailFallback")
+  public BoothManagingDetailResponse getBoothManagingDetail(
+      final UUID boothId,
+      final UUID boothAdminId) {
+
+    return getBoothManagingDetailLogic(boothId, boothAdminId);
+  }
+
+  public BoothManagingDetailResponse getBoothManagingDetailFallback(
+      final UUID boothId,
+      final UUID boothAdminId,
+      final Exception e) {
+
+    FallBackUtil.handleFallBack(e);
+    return getBoothManagingDetailLogic(boothId, boothAdminId);
+  }
+
+  private BoothManagingDetailResponse getBoothManagingDetailLogic(final UUID boothId,
       final UUID boothAdminId) {
     validateBoothExistence(boothId);
     adminQueryService.validateAdminExistence(boothAdminId);
