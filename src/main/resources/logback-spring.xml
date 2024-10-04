@@ -19,6 +19,18 @@
     </rollingPolicy>
   </appender>
 
+  <!-- Rolling File appender for fallback logs (INFO, WARN, ERROR) -->
+  <appender class="ch.qos.logback.core.rolling.RollingFileAppender" name="FALLBACK_FILE">
+    <encoder>
+      <pattern>%d{yyyy-MM-dd HH:mm:ss} %msg%n%n</pattern>
+    </encoder>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>logs/fallback/fallback[%d{yyyy-MM-dd}].log</fileNamePattern>
+      <maxHistory>10</maxHistory>
+    </rollingPolicy>
+  </appender>
+
+
   <!-- Rolling File appender for SQL logs -->
   <appender class="ch.qos.logback.core.rolling.RollingFileAppender" name="SQL_FILE">
     <encoder>
@@ -41,6 +53,10 @@
   <!-- Root logger configuration for request logs -->
   <logger level="DEBUG" name="org.mju_likelion.festival.common.logging.LoggingAspect">
     <appender-ref ref="REQUEST_FILE"/>
+  </logger>
+
+  <logger level="DEBUG" name="org.mju_likelion.festival.common.circuit_breaker.FallBackUtil">
+    <appender-ref ref="FALLBACK_FILE"/>
   </logger>
 
   <!-- Root logger configuration for console output -->
