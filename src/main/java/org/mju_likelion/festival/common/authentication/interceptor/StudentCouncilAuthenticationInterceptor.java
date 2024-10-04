@@ -3,6 +3,7 @@ package org.mju_likelion.festival.common.authentication.interceptor;
 import static org.mju_likelion.festival.common.api.ApiPaths.GET_ALL_ANNOUNCEMENTS;
 import static org.mju_likelion.festival.common.api.ApiPaths.GET_ALL_LOST_ITEMS;
 import static org.mju_likelion.festival.common.api.ApiPaths.GET_ANNOUNCEMENT;
+import static org.mju_likelion.festival.common.api.ApiPaths.GET_LOST_ITEM;
 import static org.mju_likelion.festival.common.exception.type.ErrorType.STUDENT_COUNCIL_ONLY_ERROR;
 
 import java.util.LinkedList;
@@ -33,6 +34,7 @@ public class StudentCouncilAuthenticationInterceptor extends AbstractAuthenticat
     allowedRequestMatchers.add(new RequestMatcher(HttpMethod.GET, GET_ALL_ANNOUNCEMENTS));
     allowedRequestMatchers.add(new RequestMatcher(HttpMethod.GET, GET_ANNOUNCEMENT));
     allowedRequestMatchers.add(new RequestMatcher(HttpMethod.GET, GET_ALL_LOST_ITEMS));
+    allowedRequestMatchers.add(new RequestMatcher(HttpMethod.GET, GET_LOST_ITEM));
 
     return allowedRequestMatchers;
   }
