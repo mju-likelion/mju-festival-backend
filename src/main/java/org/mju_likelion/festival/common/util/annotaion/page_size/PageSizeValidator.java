@@ -1,4 +1,4 @@
-package org.mju_likelion.festival.common.annotaion.page_size;
+package org.mju_likelion.festival.common.util.annotaion.page_size;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;

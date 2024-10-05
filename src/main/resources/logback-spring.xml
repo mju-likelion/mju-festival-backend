@@ -55,7 +55,7 @@
     <appender-ref ref="REQUEST_FILE"/>
   </logger>
 
-  <logger level="DEBUG" name="org.mju_likelion.festival.common.circuit_breaker.FallBackUtil">
+  <logger level="DEBUG" name="org.mju_likelion.festival.common.util.circuit_breaker.FallBackUtil">
     <appender-ref ref="FALLBACK_FILE"/>
   </logger>
 

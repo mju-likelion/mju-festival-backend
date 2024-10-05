@@ -8,7 +8,7 @@ import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.mju_likelion.festival.admin.domain.Admin;
 import org.mju_likelion.festival.admin.service.AdminQueryService;
-import org.mju_likelion.festival.common.circuit_breaker.FallBackUtil;
+import org.mju_likelion.festival.common.util.circuit_breaker.FallBackUtil;
 import org.mju_likelion.festival.image.domain.Image;
 import org.mju_likelion.festival.lost_item.domain.LostItem;
 import org.mju_likelion.festival.lost_item.domain.repository.LostItemJpaRepository;

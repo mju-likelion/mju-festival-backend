@@ -6,7 +6,7 @@ import static org.mju_likelion.festival.common.util.uuid.UUIDUtil.uuidToHex;
 import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
-import org.mju_likelion.festival.common.enums.SortOrder;
+import org.mju_likelion.festival.common.util.enums.SortOrder;
 import org.mju_likelion.festival.lost_item.domain.LostItemDetail;
 import org.mju_likelion.festival.lost_item.domain.SimpleLostItem;
 import org.springframework.jdbc.core.RowMapper;

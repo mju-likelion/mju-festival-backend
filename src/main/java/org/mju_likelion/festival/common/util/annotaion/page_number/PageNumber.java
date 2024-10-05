@@ -1,4 +1,4 @@
-package org.mju_likelion.festival.common.annotaion.page_number;
+package org.mju_likelion.festival.common.util.annotaion.page_number;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
