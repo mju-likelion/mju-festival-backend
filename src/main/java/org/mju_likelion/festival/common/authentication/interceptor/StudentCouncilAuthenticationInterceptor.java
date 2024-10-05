@@ -29,7 +29,7 @@ public class StudentCouncilAuthenticationInterceptor extends AbstractAuthenticat
   }
 
   @Override
-  protected List<RequestMatcher> getAllowedRequestMatchers() {
+  public List<RequestMatcher> getAllowedRequestMatchers() {
     List<RequestMatcher> allowedRequestMatchers = new LinkedList<>();
     allowedRequestMatchers.add(new RequestMatcher(HttpMethod.GET, GET_ALL_ANNOUNCEMENTS));
     allowedRequestMatchers.add(new RequestMatcher(HttpMethod.GET, GET_ANNOUNCEMENT));
