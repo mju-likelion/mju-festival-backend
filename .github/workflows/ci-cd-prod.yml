@@ -88,7 +88,7 @@ jobs:
                 echo "$properties_content" > ./application-$env.properties
               }
 
-              setup_application_properties "dev" "${{ secrets.PROD_PROPERTIES }}"
+              setup_application_properties "prod" "${{ secrets.PROD_PROPERTIES }}"
               sudo docker login --username ${{ secrets.DOCKERHUB_USERNAME }} --password ${{ secrets.DOCKERHUB_PASSWORD }}
               sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.PROD_DOCKERHUB_IMAGE }}
               sudo docker ps -q | xargs -r sudo docker stop
