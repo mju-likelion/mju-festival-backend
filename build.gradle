@@ -1,28 +1,52 @@
 plugins {
-	id 'java'
-	id 'org.springframework.boot' version '3.3.2'
-	id 'io.spring.dependency-management' version '1.1.6'
+    id 'java'
+    id 'org.springframework.boot' version '3.3.2'
+    id 'io.spring.dependency-management' version '1.1.6'
 }
 
 group = 'org.mju-likelion'
 version = '0.0.1-SNAPSHOT'
 
 java {
-	toolchain {
-		languageVersion = JavaLanguageVersion.of(17)
-	}
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    compileOnly 'org.projectlombok:lombok'// Lombok
+    annotationProcessor 'org.projectlombok:lombok'// Lombok
+    implementation 'org.springframework.boot:spring-boot-starter-validation'// Validation
+
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'// JPA
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'// JDBC
+    runtimeOnly 'com.mysql:mysql-connector-j'// MySQL
+
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'// JWT
+    implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'// JWT
+    implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'// JWT
+    implementation 'javax.xml.bind:jaxb-api:2.3.1'// JAXB
+
+    implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'// AWS
+
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'// Redis
+    implementation 'org.springframework.boot:spring-boot-starter-cache'// Cache
+
+    implementation 'org.springframework.security:spring-security-crypto'// Security
+
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.3'// Jackson
+
+    implementation 'io.github.resilience4j:resilience4j-spring-boot3:2.0.2'// Resilience4j
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 tasks.named('test') {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }

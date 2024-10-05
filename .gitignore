@@ -61,4 +61,5 @@ hs_err_pid*
 replay_pid*
 
 # application.properties
-**/main/resources/application.properties
+**/main/resources/*
+**/test/resources/*

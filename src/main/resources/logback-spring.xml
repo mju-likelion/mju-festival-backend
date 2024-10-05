@@ -1,0 +1,67 @@
+<configuration>
+
+  <!-- Console appender with color coding -->
+  <appender class="ch.qos.logback.core.ConsoleAppender" name="CONSOLE">
+    <encoder>
+      <!-- Define pattern with ANSI color codes for console logging -->
+      <pattern>%d{yyyy-MM-dd HH:mm:ss} %highlight(%-5level) %cyan(%logger{36}) - %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <!-- Rolling File appender for request logs (INFO, WARN, ERROR) -->
+  <appender class="ch.qos.logback.core.rolling.RollingFileAppender" name="REQUEST_FILE">
+    <encoder>
+      <pattern>%d{yyyy-MM-dd HH:mm:ss} %msg%n%n</pattern>
+    </encoder>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>logs/request-response/request-response[%d{yyyy-MM-dd}].log</fileNamePattern>
+      <maxHistory>10</maxHistory>
+    </rollingPolicy>
+  </appender>
+
+  <!-- Rolling File appender for fallback logs (INFO, WARN, ERROR) -->
+  <appender class="ch.qos.logback.core.rolling.RollingFileAppender" name="FALLBACK_FILE">
+    <encoder>
+      <pattern>%d{yyyy-MM-dd HH:mm:ss} %msg%n%n</pattern>
+    </encoder>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>logs/fallback/fallback[%d{yyyy-MM-dd}].log</fileNamePattern>
+      <maxHistory>10</maxHistory>
+    </rollingPolicy>
+  </appender>
+
+
+  <!-- Rolling File appender for SQL logs -->
+  <appender class="ch.qos.logback.core.rolling.RollingFileAppender" name="SQL_FILE">
+    <encoder>
+      <pattern>%d{yyyy-MM-dd HH:mm:ss} %msg%n-----------------------------------------%n</pattern>
+    </encoder>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>logs/hibernate-sql/hibernate-sql[%d{yyyy-MM-dd}].log</fileNamePattern>
+      <maxHistory>10</maxHistory>
+    </rollingPolicy>
+  </appender>
+
+  <!-- SQL logging configuration -->
+  <logger level="DEBUG" name="org.hibernate.SQL">
+    <appender-ref ref="SQL_FILE"/>
+  </logger>
+  <logger level="TRACE" name="org.hibernate.type.descriptor.sql.BasicBinder">
+    <appender-ref ref="SQL_FILE"/>
+  </logger>
+
+  <!-- Root logger configuration for request logs -->
+  <logger level="DEBUG" name="org.mju_likelion.festival.common.logging.LoggingAspect">
+    <appender-ref ref="REQUEST_FILE"/>
+  </logger>
+
+  <logger level="DEBUG" name="org.mju_likelion.festival.common.circuit_breaker.FallBackUtil">
+    <appender-ref ref="FALLBACK_FILE"/>
+  </logger>
+
+  <!-- Root logger configuration for console output -->
+  <root level="INFO">
+    <appender-ref ref="CONSOLE"/>
+  </root>
+
+</configuration>
