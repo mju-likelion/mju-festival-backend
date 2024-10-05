@@ -1,6 +1,7 @@
 package org.mju_likelion.festival.common.util.redis;
 
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.mju_likelion.festival.common.config.RedisConfig;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,8 @@ public class RedisAvailabilityChecker {
 
   private static final long REDIS_CHECK_INTERVAL = 10000; // 10초
   private final RedisConfig redisConfig;
+
+  @Setter
   private volatile boolean redisAvailable = false; // 멀티스레드 환경 가시성 보장
 
   public boolean isAvailable() {
