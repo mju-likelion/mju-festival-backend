@@ -1,12 +1,15 @@
 package org.mju_likelion.festival.common.exception.controller;
 
 import static org.mju_likelion.festival.common.exception.type.ErrorType.HTTP_MEDIA_TYPE_NOT_SUPPORTED_ERROR;
+import static org.mju_likelion.festival.common.exception.type.ErrorType.REDIS_ERROR;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.mju_likelion.festival.common.exception.BadRequestException;
 import org.mju_likelion.festival.common.exception.CustomException;
 import org.mju_likelion.festival.common.exception.dto.ErrorResponse;
 import org.mju_likelion.festival.common.exception.type.ErrorType;
+import org.mju_likelion.festival.common.util.redis.RedisAvailabilityChecker;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -23,10 +26,16 @@ import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 @Slf4j
 @RestControllerAdvice
+@RequiredArgsConstructor
 public class ExceptionController {
+
+  private final RedisAvailabilityChecker redisAvailabilityChecker;
 
   @ExceptionHandler(CustomException.class)
   public ResponseEntity<ErrorResponse> customExceptionHandler(final CustomException e) {
+    if (e.getErrorType() == REDIS_ERROR) {
+      redisAvailabilityChecker.setRedisAvailable(false);
+    }
     return ResponseEntity.status(e.getHttpStatus()).body(ErrorResponse.res(e));
   }
 
