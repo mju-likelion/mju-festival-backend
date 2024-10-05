@@ -1,4 +1,4 @@
-package org.mju_likelion.festival.common.circuit_breaker;
+package org.mju_likelion.festival.common.util.circuit_breaker;
 
 import lombok.extern.slf4j.Slf4j;
 import org.mju_likelion.festival.common.exception.CustomException;

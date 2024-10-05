@@ -16,7 +16,7 @@ import org.mju_likelion.festival.admin.domain.Admin;
 import org.mju_likelion.festival.admin.domain.AdminRole;
 import org.mju_likelion.festival.admin.domain.repository.AdminJpaRepository;
 import org.mju_likelion.festival.common.annotation.ApplicationTest;
-import org.mju_likelion.festival.common.enums.SortOrder;
+import org.mju_likelion.festival.common.util.enums.SortOrder;
 import org.mju_likelion.festival.image.domain.Image;
 import org.mju_likelion.festival.lost_item.domain.LostItem;
 import org.mju_likelion.festival.lost_item.domain.SimpleLostItem;
