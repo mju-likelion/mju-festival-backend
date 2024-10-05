@@ -9,7 +9,7 @@ name: Java CI/CD with Gradle
 
 on:
   push:
-    branches: [ "develop" ]
+    branches: [ "main" ]
 
 permissions:
   contents: read
@@ -52,7 +52,7 @@ jobs:
 
       # 4. Docker 이미지 빌드
       - name: docker image build
-        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DEV_DOCKERHUB_IMAGE }} .
+        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.PROD_DOCKERHUB_IMAGE }} .
 
       # 5. DockerHub 로그인
       - name: docker login
@@ -63,7 +63,7 @@ jobs:
 
       # 6. Docker Hub 이미지 푸시
       - name: docker Hub push
-        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DEV_DOCKERHUB_IMAGE }}
+        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.PROD_DOCKERHUB_IMAGE }}
 
   # Docker 이미지를 가져와서 AWS EC2 에 배포하는 과정
   deploy:
@@ -73,26 +73,29 @@ jobs:
       - name: ssh connect & production
         uses: appleboy/ssh-action@master
         with:
-          host: ${{secrets.DEV_HOST}}
-          username: ${{secrets.DEV_USERNAME}}
-          key: ${{secrets.DEV_PASSWORD}}
+          host: ${{ secrets.PROD_HOSTS }}
+          username: ${{ secrets.PROD_USERNAME }}
+          key: ${{ secrets.PROD_PASSWORD }}
           script: |
-            setup_application_properties() {
-            local env=$1
-            local properties_content=$2
-            mkdir -p ~/properties/$env
-            cd ~/properties/$env
-            touch ./application-$env.properties
-            echo "$properties_content" > ./application-$env.properties
-            }
-            
-            setup_application_properties "dev" "${{secrets.DEV_PROPERTIES}}"
-            sudo docker login --username ${{secrets.DOCKERHUB_USERNAME}} --password ${{secrets.DOCKERHUB_PASSWORD}}
-            sudo docker pull ${{secrets.DOCKERHUB_USERNAME}}/${{secrets.DEV_DOCKERHUB_IMAGE}}
-            sudo docker ps -q | xargs -r sudo docker stop
-            sudo docker ps -aq | xargs -r sudo docker rm
-            sudo docker run --name ${{secrets.DEV_DOCKERHUB_IMAGE}} -d -p 8080:8080 -v ~/logs:/logs -v ~/properties:/properties -e SPRING_PROFILES_ACTIVE=dev -e SPRING_CONFIG_LOCATION=/properties/dev/application-dev.properties ${{secrets.DOCKERHUB_USERNAME}}/${{secrets.DEV_DOCKERHUB_IMAGE}}
-            sudo docker system prune -f
+            IFS=',' read -ra HOSTS <<< "${{ secrets.PROD_HOSTS }}"
+            for host in "${HOSTS[@]}"; do
+              setup_application_properties() {
+                local env=$1
+                local properties_content=$2
+                mkdir -p ~/properties/$env
+                cd ~/properties/$env
+                touch ./application-$env.properties
+                echo "$properties_content" > ./application-$env.properties
+              }
+
+              setup_application_properties "dev" "${{ secrets.PROD_PROPERTIES }}"
+              sudo docker login --username ${{ secrets.DOCKERHUB_USERNAME }} --password ${{ secrets.DOCKERHUB_PASSWORD }}
+              sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.PROD_DOCKERHUB_IMAGE }}
+              sudo docker ps -q | xargs -r sudo docker stop
+              sudo docker ps -aq | xargs -r sudo docker rm
+              sudo docker run --name ${{ secrets.PROD_DOCKERHUB_IMAGE }} -d -p 8080:8080 -v ~/logs:/logs -v ~/properties:/properties -e SPRING_PROFILES_ACTIVE=dev -e SPRING_CONFIG_LOCATION=/properties/dev/application-dev.properties ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.PROD_DOCKERHUB_IMAGE }}
+              sudo docker system prune -f
+            done
             
             
             
