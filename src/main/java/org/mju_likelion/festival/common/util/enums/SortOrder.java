@@ -1,4 +1,4 @@
-package org.mju_likelion.festival.common.enums;
+package org.mju_likelion.festival.common.util.enums;
 
 import static org.mju_likelion.festival.common.exception.type.ErrorType.INVALID_SORT_ORDER_ERROR;
 

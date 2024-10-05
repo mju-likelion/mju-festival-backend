@@ -12,7 +12,7 @@ import org.mju_likelion.festival.booth.domain.repository.BoothJpaRepository;
 import org.mju_likelion.festival.booth.dto.request.UpdateBoothRequest;
 import org.mju_likelion.festival.booth.util.qr.BoothQrStrategy;
 import org.mju_likelion.festival.booth.util.qr.manager.BoothQrManager;
-import org.mju_likelion.festival.common.circuit_breaker.FallBackUtil;
+import org.mju_likelion.festival.common.util.circuit_breaker.FallBackUtil;
 import org.mju_likelion.festival.user.domain.User;
 import org.mju_likelion.festival.user.service.UserQueryService;
 import org.springframework.cache.annotation.CacheEvict;

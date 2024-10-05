@@ -4,6 +4,8 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.mju_likelion.festival.common.authentication.config.AuthenticationConfig;
 import org.mju_likelion.festival.common.logging.config.LoggingConfig;
+import org.mju_likelion.festival.common.restriction.date_restriction.DateRestrictionInterceptor;
+import org.mju_likelion.festival.common.restriction.time_restriction.BoothOperationTimeRestrictionInterceptor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,6 +22,8 @@ public class WebConfig implements WebMvcConfigurer {
   private static final String ALLOWED_METHOD_NAMES = "GET,HEAD,POST,PUT,DELETE,TRACE,OPTIONS,PATCH";
   private final AuthenticationConfig authenticationConfig;
   private final LoggingConfig loggingConfig;
+  private final DateRestrictionInterceptor dateRestrictionInterceptor;
+  private final BoothOperationTimeRestrictionInterceptor boothOperationTimeRestrictionInterceptor;
   @Value("${client.hosts}")
   private List<String> clientHosts;
 
@@ -41,6 +45,8 @@ public class WebConfig implements WebMvcConfigurer {
   @Override
   public void addInterceptors(final InterceptorRegistry registry) {
     loggingConfig.addInterceptors(registry);
+    registry.addInterceptor(dateRestrictionInterceptor);
+    registry.addInterceptor(boothOperationTimeRestrictionInterceptor);
     authenticationConfig.addInterceptors(registry);
   }
 

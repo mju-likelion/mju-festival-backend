@@ -12,8 +12,8 @@ import org.mju_likelion.festival.announcement.domain.repository.AnnouncementJpaR
 import org.mju_likelion.festival.announcement.domain.repository.AnnouncementQueryRepository;
 import org.mju_likelion.festival.announcement.dto.response.AnnouncementDetailResponse;
 import org.mju_likelion.festival.announcement.dto.response.SimpleAnnouncementsResponse;
-import org.mju_likelion.festival.common.enums.SortOrder;
 import org.mju_likelion.festival.common.exception.NotFoundException;
+import org.mju_likelion.festival.common.util.enums.SortOrder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

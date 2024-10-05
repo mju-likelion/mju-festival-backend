@@ -26,7 +26,7 @@ public class BoothAdminAuthenticationInterceptor extends AbstractAuthenticationI
   }
 
   @Override
-  protected List<RequestMatcher> getAllowedRequestMatchers() {
+  public List<RequestMatcher> getAllowedRequestMatchers() {
     List<RequestMatcher> allowedRequestMatchers = new LinkedList<>();
     allowedRequestMatchers.add(new RequestMatcher(HttpMethod.GET, GET_BOOTH));
 

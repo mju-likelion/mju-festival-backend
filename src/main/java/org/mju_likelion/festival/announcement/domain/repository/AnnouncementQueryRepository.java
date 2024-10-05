@@ -9,7 +9,7 @@ import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.mju_likelion.festival.announcement.domain.AnnouncementDetail;
 import org.mju_likelion.festival.announcement.domain.SimpleAnnouncement;
-import org.mju_likelion.festival.common.enums.SortOrder;
+import org.mju_likelion.festival.common.util.enums.SortOrder;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;

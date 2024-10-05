@@ -15,7 +15,7 @@ import org.mju_likelion.festival.announcement.domain.Announcement;
 import org.mju_likelion.festival.announcement.domain.AnnouncementDetail;
 import org.mju_likelion.festival.announcement.domain.SimpleAnnouncement;
 import org.mju_likelion.festival.common.annotation.ApplicationTest;
-import org.mju_likelion.festival.common.enums.SortOrder;
+import org.mju_likelion.festival.common.util.enums.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.transaction.annotation.Transactional;

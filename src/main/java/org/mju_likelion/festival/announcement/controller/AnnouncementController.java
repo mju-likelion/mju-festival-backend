@@ -15,10 +15,10 @@ import org.mju_likelion.festival.announcement.dto.response.AnnouncementDetailRes
 import org.mju_likelion.festival.announcement.dto.response.SimpleAnnouncementsResponse;
 import org.mju_likelion.festival.announcement.service.AnnouncementQueryService;
 import org.mju_likelion.festival.announcement.service.AnnouncementService;
-import org.mju_likelion.festival.common.annotaion.page_number.PageNumber;
-import org.mju_likelion.festival.common.annotaion.page_size.PageSize;
 import org.mju_likelion.festival.common.authentication.AuthenticationPrincipal;
-import org.mju_likelion.festival.common.enums.SortOrder;
+import org.mju_likelion.festival.common.util.annotaion.page_number.PageNumber;
+import org.mju_likelion.festival.common.util.annotaion.page_size.PageSize;
+import org.mju_likelion.festival.common.util.enums.SortOrder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
