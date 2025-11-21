@@ -2,6 +2,9 @@
 
 명지대학교 자연캠퍼스 2024 축제 백엔드
 
+# 인프라 구조
+<img src="./images/infra.png" alt="infra" width="100%"/>
+
 ## 📠 Convention
 
 ### 🤝 Branch Naming Convention
